@@ -1,7 +1,125 @@
 = dagnabit
 
-Description goes here.
+dagnabit is (yet another) ActiveRecord plugin for directed acyclic graphs.  It
+provides an underlying representation that facilitates fast reachability
+queries at the expense of edge insertion/deletion speed and execution time.
+
+The data structure used by dagnabit is the structure described in:
+
+DONG, G., LIBKIN, L., SU, J., and WONG, L.  "Maintaining the
+transitive closure of graphs in SQL."  In Int. J. Information Technology, vol.
+5, 1999.
+
+dagnabit was developed for a Ruby on Rails application designed for management
+and querying of large-and-rapidly-growing biospecimen banks (i.e. for cancer
+research).  The application uses directed acyclic graphs for knowledge
+representation (storage and application of workflows) and representing
+biospecimen heritage.
+
+== Database compatibility
+
+dagnabit has been tested with SQLite and Oracle XE 10g, but should work on any
+SQL database that supports transaction-scoped temporary tables and subselects.
+
+== Setup
+
+dagnabit is distributed as a gem plugin; you can therefore install it as you
+would any other RubyGem.  Integration with your Rails application can be
+achieved by adding dagnabit to your application's gem dependencies list.
+
+To generate the edge tables, run
+
+  script/generate dagnabit [name of your edge model here]
+
+This will generate migrations to create the tables for the edge model.
+
+In the model you want to use as an edge, put
+
+  acts_as_dag_edge
+
+In the models that you want to use as nodes, put
+
+  acts_as_dag_node
+
+== Usage
+
+The recommended usage pattern is (in pseudocode)
+
+  nodes = make_nodes
+  edges = connect_up(nodes)
+  save(nodes)
+  save(edges)
+
+Node and edge creation is identical to creation of any ActiveRecord model.  For
+example, if your Node models were called +AlphaNode+ and +BetaNode+ and your
+edge model was called +Edge+, these would be valid expressions:
+
+  n1 = AlphaNode.new
+  n2 = BetaNode.new
+
+  e1 = Edge.new(:ancestor => n1, :descendant => n2)
+  n1.save
+  n2.save
+  e1.save
+
+=== Node interface
+
++acts_as_dag_node+ adds the following associations to nodes:
+
+* +links_as_child+: Links for which the node is a child.
+* +links_as_parent+: Links for which the node is a parent.
+* +links_as_ancestor+: Links for which the node is an ancestor.  Read-only.
+* +links_as_descendant+: Links for which the node is a descendant.  Read-only.
+
++acts_as_dag_node+ adds the following instance methods to nodes:
+ 
+* +descendants+: All descendants of the node.  Read-only.
+* +ancestors+: All ancestors of the node.  Read-only.
+
+=== Edge interface
+
+The following class methods are available on edges:
+
+* +paths+: Retrieves all paths from one node to another.
+* +path+: Returns whether a node is reachable from another node.
+* +find_edge+: Finds the edge from one node to another, or nil if none exists.
+* +build_edge+: Builds an edge from one node to another node.
+* +connect+: Builds and saves an edge from one node to another.  Identical to
+  <tt>build_edge(nodeA, nodeB).save</tt>.
+* <tt>connect!</tt>: Builds and saves an edge from one node to another, raising
+  an exception if save fails.  Identical to <tt>build_edge(nodeA,
+  nodeB).save!</tt>.
+
+== Related work
+
+This plugin was inspired by Matthew Leventi's acts-as-dag plugin
+<http://github.com/mleventi/acts-as-dag/tree/master>.  Leventi's plugin has a
+couple deficiencies that this plugin attempts to address:
+
+* acts-as-dag does not permit linking of unpersisted nodes, i.e.
+
+    n1 = Node.new
+    n2 = Node.new
+    e1 = Edge.new(:ancestor => n1, :descendant => n2)
+    ... other code ...
+
+    [n1, n2, e1].map { |o| o.save }
+
+  With acts-as-dag, one must save the nodes _before_ creating the edge.
+  The above code segment works in dagnabit.
+
+* acts-as-dag issues O(x*y) queries on edge insert, update, and delete, where x
+  and y are the number of ancestors and descendants of a node.  In environments
+  where network latency between database and application server is considerable,
+  this can adversely affect application performance. 
+
+  dagnabit uses a constant number of queries for insert, update, and delete.
+  (The execution time and memory usage of queries are, of course, still
+  affected by the size of the transitive closure set being updated.)
+
+dagnabit's node and edge interfaces were intentionally modeled after the
+interfaces provided by acts-as-dag.
 
 == Copyright
 
-Copyright (c) 2009 David Yip. See LICENSE for details.
+Copyright (c) 2009 David Yip.  Released under the MIT License; see LICENSE for details.
