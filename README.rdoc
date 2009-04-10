@@ -1,0 +1,7 @@
+= dagnabit
+
+Description goes here.
+
+== Copyright
+
+Copyright (c) 2009 David Yip. See LICENSE for details.
