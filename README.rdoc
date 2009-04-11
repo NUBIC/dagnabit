@@ -93,8 +93,12 @@ The following class methods are available on edges:
 == Related work
 
 This plugin was inspired by Matthew Leventi's acts-as-dag plugin
-<http://github.com/mleventi/acts-as-dag/tree/master>.  Leventi's plugin has a
-couple deficiencies that this plugin attempts to address:
+<http://github.com/mleventi/acts-as-dag/tree/master>.  Indeed, Leventi's
+acts-as-dag plugin was originally used in the application from which this
+plugin was extracted, and dagnabit's node and edge interfaces were modeled
+after the interfaces provided by acts-as-dag.
+
+The primary differences between dagnabit and acts-as-dag are:
 
 * acts-as-dag does not permit linking of unpersisted nodes, i.e.
 
@@ -116,9 +120,6 @@ couple deficiencies that this plugin attempts to address:
   dagnabit uses a constant number of queries for insert, update, and delete.
   (The execution time and memory usage of queries are, of course, still
   affected by the size of the transitive closure set being updated.)
-
-dagnabit's node and edge interfaces were intentionally modeled after the
-interfaces provided by acts-as-dag.
 
 == Copyright
 
