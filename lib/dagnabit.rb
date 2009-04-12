@@ -7,7 +7,7 @@ unless defined?(ActiveRecord)
   end
 end
 
-require 'dagnabit/configuration'
-require 'dagnabit/activators'
+require 'dagnabit/configuration/edge'
+require 'dagnabit/activation'
 
-ActiveRecord::Base.extend(Dagnabit::Activators)
+ActiveRecord::Base.extend(Dagnabit::Activation)

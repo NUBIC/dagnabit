@@ -1,7 +1,4 @@
 module Dagnabit
-  #
-  # Dagnabit::Configuration - configuration details
-  #
   module Configuration
     #
     # Dagnabit::Configuration::Edge - dag edge configuration
