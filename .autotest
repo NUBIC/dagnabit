@@ -1,0 +1,6 @@
+require 'autotest/redgreen'
+
+Autotest.add_hook :initialize do |hook|
+  $LOAD_PATH << File.join(File.dirname(__FILE__), 'test/connections/native_sqlite3')
+  puts $LOAD_PATH.inspect
+end

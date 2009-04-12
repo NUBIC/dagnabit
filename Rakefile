@@ -22,7 +22,7 @@ task :test => :test_sqlite3
 require 'rake/testtask'
 Rake::TestTask.new(:test_sqlite3) do |test|
   test.libs << 'lib' << 'test' << 'test/connections/native_sqlite3'
-  test.pattern = 'test/**/*_test.rb'
+  test.pattern = 'test/dagnabit/**/test_*.rb'
   test.verbose = false
 end
 
@@ -30,7 +30,7 @@ begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |test|
     test.libs << 'test'
-    test.pattern = 'test/**/*_test.rb'
+    test.pattern = 'test/dagnabit/**/test_*.rb'
     test.verbose = true
   end
 rescue LoadError
