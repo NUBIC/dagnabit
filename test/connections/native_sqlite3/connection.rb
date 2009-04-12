@@ -1,6 +1,5 @@
 print "Using native SQLite3\n"
 
-gem 'sqlite3-ruby'
 require 'logger'
 
 ActiveRecord::Base.logger = Logger.new("debug.log")
