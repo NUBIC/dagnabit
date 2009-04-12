@@ -9,6 +9,7 @@ begin
     gem.email = "yipdw@northwestern.edu"
     gem.homepage = "http://github.com/yipdw/dagnabit"
     gem.authors = ["David Yip"]
+    gem.add_dependency 'activerecord', '>= 2.1.0'
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
