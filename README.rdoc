@@ -72,9 +72,9 @@ The behavior of the plugin with a deviant schema is unspecified.
   descendant.  Defaults to +descendant_id+.
 * +ancestor_id_column+: Column in the edge tables for recording the ID of a
   ancestor.  Defaults to +ancestor_id+.
-* +descendant_id_column+: Column in the edge tables for recording the type of a
+* +descendant_type_column+: Column in the edge tables for recording the type of a
   descendant.  Defaults to +descendant_type+.
-* +ancestor_id_column+: Column in the edge tables for recording the type of a
+* +ancestor_type_column+: Column in the edge tables for recording the type of a
   ancestor.  Defaults to +ancestor_type+.
 
 

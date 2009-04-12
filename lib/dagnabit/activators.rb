@@ -4,8 +4,8 @@ module Dagnabit
       puts "hi!"
     end
 
-    def acts_as_dag_edge
-      puts "bye!"
+    def acts_as_dag_edge(options = {})
+      configure_acts_as_dag_edge(options)
     end
   end
 end
