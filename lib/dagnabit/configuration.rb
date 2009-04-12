@@ -1,5 +1,11 @@
 module Dagnabit
+  #
+  # Dagnabit::Configuration - configuration details
+  #
   module Configuration
+    #
+    # Dagnabit::Configuration::Edge - dag edge configuration
+    #
     module Edge
       DEFAULTS = {
         :ancestor_id_column => 'ancestor_id',
