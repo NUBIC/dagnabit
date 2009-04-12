@@ -10,5 +10,4 @@ end
 require 'dagnabit/configuration'
 require 'dagnabit/activators'
 
-ActiveRecord::Base.extend(Dagnabit::Configuration)
 ActiveRecord::Base.extend(Dagnabit::Activators)

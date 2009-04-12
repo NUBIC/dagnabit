@@ -27,4 +27,8 @@ class ConfigurationTest < ActiveRecord::TestCase
     assert_equal 'the_ancestor_type', custom_model.ancestor_type_column
     assert_equal 'the_descendant_type', custom_model.descendant_type_column
   end
+
+  should 'not have its configuration accessors on ActiveRecord::Base' do
+    assert !ActiveRecord::Base.respond_to?(:ancestor_id_column)
+  end
 end
