@@ -9,14 +9,20 @@ module Dagnabit
 
       class Link < ActiveRecord::Base
         set_table_name 'edges'
-        acts_as_dag_link
+        extend Dagnabit::Link::Configuration
+        configure_acts_as_dag_link({})
+        extend Dagnabit::Link::Associations
       end
 
       class CustomLink < ActiveRecord::Base
         set_table_name 'other_name_edges'
-        acts_as_dag_link :ancestor_id_column => 'the_ancestor_id',
-                         :descendant_id_column => 'the_descendant_id',
-                         :transitive_closure_table_name => 'my_transitive_closure'
+
+        extend Dagnabit::Link::Configuration
+        configure_acts_as_dag_link(:ancestor_id_column => 'the_ancestor_id',
+                                   :descendant_id_column => 'the_descendant_id',
+                                   :transitive_closure_table_name => 'my_transitive_closure')
+
+        extend Dagnabit::Link::Associations
       end
 
       def setup
