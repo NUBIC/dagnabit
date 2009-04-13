@@ -1,5 +1,5 @@
 module Dagnabit
-  module Edge
+  module Link
     module ClassMethods
       def connect(from, to)
       end

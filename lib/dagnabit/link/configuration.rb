@@ -1,5 +1,5 @@
 module Dagnabit
-  module Edge
+  module Link
     #
     # Dagnabit::Edge::Configuration - dag edge configuration
     #
@@ -10,7 +10,7 @@ module Dagnabit
       attr_accessor :descendant_type_column
       attr_accessor :transitive_closure_table_name
       
-      def configure_acts_as_dag_edge(options)
+      def configure_acts_as_dag_link(options)
         self.ancestor_id_column = options[:ancestor_id_column] || 'ancestor_id'
         self.descendant_id_column = options[:descendant_id_column] || 'descendant_id'
         self.ancestor_type_column = options[:ancestor_type_column] || 'ancestor_type'

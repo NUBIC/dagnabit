@@ -1,19 +1,19 @@
 require 'test_helper'
 
 module Dagnabit
-  module Edge
+  module Link
     class TestConfiguration < ActiveRecord::TestCase
       should 'have default and settable names for transitive closure table and column names' do
         default_model = Class.new(ActiveRecord::Base) do
           set_table_name 'edges'
 
-          acts_as_dag_edge
+          acts_as_dag_link
         end
 
         custom_model = Class.new(ActiveRecord::Base) do
           set_table_name 'other_name_edges'
 
-          acts_as_dag_edge  :ancestor_id_column => 'the_ancestor_id',
+          acts_as_dag_link  :ancestor_id_column => 'the_ancestor_id',
                             :descendant_id_column => 'the_descendant_id',
                             :ancestor_type_column => 'the_ancestor_type',
                             :descendant_type_column => 'the_descendant_type',
