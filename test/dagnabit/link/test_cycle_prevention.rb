@@ -11,6 +11,13 @@ module Dagnabit
         set_table_name 'edges'
         acts_as_dag_link
       end
+      
+      class CustomLink < ActiveRecord::Base
+        set_table_name 'other_name_edges'
+        acts_as_dag_link :ancestor_id_column => 'the_ancestor_id',
+                         :descendant_id_column => 'the_descendant_id',
+                         :transitive_closure_table_name => 'my_transitive_closure'
+      end
 
       should 'prevent simple cycles from being saved' do
         n1 = Node.create
@@ -22,7 +29,29 @@ module Dagnabit
         assert l2.new_record?
       end
 
-      should 'prevent cycles from being saved'
+      should 'prevent cycles from being saved' do
+        n1 = Node.create
+        n2 = Node.create
+        n3 = Node.create
+        
+        Link.create(:ancestor => n1, :descendant => n2)
+        Link.create(:ancestor => n1, :descendant => n3)
+        l3 = Link.create(:ancestor => n3, :descendant => n1)
+        
+        assert l3.new_record?
+      end
+
+      should 'prevent cycles from being saved in customized links' do
+        n1 = Node.create
+        n2 = Node.create
+        n3 = Node.create
+        
+        CustomLink.create(:ancestor => n1, :descendant => n2)
+        CustomLink.create(:ancestor => n1, :descendant => n3)
+        l3 = CustomLink.create(:ancestor => n3, :descendant => n1)
+        
+        assert l3.new_record?
+      end
     end
   end
 end
