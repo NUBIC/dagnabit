@@ -1,15 +1,17 @@
 module Dagnabit
   module Activation
     def acts_as_dag_link(options = {})
-      initialize_acts_as_dag_link
+      extend Dagnabit::Link::Configuration
       configure_acts_as_dag_link(options)
+      augment_link_model
     end
     
     private
 
-    def initialize_acts_as_dag_link
-      extend(Dagnabit::Link::Configuration)
-      extend(Dagnabit::Link::ClassMethods)
+    def augment_link_model
+      extend Dagnabit::Link::ClassMethods
+      extend Dagnabit::Link::Associations
+      include Dagnabit::Link::TransitiveClosureRecalculation
     end
   end
 end

@@ -15,22 +15,16 @@ module Dagnabit
 
           acts_as_dag_link  :ancestor_id_column => 'the_ancestor_id',
                             :descendant_id_column => 'the_descendant_id',
-                            :ancestor_type_column => 'the_ancestor_type',
-                            :descendant_type_column => 'the_descendant_type',
                             :transitive_closure_table_name => 'my_transitive_closure'
         end
 
         assert_equal 'ancestor_id', default_model.ancestor_id_column
         assert_equal 'descendant_id', default_model.descendant_id_column
-        assert_equal 'ancestor_type', default_model.ancestor_type_column
-        assert_equal 'descendant_type', default_model.descendant_type_column
-        assert_equal 'edges_transitive_closure_tuples', default_model.transitive_closure_table_name
+        assert_equal default_model.connection.quote_table_name('edges_transitive_closure_tuples'), default_model.transitive_closure_table_name
 
         assert_equal 'the_ancestor_id', custom_model.ancestor_id_column
         assert_equal 'the_descendant_id', custom_model.descendant_id_column
-        assert_equal 'the_ancestor_type', custom_model.ancestor_type_column
-        assert_equal 'the_descendant_type', custom_model.descendant_type_column
-        assert_equal 'my_transitive_closure', custom_model.transitive_closure_table_name
+        assert_equal custom_model.connection.quote_table_name('my_transitive_closure'), custom_model.transitive_closure_table_name
       end
 
       should 'not have its configuration accessors on ActiveRecord::Base' do
