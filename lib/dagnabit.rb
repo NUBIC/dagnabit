@@ -7,7 +7,8 @@ unless defined?(ActiveRecord)
   end
 end
 
-require 'dagnabit/configuration/edge'
+require 'dagnabit/edge/configuration'
+require 'dagnabit/edge/class_methods'
 require 'dagnabit/activation'
 
 ActiveRecord::Base.extend(Dagnabit::Activation)
