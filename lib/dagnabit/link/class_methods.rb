@@ -10,9 +10,11 @@ module Dagnabit
       end
 
       def path?(a, b)
+        paths(a, b).length > 0
       end
 
       def paths(a, b)
+        transitive_closure_class.linking(a, b)
       end
     end
   end

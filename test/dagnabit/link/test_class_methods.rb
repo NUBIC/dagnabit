@@ -21,19 +21,51 @@ module Dagnabit
         assert_equal n2, link.descendant
       end
 
-      should 'add a class-level connect method to the link model' do
-        n1 = Node.new
-        n2 = Node.new
+      context 'connect' do
+        should 'connect two nodes' do
+          n1 = Node.new
+          n2 = Node.new
 
-        Link.connect(n1, n2)
-        link = Link.find(:first, :conditions => { :ancestor_id => n1.id, :descendant_id => n2.id })
+          Link.connect(n1, n2)
+          link = Link.find(:first, :conditions => { :ancestor_id => n1.id, :descendant_id => n2.id })
 
-        assert_not_nil link
-        assert_equal n1, link.ancestor
-        assert_equal n2, link.descendant
+          assert_not_nil link
+          assert_equal n1, link.ancestor
+          assert_equal n2, link.descendant
+        end
       end
 
-      should 'add a class-level path? method to the link model'
+      context 'path?' do
+        should 'return whether or not a path exists between two nodes' do
+          n1 = Node.new
+          n2 = Node.new
+          n3 = Node.new
+          n4 = Node.new
+
+          Link.connect(n1, n2)
+          Link.connect(n2, n3)
+
+          assert Link.path?(n1, n2)
+          assert Link.path?(n1, n3)
+          assert !Link.path?(n1, n4)
+        end
+      end
+
+      context 'paths' do
+        should 'return all paths between two nodes' do
+          n1 = Node.new
+          n2 = Node.new
+          n3 = Node.new
+
+          Link.connect(n1, n2)
+          Link.connect(n2, n3)
+
+          paths = Link.paths(n1, n3)
+          assert_equal 1, paths.length
+          assert_equal n1, paths.first.ancestor
+          assert_equal n3, paths.first.descendant
+        end
+      end
     end
   end
 end

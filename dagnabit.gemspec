@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Yip"]
-  s.date = %q{2009-04-12}
+  s.date = %q{2009-04-13}
   s.email = %q{yipdw@northwestern.edu}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -19,9 +19,23 @@ Gem::Specification.new do |s|
     "VERSION.yml",
     "lib/dagnabit.rb",
     "lib/dagnabit/activation.rb",
-    "lib/dagnabit/configuration/edge.rb",
+    "lib/dagnabit/link/associations.rb",
+    "lib/dagnabit/link/class_methods.rb",
+    "lib/dagnabit/link/configuration.rb",
+    "lib/dagnabit/link/cycle_prevention.rb",
+    "lib/dagnabit/link/transitive_closure_link_model.rb",
+    "lib/dagnabit/link/transitive_closure_recalculation.rb",
+    "lib/dagnabit/link/transitive_closure_recalculation/on_create.rb",
+    "lib/dagnabit/link/transitive_closure_recalculation/on_destroy.rb",
+    "lib/dagnabit/link/transitive_closure_recalculation/on_update.rb",
+    "lib/dagnabit/link/transitive_closure_recalculation/utilities.rb",
     "test/connections/native_sqlite3/connection.rb",
-    "test/dagnabit/configuration/test_edge.rb",
+    "test/dagnabit/link/test_associations.rb",
+    "test/dagnabit/link/test_class_methods.rb",
+    "test/dagnabit/link/test_configuration.rb",
+    "test/dagnabit/link/test_cycle_prevention.rb",
+    "test/dagnabit/link/test_transitive_closure_link_model.rb",
+    "test/dagnabit/link/test_transitive_closure_recalculation.rb",
     "test/schema/schema.rb",
     "test/test_helper.rb"
   ]
@@ -34,7 +48,12 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/test_helper.rb",
     "test/connections/native_sqlite3/connection.rb",
-    "test/dagnabit/configuration/test_edge.rb",
+    "test/dagnabit/link/test_class_methods.rb",
+    "test/dagnabit/link/test_cycle_prevention.rb",
+    "test/dagnabit/link/test_transitive_closure_link_model.rb",
+    "test/dagnabit/link/test_configuration.rb",
+    "test/dagnabit/link/test_associations.rb",
+    "test/dagnabit/link/test_transitive_closure_recalculation.rb",
     "test/schema/schema.rb"
   ]
 
