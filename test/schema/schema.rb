@@ -14,7 +14,6 @@ ActiveRecord::Schema.define do
   end
 
   create_table :nodes, :force => true do |t|
-    t.string :data
   end
 
   create_table :other_name_edges, :force => true do |t|

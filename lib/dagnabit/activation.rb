@@ -12,5 +12,12 @@ module Dagnabit
       include Dagnabit::Link::CyclePrevention
       include Dagnabit::Link::TransitiveClosureRecalculation
     end
+
+    def acts_as_dag_node_linked_by(link_class_name, options = {})
+      extend Dagnabit::Node::Configuration
+      configure_acts_as_dag_node(link_class_name, options)
+
+      extend Dagnabit::Node::Associations
+    end
   end
 end
