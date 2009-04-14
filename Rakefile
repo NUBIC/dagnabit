@@ -1,6 +1,10 @@
 require 'rubygems'
 require 'rake'
 
+gem 'net-ssh', '>= 1.99.1'
+require 'net/ssh'
+require 'net/scp'
+
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
@@ -57,4 +61,3 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
-
