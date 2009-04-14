@@ -44,16 +44,24 @@ module Dagnabit
         Link.connect(@n2, @n3)
       end
 
-      should 'return all ancestors of the specified neighbor types' do
+      should 'return all ancestors' do
         ancestors = @n3.ancestors
         assert_equal 2, ancestors.length
         assert_equal Set.new([@n1, @n2]), Set.new(ancestors)
       end
 
-      should 'return all descendants of the specified neighbor types' do
+      should 'return all descendants' do
         descendants = @n1.descendants
         assert_equal 2, descendants.length
         assert_equal Set.new([@n2, @n3]), Set.new(descendants)
+      end
+
+      should 'return all children' do
+        assert_equal [@n2], @n1.children
+      end
+      
+      should 'return all parents' do
+        assert_equal [@n1], @n2.parents
       end
 
       should 'return all ancestors of the specified neighbor types using customized links' do
