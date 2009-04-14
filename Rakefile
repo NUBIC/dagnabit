@@ -5,11 +5,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "dagnabit"
-    gem.summary = %Q{TODO}
+    gem.summary = %Q{Directed acyclic graph plugin for ActiveRecord}
     gem.email = "yipdw@northwestern.edu"
-    gem.homepage = "http://github.com/yipdw/dagnabit"
+    gem.homepage = "http://gitorious.org/dagnabit/dagnabit"
     gem.authors = ["David Yip"]
     gem.add_dependency 'activerecord', '>= 2.1.0'
+    gem.add_dependency 'activesupport', '>= 2.3.2'
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
