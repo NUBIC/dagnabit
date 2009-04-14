@@ -29,6 +29,13 @@ module Dagnabit
         assert l2.new_record?
       end
 
+      should 'prevent self-referential nodes' do
+        n1 = Node.create
+
+        l1 = Link.create(:ancestor => n1, :descendant => n1)
+        assert l1.new_record?
+      end
+
       should 'prevent cycles from being saved' do
         n1 = Node.create
         n2 = Node.create
