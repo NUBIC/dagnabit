@@ -7,6 +7,7 @@ unless defined?(ActiveRecord)
   end
 end
 
+require 'dagnabit/link/validations'
 require 'dagnabit/link/associations'
 require 'dagnabit/link/configuration'
 require 'dagnabit/link/class_methods'
