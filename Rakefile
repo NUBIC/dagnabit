@@ -29,7 +29,7 @@ end
 begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |test|
-    test.libs << 'test'
+    test.libs << 'test' << 'test/connections/native_sqlite3'
     test.pattern = 'test/dagnabit/**/test_*.rb'
     test.verbose = true
   end
