@@ -1,8 +1,11 @@
 module Dagnabit
   module Node
     module Associations
+      attr_accessor :link_class
+
       def self.extended(base)
         link_class = base.link_class_name.constantize
+        base.link_class = link_class
 
         base.send(:has_many,
                   :links_as_parent,

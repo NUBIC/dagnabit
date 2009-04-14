@@ -17,6 +17,7 @@ require 'dagnabit/link/transitive_closure_link_model'
 
 require 'dagnabit/node/configuration'
 require 'dagnabit/node/associations'
+require 'dagnabit/node/neighbors'
 
 require 'dagnabit/activation'
 
