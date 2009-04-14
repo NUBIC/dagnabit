@@ -33,12 +33,24 @@ module Dagnabit
         n1 = Node.create
         n2 = Node.create
         n3 = Node.create
-        
+        n4 = Node.create
+
         Link.create(:ancestor => n1, :descendant => n2)
-        Link.create(:ancestor => n1, :descendant => n3)
-        l3 = Link.create(:ancestor => n3, :descendant => n1)
-        
-        assert l3.new_record?
+        Link.create(:ancestor => n2, :descendant => n3)
+        Link.create(:ancestor => n3, :descendant => n4)
+        l = Link.create(:ancestor => n4, :descendant => n2)
+
+        assert l.new_record?
+      end
+
+      should 'not prevent links from being saved multiple times in a row' do
+        n1 = Node.create
+        n2 = Node.create
+
+        l = Link.new(:ancestor => n1, :descendant => n2)
+
+        assert l.save
+        assert l.save, 'should have been able to save twice'
       end
 
       should 'prevent cycles from being saved in customized links' do

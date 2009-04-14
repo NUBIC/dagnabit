@@ -9,8 +9,7 @@ module Dagnabit
       private
 
       def check_for_cycles
-        opposite_direction_exists = self.class.path?(ancestor, descendant) || self.class.path?(descendant, ancestor)
-        false if opposite_direction_exists
+        false if self.class.path?(descendant, ancestor)
       end
     end
   end
