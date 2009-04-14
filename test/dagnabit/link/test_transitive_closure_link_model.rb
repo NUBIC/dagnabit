@@ -33,6 +33,18 @@ module Dagnabit
         @model = Link::TransitiveClosureLink.find(@model.id)
         assert_equal @node, @model.descendant
       end
+
+      # TODO: wrap tests in transaction
+      should 'support find(:all) queries including associations' do
+        Link::TransitiveClosureLink.delete_all
+
+        n1 = Node.new
+        n2 = Node.new
+        Link::TransitiveClosureLink.create(:ancestor => n1, :descendant => n2)
+
+        links = Link::TransitiveClosureLink.find(:all, :include => :ancestor)
+        assert_equal 1, links.length
+      end
     end
   end
 end

@@ -12,7 +12,6 @@ module Dagnabit
           extend Dagnabit::Link::Configuration
           configure_acts_as_dag_link(options)
           set_table_name original_class.unquoted_transitive_closure_table_name
-          extend Dagnabit::Link::Associations
 
           def self.linking(from, to)
             find(:all, :conditions => {
@@ -25,6 +24,10 @@ module Dagnabit
         end
 
         @transitive_closure_class = const_set(transitive_closure_class_name, klass)
+
+        # reflections aren't properly created in anonymous models, so
+        # associations need to be created after the model has been named
+        @transitive_closure_class.extend(Dagnabit::Link::Associations)
       end
     end
   end
