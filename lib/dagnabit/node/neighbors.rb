@@ -2,7 +2,7 @@ module Dagnabit
   module Node
     module Neighbors
       def parents
-        links_as_descendant.find(:all, :include => :ancestor).map { |l| l.ancestor }
+        links_as_child.find(:all, :include => :ancestor).map { |l| l.ancestor }
       end
 
       def children

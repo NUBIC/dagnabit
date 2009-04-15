@@ -64,6 +64,10 @@ module Dagnabit
         assert_equal [@n1], @n2.parents
       end
 
+      should 'not report ancestor nodes as parent nodes' do
+        assert_equal 1, @n3.parents.length
+      end
+
       should 'return all ancestors of the specified neighbor types using customized links' do
         n1 = CustomNode.new
         n2 = CustomNode.new
