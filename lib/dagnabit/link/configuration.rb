@@ -23,6 +23,14 @@ module Dagnabit
       def unquoted_transitive_closure_table_name
         @transitive_closure_table_name
       end
+
+      def ancestor_type_column
+        :ancestor_type
+      end
+
+      def descendant_type_column
+        :descendant_type
+      end
     end
   end
 end

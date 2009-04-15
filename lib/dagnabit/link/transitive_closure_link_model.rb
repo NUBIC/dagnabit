@@ -16,9 +16,9 @@ module Dagnabit
           def self.linking(from, to)
             find(:all, :conditions => {
                           ancestor_id_column => from.id,
-                          'ancestor_type' => from.class.name,
+                          ancestor_type_column => from.class.name,
                           descendant_id_column => to.id,
-                          'descendant_type' => to.class.name
+                          descendant_type_column => to.class.name
                         })
           end
         end

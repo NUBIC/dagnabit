@@ -16,6 +16,9 @@ ActiveRecord::Schema.define do
   create_table :nodes, :force => true do |t|
   end
 
+  create_table :beta_nodes, :force => true do |t|
+  end
+
   create_table :other_name_edges, :force => true do |t|
     t.integer :the_ancestor_id
     t.integer :the_descendant_id

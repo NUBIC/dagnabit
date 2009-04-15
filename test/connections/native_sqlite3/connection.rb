@@ -7,4 +7,8 @@ ActiveRecord::Base.logger = Logger.new("debug.log")
 class SqliteError < StandardError
 end
 
-ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
+ActiveRecord::Base.configurations = {
+  'ActiveRecord::Base' => { :adapter => 'sqlite3', :database => ':memory:' }
+};
+
+ActiveRecord::Base.establish_connection('ActiveRecord::Base')

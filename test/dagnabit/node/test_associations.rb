@@ -13,6 +13,11 @@ module Dagnabit
         acts_as_dag_node_linked_by 'Dagnabit::Node::TestAssociations::Link'
       end
 
+      class BetaNode < ActiveRecord::Base
+        set_table_name 'beta_nodes'
+        acts_as_dag_node_linked_by 'Dagnabit::Node::TestAssociations::Link'
+      end
+
       class OtherLink < ActiveRecord::Base
         set_table_name 'edges'
         acts_as_dag_link
@@ -94,6 +99,42 @@ module Dagnabit
         assert_equal 2, @n3.links_as_descendant.count
         assert_equal Set.new([@n1, @n2]), Set.new(@n3.links_as_descendant.map(&:ancestor))
       end
+
+      context 'node class scoping' do
+        setup do
+          @n1 = Node.new
+          @n2a = BetaNode.new
+          @n2b = BetaNode.new
+          @n3 = Node.new
+
+          Link.connect(@n1, @n2a)
+          Link.connect(@n1, @n2b)
+          Link.connect(@n2a, @n3)
+          Link.connect(@n2b, @n3)
+        end
+
+        should 'apply to parent links' do
+          assert_equal 2, @n1.links_as_parent.length
+        end
+
+        should 'apply to child links' do
+          assert_equal 2, @n3.links_as_child.length
+        end
+
+        should 'apply to ancestor links' do
+          # We expect three links here:
+          # n1 -> n2a
+          # n1 -> n2b
+          # n1 -> n3
+          assert_equal 3, @n1.links_as_ancestor.length
+        end
+
+        should 'apply to descendant links' do
+          # Similar logic here.
+          assert_equal 3, @n3.links_as_descendant.length
+        end
+      end
+
     end
   end
 end

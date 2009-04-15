@@ -13,7 +13,10 @@ module Dagnabit
         end
         
         def dag_link_column_names
-          [self.class.ancestor_id_column, self.class.descendant_id_column, 'ancestor_type', 'descendant_type']
+          [ self.class.ancestor_id_column,
+            self.class.descendant_id_column,
+            self.class.ancestor_type_column,
+            self.class.descendant_type_column ]
         end
 
         def with_temporary_edge_tables(*tables, &block)
