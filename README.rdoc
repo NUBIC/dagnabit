@@ -18,8 +18,10 @@ biospecimen heritage.
 
 == Database compatibility
 
-dagnabit has been tested with SQLite and Oracle XE 10g, but should work on any
-SQL database that supports transaction-scoped temporary tables and subselects.
+dagnabit is only known to work with SQLite, but should work on any SQL database
+that supports transaction-scoped temporary tables and subselects.  It does not
+(yet) work on Oracle XE 10g databases via the ActiveRecord oracle-enhanced
+adapter.
 
 == Setup
 
@@ -35,14 +37,14 @@ In your link model, put
 
 In your node models, put
 
-  acts_as_dag_node
+  acts_as_dag_node_linked_by (your link model name)
 
-Both +acts_as_dag_node+ and +acts_as_dag_link+ accept configuration options.
-These configuration options are discussed below.
++acts_as_dag_link+ accepts some configuration options.  These configuration
+options are discussed below.
 
 === Link table schemas
 
-Edge storage is accomplished with two tables having identical schemas.  One
+Link storage is accomplished with two tables having identical schemas.  One
 table holds explicitly specified links between nodes.  The other table contains
 the _transitive closure_ of all graphs, i.e. one tuple per path in the graph.
 (The transitive closure table is therefore a superset of the direct link
@@ -60,8 +62,6 @@ The expected schema for both tables is:
     t.string :descendant_type   # not configurable
 
 The behavior of the plugin with a deviant schema is unspecified.
-
-=== Configuration options for +acts_as_dag_node+
 
 === Configuration options for +acts_as_dag_link+
 
@@ -155,4 +155,5 @@ The primary differences between dagnabit and acts-as-dag are:
 
 == Copyright
 
-Copyright (c) 2009 David Yip.  Released under the MIT License; see LICENSE for details.
+Copyright (c) 2009 David Yip.  Released under the MIT License; see LICENSE for
+details.

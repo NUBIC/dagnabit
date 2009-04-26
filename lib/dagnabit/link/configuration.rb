@@ -8,7 +8,11 @@ module Dagnabit
       attr_accessor :descendant_id_column
       attr_writer :transitive_closure_table_name
       attr_accessor :transitive_closure_class_name
-      
+
+      #
+      # Configure an ActiveRecord model as a dag link. See Dagnabit::Activation
+      # for options description.
+      #
       def configure_acts_as_dag_link(options)
         self.ancestor_id_column = options[:ancestor_id_column] || 'ancestor_id'
         self.descendant_id_column = options[:descendant_id_column] || 'descendant_id'

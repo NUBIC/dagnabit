@@ -25,6 +25,12 @@ module Dagnabit
         paths(a, b).length > 0
       end
 
+      #
+      # Returns all paths from +a+ to +b+.
+      #
+      # These paths are returned as transitive closure links, which aren't
+      # guaranteed to have the same methods as your link class.
+      #
       def paths(a, b)
         transitive_closure_class.linking(a, b)
       end

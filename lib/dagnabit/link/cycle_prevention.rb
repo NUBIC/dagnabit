@@ -7,7 +7,12 @@ module Dagnabit
     #
     module CyclePrevention
       #
-      # Performs cycle detection.  
+      # Performs cycle detection.
+      #
+      # Given an edge (A, B), insertion of that edge will create a cycle if
+      #
+      # * there is a path (B, A), or
+      # * A == B
       #
       def before_save
         super
