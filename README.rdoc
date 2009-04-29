@@ -122,6 +122,24 @@ The following class methods are available on links:
   an exception if save fails.  Identical to <tt>build_edge(nodeA,
   nodeB).save!</tt>.
 
+== Introduction to the codebase
+
+Here are some starting points to become acquainted with the dagnabit codebase:
+
+[Dagnabit::Activation]
+  How to mix this functionality into your models.
+[Dagnabit::Link::Configuration]
+  Link configuration options.
+[Dagnabit::Link::Associations]
+  Associations exposed on links.
+[Dagnabit::Node::Associations]
+  Associations exposed on nodes.
+[Dagnabit::Node::Neighbors]
+  How to locate a node's neighbors.
+[Dagnabit::Link::TransitiveClosureRecalculation]
+  How the transitive closure is maintained.
+
+
 == Related work
 
 This plugin was inspired by Matthew Leventi's acts-as-dag plugin
