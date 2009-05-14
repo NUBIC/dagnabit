@@ -6,7 +6,7 @@ ActiveRecord::Schema.define do
     t.string :descendant_type
   end
 
-  create_table :edges_transitive_closure_tuples, :force => true do |t|
+  create_table :edges_tc_tuples, :force => true do |t|
     t.integer :ancestor_id
     t.integer :descendant_id
     t.string :ancestor_type
