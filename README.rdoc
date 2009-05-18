@@ -16,6 +16,37 @@ research).  The application uses directed acyclic graphs for knowledge
 representation (storage and application of workflows) and representing
 biospecimen heritage.
 
+== Related work
+
+This plugin was inspired by Matthew Leventi's acts-as-dag plugin
+<http://github.com/mleventi/acts-as-dag/tree/master>.  Indeed, Leventi's
+acts-as-dag plugin was originally used in the application from which this
+plugin was extracted, and dagnabit's node and edge interfaces were modeled
+after the interfaces provided by acts-as-dag.
+
+The primary differences between dagnabit and acts-as-dag are:
+
+* acts-as-dag does not permit linking of unpersisted nodes, i.e.
+
+    n1 = Node.new
+    n2 = Node.new
+    e1 = Link.new(:ancestor => n1, :descendant => n2)
+    ... other code ...
+
+    [n1, n2, e1].map { |o| o.save }
+
+  With acts-as-dag, one must save the nodes _before_ creating the edge.
+  The above code segment works in dagnabit.
+
+* acts-as-dag issues O(x*y) queries on edge insert, update, and delete, where x
+  and y are the number of ancestors and descendants of a node.  In environments
+  where network latency between database and application server is considerable,
+  this can adversely affect application performance. 
+
+  dagnabit uses a constant number of queries for insert, update, and delete.
+  (The execution time and memory usage of queries are, of course, still
+  affected by the size of the transitive closure set being updated.)
+
 == Database compatibility
 
 dagnabit is only known to work with SQLite, but should work on any SQL database
@@ -138,38 +169,6 @@ Here are some starting points to become acquainted with the dagnabit codebase:
   How to locate a node's neighbors.
 [Dagnabit::Link::TransitiveClosureRecalculation]
   How the transitive closure is maintained.
-
-
-== Related work
-
-This plugin was inspired by Matthew Leventi's acts-as-dag plugin
-<http://github.com/mleventi/acts-as-dag/tree/master>.  Indeed, Leventi's
-acts-as-dag plugin was originally used in the application from which this
-plugin was extracted, and dagnabit's node and edge interfaces were modeled
-after the interfaces provided by acts-as-dag.
-
-The primary differences between dagnabit and acts-as-dag are:
-
-* acts-as-dag does not permit linking of unpersisted nodes, i.e.
-
-    n1 = Node.new
-    n2 = Node.new
-    e1 = Link.new(:ancestor => n1, :descendant => n2)
-    ... other code ...
-
-    [n1, n2, e1].map { |o| o.save }
-
-  With acts-as-dag, one must save the nodes _before_ creating the edge.
-  The above code segment works in dagnabit.
-
-* acts-as-dag issues O(x*y) queries on edge insert, update, and delete, where x
-  and y are the number of ancestors and descendants of a node.  In environments
-  where network latency between database and application server is considerable,
-  this can adversely affect application performance. 
-
-  dagnabit uses a constant number of queries for insert, update, and delete.
-  (The execution time and memory usage of queries are, of course, still
-  affected by the size of the transitive closure set being updated.)
 
 == Copyright
 
