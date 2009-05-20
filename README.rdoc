@@ -49,10 +49,11 @@ The primary differences between dagnabit and acts-as-dag are:
 
 == Database compatibility
 
-dagnabit is only known to work with SQLite, but should work on any SQL database
-that supports transaction-scoped temporary tables and subselects.  It does not
-(yet) work on Oracle XE 10g databases via the ActiveRecord oracle-enhanced
-adapter.
+dagnabit is only known to work with SQLite and PostgreSQL.  Other databases may
+work, but they have not been tested.
+
+dagnabit is known to _not_ work on Oracle XE 10g databases via the ActiveRecord
+oracle-enhanced adapter.
 
 == Setup
 
