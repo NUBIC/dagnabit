@@ -22,13 +22,15 @@ rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
-task :test => :test_sqlite3
+task :test => [:test_sqlite3, :test_postgresql]
 
 require 'rake/testtask'
-Rake::TestTask.new(:test_sqlite3) do |test|
-  test.libs << 'lib' << 'test' << 'test/connections/native_sqlite3'
-  test.pattern = 'test/dagnabit/**/test_*.rb'
-  test.verbose = false
+['sqlite3', 'postgresql'].map { |adapter| ["test_#{adapter}", "native_#{adapter}"] }.each do |task_name, adapter_name|
+  Rake::TestTask.new(task_name) do |test|
+    test.libs << 'lib' << 'test' << "test/connections/#{adapter_name}"
+    test.pattern = 'test/dagnabit/**/test_*.rb'
+    test.verbose = false
+  end
 end
 
 begin
