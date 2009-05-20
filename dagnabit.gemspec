@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dagnabit}
-  s.version = "0.0.4"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Yip"]
@@ -41,6 +41,7 @@ Gem::Specification.new do |s|
      "lib/dagnabit/node/associations.rb",
      "lib/dagnabit/node/configuration.rb",
      "lib/dagnabit/node/neighbors.rb",
+     "test/connections/native_postgresql/connection.rb",
      "test/connections/native_sqlite3/connection.rb",
      "test/dagnabit/link/test_associations.rb",
      "test/dagnabit/link/test_class_methods.rb",
@@ -62,7 +63,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{Directed acyclic graph plugin for ActiveRecord}
   s.test_files = [
-    "test/connections/native_sqlite3/connection.rb",
+    "test/connections/native_postgresql/connection.rb",
+     "test/connections/native_sqlite3/connection.rb",
      "test/dagnabit/link/test_associations.rb",
      "test/dagnabit/link/test_class_methods.rb",
      "test/dagnabit/link/test_configuration.rb",
