@@ -44,7 +44,7 @@ module Dagnabit
                       TC1.#{tc_did} = #{aid} AND TC1.#{tc_dtype} = #{atype}
                       AND
                       TC2.#{tc_aid} = #{did} AND TC2.#{tc_atype} = #{dtype}
-                )
+                ) AS tmp0
             END
 
             connection.execute <<-END

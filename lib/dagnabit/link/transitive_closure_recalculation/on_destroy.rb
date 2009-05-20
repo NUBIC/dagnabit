@@ -50,7 +50,7 @@ module Dagnabit
                         TC.#{tc_aid} = #{aid} AND TC.#{tc_did} = #{did}
                         AND
                         TC.#{tc_atype} = #{atype} AND TC.#{tc_dtype} = #{dtype}
-                )
+                ) AS tmp0
             END
 
             connection.execute <<-END
@@ -80,7 +80,7 @@ module Dagnabit
                       G.#{my_aid} <> #{aid} AND G.#{my_did} <> #{did}
                       AND
                       G.#{my_atype} <> #{atype} AND G.#{my_dtype} <> #{dtype}
-                )
+                ) AS tmp0
             END
 
             connection.execute <<-END
@@ -103,7 +103,7 @@ module Dagnabit
                       T1.descendant_id = T2.ancestor_id AND T2.descendant_id = T3.ancestor_id
                       AND
                       T1.descendant_type = T2.ancestor_type AND T2.descendant_type = T3.ancestor_type
-                )
+                ) AS tmp0
             END
 
             connection.execute <<-END
