@@ -16,7 +16,7 @@ module Dagnabit
       def configure_acts_as_dag_link(options)
         self.ancestor_id_column = options[:ancestor_id_column] || 'ancestor_id'
         self.descendant_id_column = options[:descendant_id_column] || 'descendant_id'
-        self.transitive_closure_table_name = options[:transitive_closure_table_name] || table_name + '_tc_tuples'
+        self.transitive_closure_table_name = options[:transitive_closure_table_name] || table_name + '_transitive_closure_tuples'
         self.transitive_closure_class_name = options[:transitive_closure_class_name] || 'TransitiveClosureLink'
       end
 

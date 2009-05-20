@@ -21,7 +21,7 @@ module Dagnabit
 
         assert_equal 'ancestor_id', default_model.ancestor_id_column
         assert_equal 'descendant_id', default_model.descendant_id_column
-        assert_equal default_model.connection.quote_table_name('edges_tc_tuples'), default_model.transitive_closure_table_name
+        assert_equal default_model.connection.quote_table_name('edges_transitive_closure_tuples'), default_model.transitive_closure_table_name
         assert_equal 'TransitiveClosureLink', default_model.transitive_closure_class_name
 
         assert_equal 'the_ancestor_id', custom_model.ancestor_id_column
