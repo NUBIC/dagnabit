@@ -7,15 +7,15 @@ module Dagnabit
       #
       # Constructs a new edge.  The direction of the edge runs from +from+ to +to+.
       #
-      def build_edge(from, to)
-        new(:ancestor => from, :descendant => to)
+      def build_edge(from, to, attributes = {})
+        new(attributes.merge(:ancestor => from, :descendant => to))
       end
 
       #
       # Like +build_edge+, but saves the edge after it is instantiated.
       #
-      def connect(from, to)
-        build_edge(from, to).save
+      def connect(from, to, attributes = {})
+        build_edge(from, to, attributes).save
       end
 
       # 

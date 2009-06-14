@@ -13,6 +13,22 @@ ActiveRecord::Schema.define do
     t.string :descendant_type
   end
 
+  create_table :custom_data_edges, :force => true do |t|
+    t.integer :ancestor_id
+    t.integer :descendant_id
+    t.string :ancestor_type
+    t.string :descendant_type
+    t.string :data
+  end
+
+  create_table :custom_data_edges_transitive_closure_tuples, :force => true do |t|
+    t.integer :ancestor_id
+    t.integer :descendant_id
+    t.string :ancestor_type
+    t.string :descendant_type
+    t.string :data
+  end
+
   create_table :nodes, :force => true do |t|
   end
 

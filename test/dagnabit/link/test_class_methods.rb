@@ -12,6 +12,11 @@ module Dagnabit
         acts_as_dag_link
       end
 
+      class CustomDataLink < ActiveRecord::Base
+        set_table_name 'custom_data_edges'
+        acts_as_dag_link
+      end
+
       should 'include a method to build edges' do
         n1 = Node.new
         n2 = Node.new
@@ -19,6 +24,14 @@ module Dagnabit
         link = Link.build_edge(n1, n2)
         assert_equal n1, link.ancestor
         assert_equal n2, link.descendant
+      end
+
+      should 'permit custom data to be included on edges' do
+        n1 = Node.new
+        n2 = Node.new
+
+        link = CustomDataLink.build_edge(n1, n2, :data => 'foobar')
+        assert_equal 'foobar', link.data
       end
 
       context 'connect' do
@@ -32,6 +45,16 @@ module Dagnabit
           assert_not_nil link
           assert_equal n1, link.ancestor
           assert_equal n2, link.descendant
+        end
+
+        should 'permit custom data to be included on edges' do
+          n1 = Node.new
+          n2 = Node.new
+
+          CustomDataLink.connect(n1, n2, :data => 'foobar')
+          link = CustomDataLink.find(:first, :conditions => { :ancestor_id => n1.id, :descendant_id => n2.id })
+
+          assert_equal 'foobar', link.data
         end
       end
 
