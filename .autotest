@@ -1,4 +1,4 @@
-require 'autotest/redgreen'
+require 'redgreen/autotest'
 
 Autotest.add_hook(:initialize) do |autotest|
   autotest.libs += File::PATH_SEPARATOR + File.join(File.dirname(__FILE__), 'test/connections/native_sqlite3')
