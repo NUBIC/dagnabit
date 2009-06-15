@@ -50,6 +50,7 @@ module Dagnabit
       extend Dagnabit::Node::Configuration
       configure_acts_as_dag_node(link_class_name, options)
 
+      extend Dagnabit::Node::ClassMethods
       extend Dagnabit::Node::Associations
       include Dagnabit::Node::Neighbors
     end

@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dagnabit}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Yip"]
@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
      "lib/dagnabit/link/transitive_closure_recalculation/utilities.rb",
      "lib/dagnabit/link/validations.rb",
      "lib/dagnabit/node/associations.rb",
+     "lib/dagnabit/node/class_methods.rb",
      "lib/dagnabit/node/configuration.rb",
      "lib/dagnabit/node/neighbors.rb",
      "test/connections/native_postgresql/connection.rb",
@@ -51,6 +52,7 @@ Gem::Specification.new do |s|
      "test/dagnabit/link/test_transitive_closure_recalculation.rb",
      "test/dagnabit/link/test_validations.rb",
      "test/dagnabit/node/test_associations.rb",
+     "test/dagnabit/node/test_class_methods.rb",
      "test/dagnabit/node/test_configuration.rb",
      "test/dagnabit/node/test_neighbors.rb",
      "test/helper.rb",
@@ -73,6 +75,7 @@ Gem::Specification.new do |s|
      "test/dagnabit/link/test_transitive_closure_recalculation.rb",
      "test/dagnabit/link/test_validations.rb",
      "test/dagnabit/node/test_associations.rb",
+     "test/dagnabit/node/test_class_methods.rb",
      "test/dagnabit/node/test_configuration.rb",
      "test/dagnabit/node/test_neighbors.rb",
      "test/helper.rb",
