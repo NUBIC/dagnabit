@@ -71,6 +71,10 @@ module Dagnabit
         
         assert l3.new_record?
       end
+
+      should 'not execute on links that have no ancestor or descendant' do
+        assert_nothing_raised { Link.create }
+      end
     end
   end
 end

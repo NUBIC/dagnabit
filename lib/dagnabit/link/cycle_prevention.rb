@@ -22,7 +22,9 @@ module Dagnabit
       private
 
       def check_for_cycles
-        false if self.class.path?(descendant, ancestor) || descendant == ancestor
+        if ancestor && descendant
+          false if self.class.path?(descendant, ancestor) || descendant == ancestor
+        end
       end
     end
   end
