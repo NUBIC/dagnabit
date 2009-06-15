@@ -29,11 +29,11 @@ module Dagnabit
       end
 
       def ancestor_type_column
-        :ancestor_type
+        'ancestor_type'
       end
 
       def descendant_type_column
-        :descendant_type
+        'descendant_type'
       end
     end
   end

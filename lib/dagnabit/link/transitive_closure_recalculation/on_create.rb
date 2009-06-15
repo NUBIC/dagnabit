@@ -17,10 +17,21 @@ module Dagnabit
           tc = self.class.transitive_closure_table_name
           tc_aid, tc_did, tc_atype, tc_dtype = quoted_dag_link_column_names
           aid, did, atype, dtype = quoted_dag_link_values
+          all_columns = all_quoted_column_names.join(',')
+          all_values = all_quoted_column_values.join(',')
 
           with_temporary_edge_tables('new', 'delta') do |new, delta|
+            #
+            # determine:
+            # * all paths constructed by adding (a, b) to the back of paths
+            #   ending at a (first subselect)
+            # * all paths constructed by adding (a, b) to the front of paths
+            #   starting at b (second subselect)
+            # * all paths constructed by adding (a, b) in the middle of paths
+            #   starting at a and ending at b (third subselect)
+            #
             connection.execute <<-END
-              INSERT INTO #{new} (ancestor_id, descendant_id, ancestor_type, descendant_type)
+              INSERT INTO #{new} (#{tc_aid}, #{tc_did}, #{tc_atype}, #{tc_dtype})
                 SELECT * FROM (
                   SELECT
                     TC.#{tc_aid}, #{did}, TC.#{tc_atype}, #{dtype}
@@ -47,26 +58,35 @@ module Dagnabit
                 ) AS tmp0
             END
 
+            #
+            # ...then add the new edge itself...
+            #
             connection.execute <<-END
-              INSERT INTO #{new} VALUES (#{aid}, #{did}, #{atype}, #{dtype})
+              INSERT INTO #{new} (#{all_columns}) VALUES (#{all_values})
             END
 
+            #
+            # ...filter out duplicates...
+            #
             connection.execute <<-END
-              INSERT INTO #{delta} (ancestor_id, descendant_id, ancestor_type, descendant_type)
+              INSERT INTO #{delta} (#{all_columns})
               SELECT * FROM #{new} AS T
                 WHERE NOT EXISTS (
                   SELECT *
                     FROM
                       #{tc} AS TC
                     WHERE
-                      TC.#{tc_aid} = T.ancestor_id AND TC.#{tc_did} = T.descendant_id
+                      TC.#{tc_aid} = T.#{tc_aid} AND TC.#{tc_did} = T.#{tc_did}
                       AND
-                      TC.#{tc_atype} = T.ancestor_type AND TC.#{tc_dtype} = T.descendant_type
+                      TC.#{tc_atype} = T.#{tc_atype} AND TC.#{tc_dtype} = T.#{tc_dtype}
                 )
             END
 
+            #
+            # ...and update the transitive closure table
+            #
             connection.execute <<-END
-              INSERT INTO #{tc} (#{tc_aid}, #{tc_did}, #{tc_atype}, #{tc_dtype})
+              INSERT INTO #{tc} (#{all_columns})
                 SELECT * FROM #{delta}
             END
           end

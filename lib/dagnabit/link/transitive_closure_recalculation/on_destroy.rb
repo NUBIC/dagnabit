@@ -67,9 +67,9 @@ module Dagnabit
                           FROM
                             #{suspect} AS SUSPECT
                           WHERE
-                            SUSPECT.ancestor_id = TC.#{tc_aid} AND SUSPECT.descendant_id = TC.#{tc_did}
+                            SUSPECT.#{tc_aid} = TC.#{tc_aid} AND SUSPECT.#{tc_did} = TC.#{tc_did}
                             AND
-                            SUSPECT.ancestor_type = TC.#{tc_atype} AND SUSPECT.descendant_type = TC.#{tc_dtype}
+                            SUSPECT.#{tc_atype} = TC.#{tc_atype} AND SUSPECT.#{tc_dtype} = TC.#{tc_dtype}
                       )
                   UNION
                   SELECT
@@ -89,20 +89,20 @@ module Dagnabit
                   SELECT * FROM #{trusty}
                   UNION
                   SELECT
-                    T1.ancestor_id, T2.descendant_id, T1.ancestor_type, T2.descendant_type
+                    T1.#{tc_aid}, T2.#{tc_aid}, T1.#{tc_atype}, T2.#{tc_dtype}
                     FROM
                       #{trusty} T1, #{trusty} T2
                     WHERE
-                      T1.ancestor_id = T2.descendant_id AND T1.ancestor_type = T2.descendant_type
+                      T1.#{tc_aid} = T2.#{tc_aid} AND T1.#{tc_atype} = T2.#{tc_dtype}
                   UNION
                   SELECT
-                    T1.ancestor_id, T3.descendant_id, T1.ancestor_type, T3.descendant_type
+                    T1.#{tc_aid}, T3.#{tc_aid}, T1.#{tc_atype}, T3.#{tc_dtype}
                     FROM
                       #{trusty} T1, #{trusty} T2, #{trusty} T3
                     WHERE
-                      T1.descendant_id = T2.ancestor_id AND T2.descendant_id = T3.ancestor_id
+                      T1.#{tc_aid} = T2.#{tc_aid} AND T2.#{tc_aid} = T3.#{tc_aid}
                       AND
-                      T1.descendant_type = T2.ancestor_type AND T2.descendant_type = T3.ancestor_type
+                      T1.#{tc_dtype} = T2.#{tc_atype} AND T2.#{tc_dtype} = T3.#{tc_atype}
                 ) AS tmp0
             END
 
@@ -112,9 +112,9 @@ module Dagnabit
                   FROM
                     #{new} T
                   WHERE
-                    T.ancestor_id = #{tc}.#{tc_aid} AND T.descendant_id = #{tc}.#{tc_did}
+                    T.#{tc_aid} = #{tc}.#{tc_aid} AND T.#{tc_did} = #{tc}.#{tc_did}
                     AND
-                    T.ancestor_type = #{tc}.#{tc_atype} AND T.descendant_type = #{tc}.#{tc_dtype}
+                    T.#{tc_atype} = #{tc}.#{tc_atype} AND T.#{tc_dtype} = #{tc}.#{tc_dtype}
               )
             END
           end
