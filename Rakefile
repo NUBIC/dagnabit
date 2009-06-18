@@ -4,6 +4,7 @@ require 'rake'
 gem 'net-ssh', '>= 1.99.1'
 require 'net/ssh'
 require 'net/scp'
+require 'yaml'
 
 begin
   require 'jeweler'
