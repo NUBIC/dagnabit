@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dagnabit}
-  s.version = "0.3.0"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Yip"]
@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
      "lib/dagnabit/link/class_methods.rb",
      "lib/dagnabit/link/configuration.rb",
      "lib/dagnabit/link/cycle_prevention.rb",
+     "lib/dagnabit/link/named_scopes.rb",
      "lib/dagnabit/link/transitive_closure_link_model.rb",
      "lib/dagnabit/link/transitive_closure_recalculation.rb",
      "lib/dagnabit/link/transitive_closure_recalculation/on_create.rb",
@@ -48,6 +49,7 @@ Gem::Specification.new do |s|
      "test/dagnabit/link/test_class_methods.rb",
      "test/dagnabit/link/test_configuration.rb",
      "test/dagnabit/link/test_cycle_prevention.rb",
+     "test/dagnabit/link/test_named_scopes.rb",
      "test/dagnabit/link/test_transitive_closure_link_model.rb",
      "test/dagnabit/link/test_transitive_closure_recalculation.rb",
      "test/dagnabit/link/test_validations.rb",
@@ -71,6 +73,7 @@ Gem::Specification.new do |s|
      "test/dagnabit/link/test_class_methods.rb",
      "test/dagnabit/link/test_configuration.rb",
      "test/dagnabit/link/test_cycle_prevention.rb",
+     "test/dagnabit/link/test_named_scopes.rb",
      "test/dagnabit/link/test_transitive_closure_link_model.rb",
      "test/dagnabit/link/test_transitive_closure_recalculation.rb",
      "test/dagnabit/link/test_validations.rb",

@@ -33,6 +33,12 @@ module Dagnabit
     #
     # [linking(a, b)]
     #   Returns all links (direct or indirect) linking +a+ and +b+.  
+    # [ancestor_type(type)]
+    #   Behaves identically to the ancestor_type named scope defined in
+    #   Dagnabit::Link::NamedScopes.
+    # [descendant_type(type)]
+    #   Behaves identically to the descendant_type named scope defined in
+    #   Dagnabit::Link::NamedScopes.
     #
     # The following instance methods are available on transitive closure link
     # models:
