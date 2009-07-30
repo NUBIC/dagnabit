@@ -8,8 +8,9 @@ module Dagnabit
     # cache, do not support calculations, do not support extension modules,
     # named scopes, etc.
     #
-    # This is (admittedly) a pretty severe limitation, and will be addressed in
-    # future.
+    # These methods aren't association proxies because a link's ancestor and
+    # descendant are polymorphic associations, and ActiveRecord does not
+    # support polymorphic has_many :through associations.
     #
     module Neighbors
       #
@@ -20,10 +21,24 @@ module Dagnabit
       end
 
       #
+      # Finds the parents (immediate predecessors) of this node satisfying a given type.
+      #
+      def parents_of_type(type)
+        links_as_child.ancestor_type(type).find(:all, :include => :ancestor).map { |l| l.ancestor }
+      end
+
+      #
       # Finds the children (immediate successors) of this node.
       #
       def children
         links_as_parent.find(:all, :include => :descendant).map { |l| l.descendant }
+      end
+
+      #
+      # Finds the children (immediate successors) of this node satisfying a given type.
+      #
+      def children_of_type(type)
+        links_as_parent.descendant_type(type).find(:all, :include => :descendant).map { |l| l.descendant }
       end
 
       #
@@ -34,10 +49,24 @@ module Dagnabit
       end
 
       #
+      # Find the ancestors (predecessors) of this node satisfying a given type.
+      #
+      def ancestors_of_type(type)
+        links_as_descendant.ancestor_type(type).find(:all, :include => :ancestor).map { |l| l.ancestor }
+      end
+
+      #
       # Finds the descendants (successors) of this node.
       #
       def descendants
         links_as_ancestor.find(:all, :include => :descendant).map { |l| l.descendant }
+      end
+
+      #
+      # Finds the descendants (successors) of this node satisfying a given type.
+      #
+      def descendants_of_type(type)
+        links_as_ancestor.descendant_type(type).find(:all, :include => :descendant).map { |l| l.descendant }
       end
     end
   end

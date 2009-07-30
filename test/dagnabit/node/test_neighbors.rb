@@ -50,18 +50,38 @@ module Dagnabit
         assert_equal Set.new([@n1, @n2]), Set.new(ancestors)
       end
 
+      should 'return all ancestors of a specified type' do
+        ancestors = @n3.ancestors_of_type(OtherNode.name)
+        assert_equal [@n2], ancestors
+      end
+
       should 'return all descendants' do
         descendants = @n1.descendants
         assert_equal 2, descendants.length
         assert_equal Set.new([@n2, @n3]), Set.new(descendants)
       end
 
+      should 'return all descendants of a specified type' do
+        descendants = @n1.descendants_of_type(OtherNode.name)
+        assert_equal [@n2], descendants
+      end
+
       should 'return all children' do
         assert_equal [@n2], @n1.children
+      end
+
+      should 'return all children of a specified type' do
+        assert_equal [@n2], @n1.children_of_type(OtherNode.name)
+        assert_equal [], @n1.children_of_type(Node.name)
       end
       
       should 'return all parents' do
         assert_equal [@n1], @n2.parents
+      end
+
+      should 'return all parents of a specified type' do
+        assert_equal [@n2], @n3.parents_of_type(OtherNode.name)
+        assert_equal [], @n3.parents_of_type(Node.name)
       end
 
       should 'not report ancestor nodes as parent nodes' do

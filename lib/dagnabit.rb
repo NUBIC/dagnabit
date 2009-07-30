@@ -12,6 +12,7 @@ require 'dagnabit/link/validations'
 require 'dagnabit/link/associations'
 require 'dagnabit/link/class_methods'
 require 'dagnabit/link/cycle_prevention'
+require 'dagnabit/link/named_scopes'
 require 'dagnabit/link/transitive_closure_recalculation'
 require 'dagnabit/link/transitive_closure_link_model'
 

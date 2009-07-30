@@ -7,6 +7,10 @@ module Dagnabit
         set_table_name 'nodes'
       end
 
+      class OtherNode < ActiveRecord::Base
+        set_table_name 'beta_nodes'
+      end
+
       class Link < ActiveRecord::Base
         set_table_name 'edges'
         acts_as_dag_link
@@ -44,6 +48,34 @@ module Dagnabit
 
         links = Link::TransitiveClosureLink.find(:all, :include => :ancestor)
         assert_equal 1, links.length
+      end
+
+      should 'support scoping by ancestor type' do
+        Link::TransitiveClosureLink.delete_all
+
+        n1 = OtherNode.new
+        n2 = Node.new
+
+        Link::TransitiveClosureLink.create(:ancestor => n1, :descendant => n2)
+
+        links = Link::TransitiveClosureLink.ancestor_type(OtherNode.name)
+
+        assert_equal 1, links.length
+        assert_equal n1, links.first.ancestor
+      end
+
+      should 'support scoping by descendant type' do
+        Link::TransitiveClosureLink.delete_all
+
+        n1 = Node.new
+        n2 = OtherNode.new
+
+        Link::TransitiveClosureLink.create(:ancestor => n1, :descendant => n2)
+
+        links = Link::TransitiveClosureLink.descendant_type(OtherNode.name)
+
+        assert_equal 1, links.length
+        assert_equal n2, links.first.descendant
       end
     end
   end

@@ -32,6 +32,7 @@ module Dagnabit
 
       extend Dagnabit::Link::ClassMethods
       extend Dagnabit::Link::Associations
+      extend Dagnabit::Link::NamedScopes
       include Dagnabit::Link::CyclePrevention
       include Dagnabit::Link::TransitiveClosureRecalculation
     end
