@@ -100,6 +100,22 @@ module Dagnabit
         assert_equal Set.new([@n1, @n2]), Set.new(@n3.links_as_descendant.map(&:ancestor))
       end
 
+      should 'clean up links to parents and children when destroyed' do
+        n1 = Node.new
+        n2 = Node.new
+        n3 = Node.new
+
+        Link.connect(n1, n2)
+        Link.connect(n2, n3)
+
+        n2.destroy
+
+        assert_equal [], n1.children
+        assert_equal [], n1.descendants
+        assert_equal [], n3.ancestors
+        assert_equal [], n3.parents
+      end
+
       context 'node class scoping' do
         setup do
           @n1 = Node.new
