@@ -5,11 +5,16 @@ module Dagnabit
     #
     module Configuration
       #
-      # The name of the model used to link nodes of this class.
-      # 
-      attr_accessor :link_class_name
-
-      attr_accessor :neighbor_node_class_names
+      # Writes accessors for configuration data into a node.
+      #
+      # The following accessors are available:
+      # [link_class_name]
+      #   The name of the model used to link nodes of this class.
+      #
+      def self.extended(base)
+        base.class_inheritable_accessor :link_class_name
+        base.class_inheritable_accessor :neighbor_node_class_names
+      end
 
       #
       # Configure node behavior.
