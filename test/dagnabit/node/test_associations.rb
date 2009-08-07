@@ -40,6 +40,15 @@ module Dagnabit
         acts_as_dag_node_linked_by 'Dagnabit::Node::TestAssociations::OtherTableLink'
       end
 
+      class BaseNode < ActiveRecord::Base
+        self.abstract_class = true
+        set_table_name 'nodes'
+        acts_as_dag_node_linked_by 'Dagnabit::Node::TestAssociations::Link'
+      end
+
+      class DerivedNode < BaseNode
+      end
+
       def setup
         @n1 = Node.new
         @n2 = Node.new
@@ -100,6 +109,15 @@ module Dagnabit
         assert_equal Set.new([@n1, @n2]), Set.new(@n3.links_as_descendant.map(&:ancestor))
       end
 
+      should 'report links for which the node is a parent on derived nodes' do
+        n1 = DerivedNode.new
+        n2 = DerivedNode.new
+
+        Link.connect(n1, n2)
+
+        assert_equal [n2], n1.links_as_parent.map(&:descendant)
+      end
+
       context 'node class scoping' do
         setup do
           @n1 = Node.new
@@ -134,7 +152,6 @@ module Dagnabit
           assert_equal 3, @n3.links_as_descendant.length
         end
       end
-
     end
   end
 end
