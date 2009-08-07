@@ -34,13 +34,6 @@ module Dagnabit
     #
     module Associations
       #
-      # Reference to the link model used by this node.
-      #
-      # This is set when this module is extended by another object.
-      #
-      attr_accessor :link_class
-
-      #
       # Installs associations on the node model.
       #
       def self.extended(base)

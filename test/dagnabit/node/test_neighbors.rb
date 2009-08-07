@@ -10,16 +10,12 @@ module Dagnabit
 
       class Node < ActiveRecord::Base
         set_table_name 'nodes'
-        acts_as_dag_node_linked_by 'Dagnabit::Node::TestNeighbors::Link',
-          :neighbor_node_class_names => [ 'Dagnabit::Node::TestNeighbors::Node',
-                                          'Dagnabit::Node::TestNeighbors::OtherNode']
+        acts_as_dag_node_linked_by 'Dagnabit::Node::TestNeighbors::Link'
       end
 
       class OtherNode < ActiveRecord::Base
         set_table_name 'nodes'
-        acts_as_dag_node_linked_by 'Dagnabit::Node::TestNeighbors::Link',
-          :neighbor_node_class_names => [ 'Dagnabit::Node::TestNeighbors::Node',
-                                          'Dagnabit::Node::TestNeighbors::OtherNode']
+        acts_as_dag_node_linked_by 'Dagnabit::Node::TestNeighbors::Link'
       end
 
       class CustomLink < ActiveRecord::Base
@@ -31,8 +27,7 @@ module Dagnabit
 
       class CustomNode < ActiveRecord::Base
         set_table_name 'nodes'
-        acts_as_dag_node_linked_by 'Dagnabit::Node::TestNeighbors::CustomLink',
-          :neighbor_node_class_names => [ 'Dagnabit::Node::TestNeighbors::CustomNode' ]
+        acts_as_dag_node_linked_by 'Dagnabit::Node::TestNeighbors::CustomLink'
       end
 
       def setup

@@ -10,16 +10,12 @@ module Dagnabit
 
       class Node < ActiveRecord::Base
         set_table_name 'nodes'
-        acts_as_dag_node_linked_by 'Dagnabit::Link::TestNamedScopes::Link',
-          :neighbor_node_class_names => [ 'Dagnabit::Link::TestNamedScopes::Node',
-                                          'Dagnabit::Link::TestNamedScopes::OtherNode']
+        acts_as_dag_node_linked_by 'Dagnabit::Link::TestNamedScopes::Link'
       end
 
       class OtherNode < ActiveRecord::Base
         set_table_name 'nodes'
-        acts_as_dag_node_linked_by 'Dagnabit::Link::TestNamedScopes::Link',
-          :neighbor_node_class_names => [ 'Dagnabit::Link::TestNamedScopes::Node',
-                                          'Dagnabit::Link::TestNamedScopes::OtherNode']
+        acts_as_dag_node_linked_by 'Dagnabit::Link::TestNamedScopes::Link'
       end
 
       def setup

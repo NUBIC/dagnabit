@@ -47,9 +47,9 @@ module Dagnabit
     # The +link_class_name+ parameter determines the the link model to be used
     # for nodes of this type.
     #
-    def acts_as_dag_node_linked_by(link_class_name, options = {})
+    def acts_as_dag_node_linked_by(link_class_name)
       extend Dagnabit::Node::Configuration
-      configure_acts_as_dag_node(link_class_name, options)
+      configure_acts_as_dag_node(link_class_name)
 
       extend Dagnabit::Node::ClassMethods
       extend Dagnabit::Node::Associations
