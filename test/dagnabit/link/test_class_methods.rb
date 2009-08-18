@@ -56,6 +56,28 @@ module Dagnabit
 
           assert_equal 'foobar', link.data
         end
+
+        should 'return false if connection fails due to node invalidity' do
+          n1 = Node.new
+          n2 = Node.new
+
+          n1.stubs(:valid?).returns(false)
+
+          result = Link.connect(n1, n2)
+          assert_equal false, result
+        end
+
+        should 'not save endpoints if connection fails due to node invalidity' do
+          n1 = Node.new
+          n2 = Node.new
+
+          n1.stubs(:valid?).returns(false)
+
+          Link.connect(n1, n2)
+
+          assert n1.new_record?
+          assert n2.new_record?
+        end
       end
 
       context 'path?' do

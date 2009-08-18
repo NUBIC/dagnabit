@@ -13,6 +13,10 @@ module Dagnabit
 
       #
       # Like +build_edge+, but saves the edge after it is instantiated.
+      # Returns true if the endpoints could be connected, false otherwise.
+      #
+      # See Dagnabit::Link::Validations for more information on built-in link
+      # validations.
       #
       def connect(from, to, attributes = {})
         build_edge(from, to, attributes).save

@@ -26,8 +26,24 @@ module Dagnabit
         assert !@link.save
       end
 
+      should 'not permit an invalid ancestor' do
+        @n1.stubs(:valid?).returns(false)
+
+        @link.ancestor = @n1
+        @link.descendant = @n2
+        assert !@link.save
+      end
+
       should 'not permit a null descendant' do
         @link.descendant = nil
+        assert !@link.save
+      end
+
+      should 'not permit an invalid descendant' do
+        @n2.stubs(:valid?).returns(false)
+
+        @link.ancestor = @n1
+        @link.descendant = @n2
         assert !@link.save
       end
     end
