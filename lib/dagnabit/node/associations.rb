@@ -48,13 +48,15 @@ module Dagnabit
                   :links_as_parent,
                   :class_name => klass.link_class_name,
                   :foreign_key => link_class.ancestor_id_column,
-                  :conditions => { link_class.ancestor_type_column => klass.name })
+                  :conditions => { link_class.ancestor_type_column => klass.name },
+                  :dependent => :destroy)
 
         klass.send(:has_many,
                   :links_as_child,
                   :class_name => klass.link_class_name,
                   :foreign_key => link_class.descendant_id_column,
-                  :conditions => { link_class.descendant_type_column => klass.name })
+                  :conditions => { link_class.descendant_type_column => klass.name },
+                  :dependent => :destroy)
 
         klass.send(:has_many,
                   :links_as_ancestor,

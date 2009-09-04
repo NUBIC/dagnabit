@@ -77,9 +77,9 @@ module Dagnabit
                     FROM
                       #{my_table} AS G
                     WHERE
-                      G.#{my_aid} <> #{aid} AND G.#{my_did} <> #{did}
-                      AND
-                      G.#{my_atype} <> #{atype} AND G.#{my_dtype} <> #{dtype}
+                      NOT (G.#{my_aid} = #{aid} AND g.#{my_atype} = #{atype}
+                           AND
+                           G.#{my_did} = #{did} AND g.#{my_dtype} = #{dtype})
                 ) AS tmp0
             END
 

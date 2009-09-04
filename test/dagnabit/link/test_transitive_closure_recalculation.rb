@@ -83,6 +83,22 @@ module Dagnabit
         assert_nil tc, 'expected to not find path from n1 to n3'
       end
 
+      should 'include edges in the graph when reconstructing the transitive closure on destroy' do
+        n1 = Node.create
+        n2 = Node.create
+        n3 = Node.create
+
+        l1 = Link.create(:ancestor => n1, :descendant => n2)
+        l2 = Link.create(:ancestor => n2, :descendant => n3)
+        l3 = Link.create(:ancestor => n1, :descendant => n3)
+
+        l1.destroy
+        l2.destroy
+
+        tc = TransitiveClosureLink.find(:first, :conditions => { :ancestor_id => n1.id, :descendant_id => n3.id })
+        assert_not_nil tc, 'expected to find path from n1 to n3'
+      end
+
       should 'recalculate transitive closure on update' do
         n1 = Node.create
         n2 = Node.create
