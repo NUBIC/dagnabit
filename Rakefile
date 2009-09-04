@@ -40,6 +40,7 @@ begin
     test.libs << 'test' << 'test/connections/native_sqlite3'
     test.pattern = 'test/dagnabit/**/test_*.rb'
     test.verbose = true
+    test.rcov_opts << '--exclude gems/*'
   end
 rescue LoadError
   task :rcov do
