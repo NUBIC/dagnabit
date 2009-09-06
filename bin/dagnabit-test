@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+#
+# Launches an irb session with an in-memory SQLite3 database and Node and Link
+# ActiveRecord models.
+#
+
+require 'rubygems'
+require 'activerecord'
+
+src = File.dirname(__FILE__) + '/../lib/dagnabit.rb'
+if File.exists?(src)
+  require src
+else
+  require 'dagnabit'
+end
+
+require 'irb'
+
+begin
+  require 'sqlite3'
+rescue LoadError
+  gem 'sqlite3-ruby'
+  require 'sqlite3'
+end
+
+ActiveRecord::Base.logger = Logger.new("#{__FILE__}.log")
+ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
+
+ActiveRecord::Schema.define do
+  [:edges, :edges_transitive_closure_tuples].each do |table|
+    create_table table do |t|
+      t.integer :ancestor_id
+      t.integer :descendant_id
+      t.string :ancestor_type
+      t.string :descendant_type
+    end
+  end
+
+  create_table :nodes do |t|
+    t.string :data
+  end
+end
+
+class Edge < ActiveRecord::Base
+  acts_as_dag_link
+end
+
+class Node < ActiveRecord::Base
+  acts_as_dag_node_linked_by 'Edge'
+end
+
+IRB.start
