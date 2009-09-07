@@ -24,7 +24,7 @@ rescue LoadError
   require 'sqlite3'
 end
 
-ActiveRecord::Base.logger = Logger.new("#{__FILE__}.log")
+ActiveRecord::Base.logger = Logger.new("#{File.basename(__FILE__)}.log")
 ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
 
 ActiveRecord::Schema.define do
