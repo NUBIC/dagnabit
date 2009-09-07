@@ -1,12 +1,3 @@
-unless defined?(ActiveRecord)
-  begin
-    require 'active_record'
-  rescue LoadError
-    require 'rubygems'
-    require_gem 'activerecord'
-  end
-end
-
 require 'dagnabit/link/configuration'
 require 'dagnabit/link/validations'
 require 'dagnabit/link/associations'
