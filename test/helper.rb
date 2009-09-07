@@ -21,3 +21,7 @@ class ActiveSupport::TestCase
 end
 
 load(SCHEMA_ROOT + '/schema.rb')
+
+# load link models before other models
+models = Dir[File.dirname(__FILE__) + '/models/**/*.rb']
+models.sort { |x, y| x =~ /link.rb$/ ? -1 : x <=> y }.each { |m| require m }
