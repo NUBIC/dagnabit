@@ -26,7 +26,7 @@ module Dagnabit
       # Returns true if there is a path from +a+ to +b+, false otherwise.
       # 
       def path?(a, b)
-        paths(a, b).length > 0
+        paths(a, b).count > 0
       end
 
       #
