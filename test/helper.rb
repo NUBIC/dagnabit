@@ -24,4 +24,4 @@ load(SCHEMA_ROOT + '/schema.rb')
 
 # load link models before other models
 models = Dir[File.dirname(__FILE__) + '/models/**/*.rb']
-models.sort { |x, y| x =~ /link.rb$/ ? -1 : x <=> y }.each { |m| require m }
+models.sort { |x, y| x =~ /link\.rb$/ ? -1 : 0 }.each { |m| require m }
