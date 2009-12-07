@@ -16,6 +16,9 @@ research).  The application uses directed acyclic graphs for knowledge
 representation (storage and application of workflows) and representing
 biospecimen heritage.
 
+dagnabit was developed at the Northwestern University Biomedical Informatics
+Center <http://www.nucats.northwestern.edu/centers/nubic/index.html>.
+
 == Related work
 
 This plugin was inspired by Matthew Leventi's acts-as-dag plugin

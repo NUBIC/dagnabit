@@ -16,11 +16,13 @@ begin
     gem.authors = ["David Yip"]
     gem.add_dependency 'activerecord', '>= 2.1.0'
     gem.add_dependency 'activesupport', '>= 2.3.2'
+    gem.add_development_dependency 'mocha', '= 0.9.8'
+    gem.add_development_dependency 'shoulda', '= 2.10.2'
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler not available. Install it with: sudo gem install jeweler"
 end
 
 task :test => [:test_sqlite3, :test_postgresql]
