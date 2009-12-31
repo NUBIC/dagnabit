@@ -6,7 +6,7 @@
 #
 
 require 'rubygems'
-require 'activerecord'
+require 'active_record'
 
 src = File.dirname(__FILE__) + '/../lib/dagnabit.rb'
 if File.exists?(src)
