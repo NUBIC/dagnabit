@@ -134,6 +134,17 @@ module Dagnabit
         tc = CustomTransitiveClosureLink.find(:first, :conditions => { :the_ancestor_id => n1.id, :the_descendant_id => n3.id })
         assert_nil tc, 'expected to not find path from n1 to n3'
       end
+
+      should "not recalculate transitive closure if neither a link's source nor target changed" do
+        n1 = ::Node.create
+        n2 = ::Node.create
+
+        l1 = ::Link.new(:ancestor => n1, :descendant => n2)
+
+        l1.expects(:update_transitive_closure_for_destroy).never
+        l1.save
+        l1.save
+      end
     end
   end
 end
