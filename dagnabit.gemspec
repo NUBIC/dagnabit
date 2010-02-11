@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Yip"]
-  s.date = %q{2010-02-04}
+  s.date = %q{2010-02-11}
   s.default_executable = %q{dagnabit-test}
   s.email = %q{yipdw@northwestern.edu}
   s.executables = ["dagnabit-test"]
@@ -75,9 +75,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Directed acyclic graph plugin for ActiveRecord}
   s.test_files = [
-    "test/benchmark/helper.rb",
-     "test/benchmark/linear_benchmark.rb",
-     "test/connections/native_postgresql/connection.rb",
+    "test/connections/native_postgresql/connection.rb",
      "test/connections/native_sqlite3/connection.rb",
      "test/dagnabit/link/test_associations.rb",
      "test/dagnabit/link/test_class_methods.rb",
