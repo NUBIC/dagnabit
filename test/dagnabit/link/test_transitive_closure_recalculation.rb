@@ -54,6 +54,34 @@ module Dagnabit
         assert_nil tc, 'expected to not find path from n1 to n3'
       end
 
+      should 'recalculate transitive closure when destroying links with custom data' do
+        n1 = ::Node.create
+        n2 = ::Node.create
+        n3 = ::Node.create
+        n4 = ::Node.create
+
+        l1 = CustomDataLink.create(:ancestor => n1, :descendant => n2, :data => 'foo')
+        l2 = CustomDataLink.create(:ancestor => n2, :descendant => n3, :data => 'bar')
+        l3 = CustomDataLink.create(:ancestor => n3, :descendant => n4, :data => 'baz')
+
+        l2.destroy
+
+        tc1 = TransitiveClosureCustomDataLink.find(:first, :conditions => { :ancestor_id => n1.id, :descendant_id => n2.id })
+        assert_not_nil tc1, 'expected to find path from n1 to n2'
+        assert_equal 'foo', tc1.data, 'expected to find custom data attribute on n1->n2 edge'
+
+        tc2 = TransitiveClosureCustomDataLink.find(:first, :conditions => { :ancestor_id => n3.id, :descendant_id => n4.id })
+        assert_not_nil tc2, 'expected to find path from n3 to n4'
+        assert_equal 'baz', tc2.data, 'expected to find custom data attribute on n3->n4 edge'
+
+        tc = TransitiveClosureCustomDataLink.find(:first, :conditions => { :ancestor_id => n1.id, :descendant_id => n3.id })
+        assert_nil tc, 'expected to not find path from n1 to n3'
+        tc = TransitiveClosureCustomDataLink.find(:first, :conditions => { :ancestor_id => n2.id, :descendant_id => n4.id })
+        assert_nil tc, 'expected to not find path from n2 to n4'
+        tc = TransitiveClosureCustomDataLink.find(:first, :conditions => { :ancestor_id => n1.id, :descendant_id => n4.id })
+        assert_nil tc, 'expected to not find path from n1 to n4'
+      end
+
       should 'include edges in the graph when reconstructing the transitive closure on destroy' do
         n1 = ::Node.create
         n2 = ::Node.create

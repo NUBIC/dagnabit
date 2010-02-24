@@ -17,7 +17,7 @@ module Dagnabit
 
           with_temporary_edge_tables('suspect', 'trusty', 'new') do |suspect, trusty, new|
             connection.execute <<-END
-              INSERT INTO #{suspect} 
+              INSERT INTO #{suspect} (#{tc_aid}, #{tc_did}, #{tc_atype}, #{tc_dtype})
                 SELECT * FROM (
                   SELECT
                     TC1.#{tc_aid}, TC2.#{tc_did}, TC1.#{tc_atype}, TC2.#{tc_dtype}
@@ -54,7 +54,7 @@ module Dagnabit
             END
 
             connection.execute <<-END
-              INSERT INTO #{trusty}
+              INSERT INTO #{trusty} (#{tc_aid}, #{tc_did}, #{tc_atype}, #{tc_dtype})
                 SELECT
                   #{tc_aid}, #{tc_did}, #{tc_atype}, #{tc_dtype}
                   FROM (
@@ -84,9 +84,9 @@ module Dagnabit
             END
 
             connection.execute <<-END
-              INSERT INTO #{new}
+              INSERT INTO #{new} (#{tc_aid}, #{tc_did}, #{tc_atype}, #{tc_dtype})
                 SELECT * FROM (
-                  SELECT * FROM #{trusty}
+                  SELECT #{tc_aid}, #{tc_did}, #{tc_atype}, #{tc_dtype} FROM #{trusty}
                   UNION
                   SELECT
                     T1.#{tc_aid}, T2.#{tc_aid}, T1.#{tc_atype}, T2.#{tc_dtype}
