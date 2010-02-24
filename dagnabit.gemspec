@@ -9,10 +9,9 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Yip"]
-  s.date = %q{2010-02-04}
-  s.default_executable = %q{dagnabit-test}
+  s.date = %q{2010-02-24}
   s.email = %q{yipdw@northwestern.edu}
-  s.executables = ["dagnabit-test"]
+  s.executables = ["dagnabit-test.log", "dagnabit-test"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
@@ -75,30 +74,28 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Directed acyclic graph plugin for ActiveRecord}
   s.test_files = [
-    "test/benchmark/helper.rb",
-     "test/benchmark/linear_benchmark.rb",
-     "test/connections/native_postgresql/connection.rb",
-     "test/connections/native_sqlite3/connection.rb",
+    "test/dagnabit/link/test_transitive_closure_link_model.rb",
+     "test/dagnabit/link/test_validations.rb",
      "test/dagnabit/link/test_associations.rb",
-     "test/dagnabit/link/test_class_methods.rb",
      "test/dagnabit/link/test_configuration.rb",
      "test/dagnabit/link/test_cycle_prevention.rb",
+     "test/dagnabit/link/test_class_methods.rb",
      "test/dagnabit/link/test_named_scopes.rb",
-     "test/dagnabit/link/test_transitive_closure_link_model.rb",
      "test/dagnabit/link/test_transitive_closure_recalculation.rb",
-     "test/dagnabit/link/test_validations.rb",
-     "test/dagnabit/node/test_associations.rb",
-     "test/dagnabit/node/test_class_methods.rb",
-     "test/dagnabit/node/test_configuration.rb",
      "test/dagnabit/node/test_neighbors.rb",
+     "test/dagnabit/node/test_associations.rb",
+     "test/dagnabit/node/test_configuration.rb",
+     "test/dagnabit/node/test_class_methods.rb",
      "test/helper.rb",
-     "test/models/beta_node.rb",
-     "test/models/custom_data_link.rb",
-     "test/models/customized_link.rb",
+     "test/schema/schema.rb",
+     "test/connections/native_sqlite3/connection.rb",
+     "test/connections/native_postgresql/connection.rb",
      "test/models/customized_link_node.rb",
+     "test/models/customized_link.rb",
      "test/models/link.rb",
      "test/models/node.rb",
-     "test/schema/schema.rb"
+     "test/models/beta_node.rb",
+     "test/models/custom_data_link.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -110,17 +107,20 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<activesupport>, [">= 2.3.2"])
       s.add_development_dependency(%q<mocha>, ["= 0.9.8"])
       s.add_development_dependency(%q<shoulda>, ["= 2.10.2"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
     else
       s.add_dependency(%q<activerecord>, [">= 2.1.0"])
       s.add_dependency(%q<activesupport>, [">= 2.3.2"])
       s.add_dependency(%q<mocha>, ["= 0.9.8"])
       s.add_dependency(%q<shoulda>, ["= 2.10.2"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
     end
   else
     s.add_dependency(%q<activerecord>, [">= 2.1.0"])
     s.add_dependency(%q<activesupport>, [">= 2.3.2"])
     s.add_dependency(%q<mocha>, ["= 0.9.8"])
     s.add_dependency(%q<shoulda>, ["= 2.10.2"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
   end
 end
 
