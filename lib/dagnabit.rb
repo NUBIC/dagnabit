@@ -1,3 +1,5 @@
+require 'active_record'
+
 require 'dagnabit/link/configuration'
 require 'dagnabit/link/validations'
 require 'dagnabit/link/associations'
