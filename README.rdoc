@@ -19,6 +19,14 @@ biospecimen heritage.
 dagnabit was developed at the Northwestern University Biomedical Informatics
 Center <http://www.nucats.northwestern.edu/centers/nubic/index.html>.
 
+dagnabit is hosted at Gitorious and Github:
+
+http://gitorious.org/dagnabit/dagnabit
+http://github.com/yipdw/dagnabit
+
+The Gitorious repository is always updated before the Github repository, and
+should be considered canonical.
+
 == Related work
 
 This plugin was inspired by Matthew Leventi's acts-as-dag plugin
