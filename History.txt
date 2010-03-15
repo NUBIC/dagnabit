@@ -1,3 +1,11 @@
+== 2.2.4 2010-03-15
+
+=== Bugfixes
+
+* Ensure that ActiveRecord is loaded before dagnabit's extensions are loaded.
+  This fixes a problem that would occasionally occur when using dagnabit in
+  Bundler.
+
 == 2.2.3 2010-02-17
 
 === Bugfixes
