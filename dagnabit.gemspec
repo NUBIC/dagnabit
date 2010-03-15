@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dagnabit}
-  s.version = "2.2.3"
+  s.version = "2.2.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Yip"]
-  s.date = %q{2010-02-17}
+  s.date = %q{2010-03-15}
   s.default_executable = %q{dagnabit-test}
   s.email = %q{yipdw@northwestern.edu}
   s.executables = ["dagnabit-test"]
@@ -73,7 +73,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://gitorious.org/dagnabit/dagnabit}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Directed acyclic graph plugin for ActiveRecord}
   s.test_files = [
     "test/connections/native_postgresql/connection.rb",
