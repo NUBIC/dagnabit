@@ -109,17 +109,20 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<activesupport>, [">= 2.3.2"])
       s.add_development_dependency(%q<mocha>, ["= 0.9.8"])
       s.add_development_dependency(%q<shoulda>, ["= 2.10.2"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
     else
       s.add_dependency(%q<activerecord>, [">= 2.1.0"])
       s.add_dependency(%q<activesupport>, [">= 2.3.2"])
       s.add_dependency(%q<mocha>, ["= 0.9.8"])
       s.add_dependency(%q<shoulda>, ["= 2.10.2"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
     end
   else
     s.add_dependency(%q<activerecord>, [">= 2.1.0"])
     s.add_dependency(%q<activesupport>, [">= 2.3.2"])
     s.add_dependency(%q<mocha>, ["= 0.9.8"])
     s.add_dependency(%q<shoulda>, ["= 2.10.2"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
   end
 end
 
