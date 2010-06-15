@@ -1,0 +1,67 @@
+--- 
+dependencies: 
+  ZenTest: 
+    group: 
+    - :development
+    version: ">= 0"
+  pg: 
+    group: 
+    - :development
+    version: ">= 0"
+  activerecord: 
+    group: 
+    - :default
+    version: = 2.3.5
+  sqlite3-ruby: 
+    group: 
+    - :development
+    version: ">= 0"
+  shoulda: 
+    group: 
+    - :development
+    version: = 2.10.2
+  mocha: 
+    group: 
+    - :development
+    version: = 0.9.8
+  jeweler: 
+    group: 
+    - :development
+    version: ">= 0"
+  redgreen: 
+    group: 
+    - :development
+    version: ">= 0"
+specs: 
+- rake: 
+    version: 0.8.7
+- ZenTest: 
+    version: 4.3.2
+- activesupport: 
+    version: 2.3.5
+- activerecord: 
+    version: 2.3.5
+- json_pure: 
+    version: 1.4.3
+- gemcutter: 
+    version: 0.5.0
+- git: 
+    version: 1.2.5
+- rubyforge: 
+    version: 2.0.4
+- jeweler: 
+    version: 1.4.0
+- mocha: 
+    version: 0.9.8
+- pg: 
+    version: 0.9.0
+- redgreen: 
+    version: 1.2.2
+- shoulda: 
+    version: 2.10.2
+- sqlite3-ruby: 
+    version: 1.2.5
+hash: 082f1177aae05b594c75026d960b34e38af2c8ef
+sources: 
+- Rubygems: 
+    uri: http://gemcutter.org

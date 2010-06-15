@@ -1,4 +1,5 @@
-require 'rubygems'
+require File.join(File.dirname(__FILE__), 'bootstrap')
+
 require 'rake'
 require 'yaml'
 
@@ -10,8 +11,7 @@ begin
     gem.email = 'yipdw@northwestern.edu'
     gem.homepage = 'http://gitorious.org/dagnabit/dagnabit'
     gem.authors = ['David Yip']
-    gem.add_dependency 'activerecord', '>= 2.1.0'
-    gem.add_dependency 'activesupport', '>= 2.3.2'
+    gem.add_dependency 'activerecord', '2.3.5'
     gem.add_development_dependency 'mocha', '= 0.9.8'
     gem.add_development_dependency 'shoulda', '= 2.10.2'
     gem.add_development_dependency 'jeweler'

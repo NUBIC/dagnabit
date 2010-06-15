@@ -5,13 +5,17 @@
 # ActiveRecord models.
 #
 
-require 'rubygems'
-require 'active_record'
-
 src = File.dirname(__FILE__) + '/../lib/dagnabit.rb'
+src_dir = File.dirname(src)
+
 if File.exists?(src)
+  $LOAD_PATH << src_dir
+
+  require File.join(src_dir, %w(.. bootstrap))
   require src
 else
+  require 'rubygems'
+  require 'active_record'
   require 'dagnabit'
 end
 
