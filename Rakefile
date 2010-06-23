@@ -2,6 +2,7 @@ require File.join(File.dirname(__FILE__), 'bootstrap')
 
 require 'rake'
 require 'yaml'
+require 'bundler'
 
 begin
   require 'jeweler'
@@ -11,12 +12,8 @@ begin
     gem.email = 'yipdw@northwestern.edu'
     gem.homepage = 'http://gitorious.org/dagnabit/dagnabit'
     gem.authors = ['David Yip']
-    gem.add_dependency 'activerecord', '2.3.5'
-    gem.add_development_dependency 'mocha', '= 0.9.8'
-    gem.add_development_dependency 'shoulda', '= 2.10.2'
-    gem.add_development_dependency 'jeweler'
 
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.add_bundler_dependencies
   end
 rescue LoadError
   puts 'Jeweler not available. Install it with: sudo gem install jeweler'
