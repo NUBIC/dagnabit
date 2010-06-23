@@ -4,14 +4,14 @@ dependencies:
     group: 
     - :development
     version: ">= 0"
-  pg: 
-    group: 
-    - :development
-    version: ">= 0"
   activerecord: 
     group: 
     - :default
     version: = 2.3.5
+  pg: 
+    group: 
+    - :development
+    version: ">= 0"
   sqlite3-ruby: 
     group: 
     - :development
@@ -24,7 +24,11 @@ dependencies:
     group: 
     - :development
     version: = 0.9.8
-  jeweler: 
+  rcov: 
+    group: 
+    - :development
+    version: ">= 0"
+  redgreen: 
     group: 
     - :development
     version: ">= 0"
@@ -32,7 +36,7 @@ dependencies:
     group: 
     - :development
     version: ">= 0"
-  redgreen: 
+  jeweler: 
     group: 
     - :development
     version: ">= 0"
@@ -61,13 +65,15 @@ specs:
     version: 0.9.8
 - pg: 
     version: 0.9.0
+- rcov: 
+    version: 0.9.8
 - redgreen: 
     version: 1.2.2
 - shoulda: 
     version: 2.10.2
 - sqlite3-ruby: 
     version: 1.2.5
-hash: 82086506b1195cc73542dccdc349a6bdc1781ddc
+hash: a06daabcfdaa388035efcea7ed91b172304f9bb3
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org

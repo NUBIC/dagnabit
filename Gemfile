@@ -11,5 +11,6 @@ group :development do
   gem 'shoulda', '2.10.2'
   gem 'sqlite3-ruby'
   gem 'redgreen'
+  gem 'rcov'
   gem 'ZenTest'
 end
