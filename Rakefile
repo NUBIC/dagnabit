@@ -3,20 +3,16 @@ require File.join(File.dirname(__FILE__), 'bootstrap')
 require 'rake'
 require 'yaml'
 require 'bundler'
+require 'jeweler'
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = 'dagnabit'
-    gem.summary = %Q{Directed acyclic graph plugin for ActiveRecord}
-    gem.email = 'yipdw@northwestern.edu'
-    gem.homepage = 'http://gitorious.org/dagnabit/dagnabit'
-    gem.authors = ['David Yip']
+Jeweler::Tasks.new do |gem|
+  gem.name = 'dagnabit'
+  gem.summary = %Q{Directed acyclic graph plugin for ActiveRecord}
+  gem.email = 'yipdw@northwestern.edu'
+  gem.homepage = 'http://gitorious.org/dagnabit/dagnabit'
+  gem.authors = ['David Yip']
 
-    gem.add_bundler_dependencies
-  end
-rescue LoadError
-  puts 'Jeweler not available. Install it with: sudo gem install jeweler'
+  gem.add_bundler_dependencies
 end
 
 task :test => [:test_sqlite3, :test_postgresql]
@@ -30,20 +26,13 @@ require 'rake/testtask'
   end
 end
 
-begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'test' << 'test/connections/native_sqlite3'
-    test.pattern = 'test/dagnabit/**/test_*.rb'
-    test.verbose = true
-    test.rcov_opts << '--exclude gems/*'
-  end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
-  end
+require 'rcov/rcovtask'
+Rcov::RcovTask.new do |test|
+  test.libs << 'test' << 'test/connections/native_sqlite3'
+  test.pattern = 'test/dagnabit/**/test_*.rb'
+  test.verbose = true
+  test.rcov_opts << '--exclude gems/*'
 end
-
 
 task :default => :test
 
