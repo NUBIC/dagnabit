@@ -31,7 +31,7 @@ Rcov::RcovTask.new do |test|
   test.libs << 'test' << 'test/connections/native_sqlite3'
   test.pattern = 'test/dagnabit/**/test_*.rb'
   test.verbose = true
-  test.rcov_opts << '--exclude gems/*'
+  test.rcov_opts << '--exclude gems/*,.bundle/environment.rb'
 end
 
 task :default => :test
