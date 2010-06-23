@@ -28,6 +28,10 @@ dependencies:
     group: 
     - :development
     version: ">= 0"
+  bundler: 
+    group: 
+    - :development
+    version: ">= 0"
   redgreen: 
     group: 
     - :development
@@ -41,6 +45,8 @@ specs:
     version: 2.3.5
 - activerecord: 
     version: 2.3.5
+- bundler: 
+    version: 0.9.25
 - json_pure: 
     version: 1.4.3
 - gemcutter: 
@@ -61,7 +67,7 @@ specs:
     version: 2.10.2
 - sqlite3-ruby: 
     version: 1.2.5
-hash: 082f1177aae05b594c75026d960b34e38af2c8ef
+hash: 82086506b1195cc73542dccdc349a6bdc1781ddc
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
