@@ -1,8 +1,8 @@
-require File.join(File.dirname(__FILE__), 'bootstrap')
-
 require 'rake'
 require 'yaml'
 require 'bundler'
+Bundler.setup
+
 require 'jeweler'
 
 Jeweler::Tasks.new do |gem|

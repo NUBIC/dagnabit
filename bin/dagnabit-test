@@ -4,29 +4,18 @@
 # Launches an irb session with an in-memory SQLite3 database and Node and Link
 # ActiveRecord models.
 #
+#
+require 'rubygems'
+require 'bundler'
+Bundler.setup
 
-src = File.dirname(__FILE__) + '/../lib/dagnabit.rb'
-src_dir = File.dirname(src)
-
-if File.exists?(src)
-  $LOAD_PATH << src_dir
-
-  require File.join(src_dir, %w(.. bootstrap))
-  require src
-else
-  require 'rubygems'
-  require 'active_record'
-  require 'dagnabit'
-end
-
+require 'active_record'
+require 'sqlite3'
 require 'irb'
 
-begin
-  require 'sqlite3'
-rescue LoadError
-  gem 'sqlite3-ruby'
-  require 'sqlite3'
-end
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. lib)))
+
+require 'dagnabit'
 
 ActiveRecord::Base.logger = Logger.new("#{File.basename(__FILE__)}.log")
 ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')

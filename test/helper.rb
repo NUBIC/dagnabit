@@ -1,5 +1,3 @@
-require File.join(File.dirname(__FILE__), %w(.. bootstrap))
-
 require 'test/unit'
 require 'shoulda'
 require 'mocha'
