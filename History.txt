@@ -1,3 +1,11 @@
+== 2.2.5 2010-10-01
+
+=== Minor changes
+
+* Ported development code to Bundler 1.0.
+* Removed usage of Object#returning, which was deprecated in ActiveSupport
+  2.3.9.
+
 == 2.2.4 2010-03-15
 
 === Bugfixes
