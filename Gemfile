@@ -1,7 +1,7 @@
 # A sample Gemfile
 source :gemcutter
 
-gem 'activerecord', '>= 2.3.5'
+gem 'activerecord', '~> 2.3.5'
 
 group :development do
   gem 'jeweler'

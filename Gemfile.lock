@@ -2,9 +2,9 @@ GEM
   remote: http://rubygems.org/
   specs:
     ZenTest (4.4.0)
-    activerecord (2.3.5)
-      activesupport (= 2.3.5)
-    activesupport (2.3.5)
+    activerecord (2.3.9)
+      activesupport (= 2.3.9)
+    activesupport (2.3.9)
     gemcutter (0.6.1)
     git (1.2.5)
     jeweler (1.4.0)
@@ -28,7 +28,7 @@ PLATFORMS
 
 DEPENDENCIES
   ZenTest
-  activerecord (>= 2.3.5)
+  activerecord (~> 2.3.5)
   jeweler
   mocha (= 0.9.8)
   pg
