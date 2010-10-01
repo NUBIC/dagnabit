@@ -1,3 +1,13 @@
+= Read this first
+
+dagnabit is shutting down.  Errors will be fixed, but no new features will be
+added.
+
+If you need fast reachability queries in a Ruby application that uses an SQL
+database, consider using a database that supports recursive common table
+expressions (e.g. PostgreSQL) and Sequel, which has a Ruby interface for
+constructing recursive CTEs.
+
 = dagnabit
 
 dagnabit is (yet another) ActiveRecord plugin for directed acyclic graphs.  It
