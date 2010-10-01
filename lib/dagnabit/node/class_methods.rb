@@ -48,7 +48,7 @@ module Dagnabit
       # </pre>
       #
       def subgraph_from(*roots)
-        returning(OpenStruct.new) do |g|
+        OpenStruct.new.tap do |g|
           g.nodes = all_nodes_of(roots)
           g.edges = direct_edges_of(roots)
         end
