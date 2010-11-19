@@ -1,15 +1,10 @@
-# A sample Gemfile
-source :gemcutter
+source :rubygems
 
-gem 'activerecord', '~> 2.3.5'
+gemspec
 
 group :development do
-  gem 'jeweler'
-  gem 'mocha', '0.9.8'
-  gem 'pg'
-  gem 'shoulda', '2.10.2'
-  gem 'sqlite3-ruby'
-  gem 'redgreen'
+  gem 'autotest'
   gem 'rcov'
-  gem 'ZenTest'
+  gem 'rspec'
+  gem 'pg'
 end
