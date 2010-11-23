@@ -10,6 +10,9 @@ class ActiveSupport::TestCase
   self.use_transactional_fixtures = true
 end
 
+database = ENV['DATABASE'] || 'postgresql'
+$LOAD_PATH.unshift(File.expand_path("connections/#{database}", File.dirname(__FILE__)))
+
 require 'connection'
 require 'schema'
 

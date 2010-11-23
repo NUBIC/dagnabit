@@ -1,6 +1,8 @@
 require 'active_record'
 require 'logger'
 
+puts 'Using PostgreSQL adapter'
+
 ActiveRecord::Base.logger = Logger.new('debug.log')
 
 ActiveRecord::Base.configurations = {

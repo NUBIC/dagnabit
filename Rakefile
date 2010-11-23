@@ -6,8 +6,5 @@ spec_path = File.expand_path('spec', File.dirname(__FILE__))
 
 Rake::GemPackageTask.new(gemspec).define
 
-RSpec::Core::RakeTask.new('spec:postgresql') do |t|
-  t.rspec_opts = "-I#{spec_path}/connections/postgresql -I#{spec_path}"
-end
-
-task :spec => 'spec:postgresql'
+desc 'Run specs (set database adapter with DATABASE, defaults to postgresql)'
+RSpec::Core::RakeTask.new
