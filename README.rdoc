@@ -1,51 +1,42 @@
-= Read this first
+= So I lied
 
-dagnabit is shutting down.  Errors will be fixed, but no new features will be
-added.
+dagnabit is actually still alive.  I still think you should be using something
+like Sequel if you really want to do dags in a SQL database, but if you're using
+ActiveRecord for whatever reason, dagnabit might still be useful.
 
-If you need fast reachability queries in a Ruby application that uses an SQL
-database, consider using a database that supports recursive common table
-expressions (e.g. PostgreSQL) and Sequel, which has a Ruby interface for
-constructing recursive CTEs.
+Version 3 is a rework of dagnabit as a PostgreSQL-specific ActiveRecord plugin.
+It's blatantly incompatible with the 2.x series of dagnabit.  There are some
+migration notes in MIGRATION.md.
 
 = dagnabit
 
 dagnabit is (yet another) ActiveRecord plugin for directed acyclic graphs.  It
-provides an underlying representation that facilitates fast reachability
-queries at the expense of edge insertion/deletion speed and execution time.
-
-The data structure used by dagnabit is the structure described in:
-
-DONG, G., LIBKIN, L., SU, J., and WONG, L.  "Maintaining the
-transitive closure of graphs in SQL."  In Int. J. Information Technology, vol.
-5, 1999.
-
-dagnabit was developed for a Ruby on Rails application designed for management
-and querying of large-and-rapidly-growing biospecimen banks (i.e. for cancer
-research).  The application uses directed acyclic graphs for knowledge
-representation (storage and application of workflows) and representing
-biospecimen heritage.
+stores directed acyclic graphs as an adjacency list, using recursive common
+table expressions to perform fast reachability queries.
 
 dagnabit was developed at the Northwestern University Biomedical Informatics
-Center <http://www.nucats.northwestern.edu/centers/nubic/index.html>.
+Center <http://www.nucats.northwestern.edu/centers/nubic/index.html> for a Ruby
+on Rails application designed for management and querying of
+large-and-rapidly-growing biospecimen banks (i.e. for cancer research).  The
+application uses directed acyclic graphs for knowledge representation (storage
+and application of workflows) and representing biospecimen heritage.
 
 dagnabit is hosted at Gitorious and Github:
 
 http://gitorious.org/dagnabit/dagnabit
 http://github.com/yipdw/dagnabit
 
-The Gitorious repository is always updated before the Github repository, and
-should be considered canonical.
-
-== Related work
+= Related work
 
 This plugin was inspired by Matthew Leventi's acts-as-dag plugin
 <http://github.com/mleventi/acts-as-dag/tree/master>.  Indeed, Leventi's
 acts-as-dag plugin was originally used in the application from which this
-plugin was extracted, and dagnabit's node and edge interfaces were modeled
-after the interfaces provided by acts-as-dag.
+plugin was extracted.
 
 The primary differences between dagnabit and acts-as-dag are:
+
+* dagnabit does not maintain a separate transitive closure table, which speeds
+  up insertion.
 
 * acts-as-dag does not permit linking of unpersisted nodes, i.e.
 
@@ -59,144 +50,92 @@ The primary differences between dagnabit and acts-as-dag are:
   With acts-as-dag, one must save the nodes _before_ creating the edge.
   The above code segment works in dagnabit.
 
-* acts-as-dag issues O(x*y) queries on edge insert, update, and delete, where x
-  and y are the number of ancestors and descendants of a node.  In environments
-  where network latency between database and application server is considerable,
-  this can adversely affect application performance. 
+= Database compatibility
 
-  dagnabit uses a constant number of queries for insert, update, and delete.
-  (The execution time and memory usage of queries are, of course, still
-  affected by the size of the transitive closure set being updated.)
+PostgreSQL.  That's all I know that'll work with dagnabit, anyway.
 
-== Database compatibility
+It's possible other SQL databases will work, but I have no tests to demonstrate
+that situation.
 
-dagnabit is only known to work with SQLite and PostgreSQL.  Other databases may
-work, but they have not been tested.
-
-dagnabit is known to _not_ work on Oracle XE 10g databases via the ActiveRecord
-oracle-enhanced adapter.
-
-== Setup
+= Setup
 
 dagnabit is distributed as a gem plugin; you can therefore install it as you
 would any other RubyGem.  Integration with your Rails application can be
 achieved by adding dagnabit to your application's gem dependencies list.
 
-Details for creating the link tables are discussed below.
+== Database schema
 
-In your link model, put
+You'll need at least one table for storing your graph's vertices.  Additionally,
+for every vertex table you create, you will need one edge table.
 
-  acts_as_dag_link
+Polymorphic vertices are supported via single table inheritance.
 
-In your node models, put
+Here's an example schema written as an ActiveRecord schema definition:
 
-  acts_as_dag_node_linked_by (your link model name)
+  create_table :vertices do |t|
+    t.integer :ordinal
+    t.string  :type
+  end
+  
+  create_table :edges do |t|
+    t.integer :parent_id
+    t.integer :child_id
+  end
 
-+acts_as_dag_link+ accepts some configuration options.  These configuration
-options are discussed below.
+== ActiveRecord model classes
 
-For a code example of a complete setup, see the <tt>dagnabit-test</tt> script
-in +bin+.
+Send your vertex model classes to Dagnabit::Vertex.augment:
 
-=== Link table schemas
+  class Vertex < ActiveRecord::Base
+    Dagnabit::Vertex.augment(self)
+  end
 
-Link storage is accomplished with two tables having identical schemas.  One
-table holds explicitly specified links between nodes.  The other table contains
-the _transitive closure_ of all graphs, i.e. one tuple per path in the graph.
-(The transitive closure table is therefore a superset of the direct link
-table.)
+While this may look a bit weird, it's shorthand for extending the vertex class
+with some modules and including other modules in said class, so you can write it
+out longhand if you prefer that.  See the API documentation for details.
 
-The transitive closure table is automatically maintained by dagnabit and should
-not be manually modified.  The transitive closure table does not need to be
-mapped to a model in your application.
+You don't actually need an edge model, but if you'd like one, that's alright
+too:
 
-The expected schema for both tables is:
+  class Edge < ActiveRecord::Base
+    belongs_to :parent, :class_name => 'Vertex'
+    belongs_to :child,  :class_name => 'Vertex'
+  end
 
-    t.integer :ancestor_id      # or configured foreign key ID
-    t.integer :descendant_id    # or configured foreign key ID
-    t.string :ancestor_type     # not configurable
-    t.string :descendant_type   # not configurable
+If you are using single table inheritance with your models, you'll only want to
+augment the base:
 
-The behavior of the plugin with a deviant schema is unspecified.
+  class Vertex < ActiveRecord::Base
+    Dagnabit::Vertex.augment(self)
+  end
 
-=== Configuration options for +acts_as_dag_link+
+  class AlphaVertex < Vertex
+  end
 
-* +transitive_closure_table_name+: The table where tuples in the transitive
-  closure of the graph should be stored.  Defaults to
-  <tt>#{link_table_name}_transitive_closure_tuples</tt>.
-* +transitive_closure_class_name+: The transitive closure is represented with
-  an ActiveRecord class whose name defaults to +TransitiveClosureLink+.  Set this
-  option to change that name.
-* +descendant_id_column+: Column in the link tables for recording the ID of a
-  descendant.  Defaults to +descendant_id+.
-* +ancestor_id_column+: Column in the link tables for recording the ID of a
-  ancestor.  Defaults to +ancestor_id+.
+= Node interface
 
-== Usage
++Dagnabit::Vertex.augment+ adds the following instance methods to vertices:
 
-The recommended usage pattern is (in pseudocode)
+* +roots+: Roots (source vertices) of the vertex.
+* +ancestors+: Ancestors of the vertex.
+* +parents+: Parents of the vertex.
+* +children+: Children of the vertex.
+* +descendants+: Descendants of the vertex.
 
-  nodes = make_nodes
-  links = connect_up(nodes)
-  save(nodes)
-  save(links)
++ancestors+ will always be a superset of +parents+, and +descendants+ will
+always be a superset of +children+.
 
-Node and edge creation is identical to creation of any ActiveRecord model.  For
-example, if your Node models were called +AlphaNode+ and +BetaNode+ and your
-edge model was called +Link+, these would be valid expressions:
+In addition, +Dagnabit::Vertex.augment+ installs the following class methods on
+vertex models:
 
-  n1 = AlphaNode.new
-  n2 = BetaNode.new
+* +roots_of+: Roots for a set of vertices.
+* +ancestors_of+: Ancestors of a set of vertices.
+* +parents_of+: Parents for a set of vertices.
+* +children_of+: All children of a set of vertices.
+* +descendants_of+: All descendants of a set of vertices.
+* +set_edge_table+: Changes the name of the edge table used by the vertex.
 
-  e1 = Link.new(:ancestor => n1, :descendant => n2)
-  n1.save
-  n2.save
-  e1.save
+= Copyright
 
-=== Node interface
-
-+acts_as_dag_node+ adds the following associations to nodes:
-
-* +links_as_child+: Links for which the node is a child.
-* +links_as_parent+: Links for which the node is a parent.
-* +links_as_ancestor+: Links for which the node is an ancestor.  Read-only.
-* +links_as_descendant+: Links for which the node is a descendant.  Read-only.
-
-+acts_as_dag_node+ adds the following instance methods to nodes:
- 
-* +children+: All children of the node.  Read-only.
-* +parents+: All parents of the node.  Read-only.
-* +ancestors+: All ancestors of the node.  Read-only.
-* +descendants+: All descendants of the node.  Read-only.
-
-=== Link interface
-
-The following class methods are available on links:
-
-* +paths+: Retrieves all paths from one node to another.
-* <tt>path?</tt>: Returns whether a node is reachable from another node.
-* +build_edge+: Builds an edge from one node to another node.
-* +connect+: Builds and saves an edge from one node to another.  Identical to
-  <tt>build_edge(nodeA, nodeB).save</tt>.
-
-== Introduction to the codebase
-
-Here are some starting points to become acquainted with the dagnabit codebase:
-
-[Dagnabit::Activation]
-  How to mix this functionality into your models.
-[Dagnabit::Link::Configuration]
-  Link configuration options.
-[Dagnabit::Link::Associations]
-  Associations exposed on links.
-[Dagnabit::Node::Associations]
-  Associations exposed on nodes.
-[Dagnabit::Node::Neighbors]
-  How to locate a node's neighbors.
-[Dagnabit::Link::TransitiveClosureRecalculation]
-  How the transitive closure is maintained.
-
-== Copyright
-
-Copyright (c) 2009 David Yip.  Released under the MIT License; see LICENSE for
-details.
+Copyright (c) 2009-2010 David Yip.  Released under the MIT License; see LICENSE
+for details.
