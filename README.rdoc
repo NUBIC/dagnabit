@@ -82,36 +82,6 @@ Here's an example schema written as an ActiveRecord schema definition:
     t.integer :child_id
   end
 
-== ActiveRecord model classes
-
-Send your vertex model classes to Dagnabit::Vertex.augment:
-
-  class Vertex < ActiveRecord::Base
-    Dagnabit::Vertex.augment(self)
-  end
-
-While this may look a bit weird, it's shorthand for extending the vertex class
-with some modules and including other modules in said class, so you can write it
-out longhand if you prefer that.  See the API documentation for details.
-
-You don't actually need an edge model, but if you'd like one, that's alright
-too:
-
-  class Edge < ActiveRecord::Base
-    belongs_to :parent, :class_name => 'Vertex'
-    belongs_to :child,  :class_name => 'Vertex'
-  end
-
-If you are using single table inheritance with your models, you'll only want to
-augment the base:
-
-  class Vertex < ActiveRecord::Base
-    Dagnabit::Vertex.augment(self)
-  end
-
-  class AlphaVertex < Vertex
-  end
-
 = Node interface
 
 +Dagnabit::Vertex.augment+ adds the following instance methods to vertices:
