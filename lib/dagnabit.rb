@@ -1,3 +1,3 @@
 module Dagnabit
-  autoload :Vertex, 'dagnabit/vertex'
+  autoload :Connectivity, 'dagnabit/connectivity'
 end

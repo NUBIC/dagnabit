@@ -15,6 +15,7 @@ $LOAD_PATH.unshift(File.expand_path("connections/#{database}", File.dirname(__FI
 
 require 'connection'
 require 'schema'
+require 'matchers/be_set_equivalent'
 
 RSpec.configure do |config|
 end

@@ -40,7 +40,7 @@ class Edge < ActiveRecord::Base
 end
 
 class Node < ActiveRecord::Base
-  acts_as_dag_node_linked_by 'Edge'
+  extend Dagnabit::Connectivity
 end
 
 IRB.start
