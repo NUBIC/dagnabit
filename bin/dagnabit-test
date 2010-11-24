@@ -1,16 +1,6 @@
 #!/usr/bin/env ruby
 
-#
-# Launches an irb session with an in-memory SQLite3 database and Node and Link
-# ActiveRecord models.
-#
-#
-require 'rubygems'
-require 'bundler'
-Bundler.setup
-
 require 'active_record'
-require 'sqlite3'
 require 'irb'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. lib)))
@@ -18,28 +8,31 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. lib)))
 require 'dagnabit'
 
 ActiveRecord::Base.logger = Logger.new("#{File.basename(__FILE__)}.log")
-ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
+ActiveRecord::Base.establish_connection({
+  :adapter => 'postgresql',
+  :database => 'dagnabit_test',
+  :username => 'dagnabit_test',
+  :password => 'dagnabit_test',
+  :host => 'localhost'
+})
 
 ActiveRecord::Schema.define do
-  [:edges, :edges_transitive_closure_tuples].each do |table|
-    create_table table do |t|
-      t.integer :ancestor_id
-      t.integer :descendant_id
-      t.string :ancestor_type
-      t.string :descendant_type
-    end
+  create_table :edges, :force => true do |t|
+    t.integer :parent_id
+    t.integer :child_id
   end
 
-  create_table :nodes do |t|
-    t.string :data
+  create_table :vertices, :force => true do |t|
+    t.integer :datum
   end
 end
 
 class Edge < ActiveRecord::Base
-  acts_as_dag_link
+  belongs_to :parent, :class_name => 'Vertex'
+  belongs_to :child,  :class_name => 'Vertex'
 end
 
-class Node < ActiveRecord::Base
+class Vertex < ActiveRecord::Base
   extend Dagnabit::Connectivity
 end
 
