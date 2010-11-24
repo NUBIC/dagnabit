@@ -17,6 +17,24 @@ module Dagnabit
       edge.create(:parent => v2, :child => v3)
     end
 
+    describe '#roots_of' do
+      it 'returns the source vertices of a vertex' do
+        model.roots_of(v3).should == [v1]
+      end
+
+      it 'returns the source vertices of a set of vertices' do
+        v4 = model.new
+
+        edge.create(:parent => v2, :child => v4)
+
+        model.roots_of(v3, v4).should == [v1]
+      end
+
+      it 'returns an empty list for source vertices' do
+        model.roots_of(v1).should be_empty
+      end
+    end
+
     describe '#ancestors_of' do
       it 'returns the ancestors of a vertex' do
         model.ancestors_of(v3).should be_set_equivalent_to(v1, v2)

@@ -6,7 +6,7 @@ module Dagnabit
   #
   # This module is meant to be used by ActiveRecord::Base subclasses.
   module Connectivity
-    ##
+    ## 
     # Finds all source vertices of the given `vertices`.  A source vertex is a
     # vertex that has an indegree of zero.
     #
