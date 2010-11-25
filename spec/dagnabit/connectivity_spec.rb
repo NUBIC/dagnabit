@@ -17,6 +17,16 @@ module Dagnabit
       edge.create(:parent => v2, :child => v3)
     end
 
+    describe '.inherited' do
+      let(:subclass) { Class.new(model) }
+
+      it 'extends subclasses with itself' do
+        Connectivity.instance_methods.each do |m|
+          subclass.should respond_to(m)
+        end
+      end
+    end
+
     describe '#roots_of' do
       it 'returns the source vertices of a vertex' do
         model.roots_of(v3).should == [v1]
