@@ -1,12 +1,12 @@
-require File.join(File.dirname(__FILE__), %w(.. dagnabit))
+require File.join(File.dirname(__FILE__), %w(.. vertex))
 
-module Dagnabit
+module Dagnabit::Vertex
   ##
   # Methods for checking connectivity between vertices.
   #
   # This module is meant to be used by ActiveRecord::Base subclasses.
   module Connectivity
-    ## 
+    ##
     # Finds all source vertices of the given `vertices`.  A source vertex is a
     # vertex that has an indegree of zero.
     #

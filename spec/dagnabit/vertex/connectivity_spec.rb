@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'models/edge'
 require 'models/vertex'
 
-module Dagnabit
+module Dagnabit::Vertex
   describe Connectivity do
     let(:model) { Class.new(Vertex) }
     let(:edge) { Edge[Vertex] }
