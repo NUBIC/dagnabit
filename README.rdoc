@@ -40,8 +40,8 @@ The primary differences between dagnabit and acts-as-dag are:
 
 * acts-as-dag does not permit linking of unpersisted nodes, i.e.
 
-    n1 = Node.new
-    n2 = Node.new
+    n1 = Vertex.new
+    n2 = Vertex.new
     e1 = Link.new(:ancestor => n1, :descendant => n2)
     ... other code ...
 
@@ -82,28 +82,10 @@ Here's an example schema written as an ActiveRecord schema definition:
     t.integer :child_id
   end
 
-= Node interface
+= Using dagnabit
 
-+Dagnabit::Vertex.augment+ adds the following instance methods to vertices:
-
-* +roots+: Roots (source vertices) of the vertex.
-* +ancestors+: Ancestors of the vertex.
-* +parents+: Parents of the vertex.
-* +children+: Children of the vertex.
-* +descendants+: Descendants of the vertex.
-
-+ancestors+ will always be a superset of +parents+, and +descendants+ will
-always be a superset of +children+.
-
-In addition, +Dagnabit::Vertex.augment+ installs the following class methods on
-vertex models:
-
-* +roots_of+: Roots for a set of vertices.
-* +ancestors_of+: Ancestors of a set of vertices.
-* +parents_of+: Parents for a set of vertices.
-* +children_of+: All children of a set of vertices.
-* +descendants_of+: All descendants of a set of vertices.
-* +set_edge_table+: Changes the name of the edge table used by the vertex.
+I need to write more about this, but for now, look at the Vertex and Edge
+models in the dagnabit-test executable for an example setup.
 
 = Copyright
 
