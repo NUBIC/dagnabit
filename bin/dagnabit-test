@@ -28,12 +28,14 @@ ActiveRecord::Schema.define do
 end
 
 class Edge < ActiveRecord::Base
+  extend Dagnabit::Edge::Connectivity
+
   belongs_to :parent, :class_name => 'Vertex'
   belongs_to :child,  :class_name => 'Vertex'
 end
 
 class Vertex < ActiveRecord::Base
-  extend Dagnabit::Connectivity
+  extend Dagnabit::Vertex::Connectivity
 end
 
 IRB.start
