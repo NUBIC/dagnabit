@@ -38,4 +38,12 @@ class Vertex < ActiveRecord::Base
   extend Dagnabit::Vertex::Connectivity
 end
 
+def v(datum)
+  Vertex.find_or_create_by_datum(datum)
+end
+
+def e(a, b)
+  Edge.create(:parent => a, :child => b)
+end
+
 IRB.start
