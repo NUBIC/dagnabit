@@ -10,6 +10,15 @@ Migrating from Dagnabit 2 to Dagnabit 3
    to augment the models you want to use as vertices:
 
       class Vertex < ActiveRecord::Base
+        extend Dagnabit::Vertex::Connectivity
+      end
+
+   If you want the instance method connectivity queries, those are in a
+   separate module:
+
+      class Vertex < ActiveRecord::Base
+        extend Dagnabit::Vertex::Connectivity
+        include Dagnabit::Vertex::Neighbors
       end
 
 4. The default name of the edge table is now `edges`.  The name of the vertex table
@@ -41,6 +50,12 @@ Migrating from Dagnabit 2 to Dagnabit 3
     resembling
 
         class Edge < ActiveRecord::Base
+        end
+
+    To use the edge connectivity methods:
+
+        class Edge < ActiveRecord::Base
+          extend Dagnabit::Edge::Connectivity
         end
 
  :vim:tw=80
