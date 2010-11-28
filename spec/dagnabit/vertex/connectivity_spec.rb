@@ -137,10 +137,8 @@ module Dagnabit::Vertex
 
       before do
         model.extend(Connectivity)
-        edge.extend(::Dagnabit::Edge::Settings)
 
         model.set_edge_table 'other_edges'
-        edge.set_vertex_table 'other_vertices'
       end
 
       it_behaves_like Connectivity

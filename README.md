@@ -103,18 +103,14 @@ respectively:
       extend Dagnabit::Edge::Connectivity
     end
 
-dagnabit assumes that the edge table is called `edges`, and that the vertex
-table is called `vertices`.  These can be changed on a per-model basis:
+By default, the vertex connectivity queries expect the edge table to be called
+"edges", but that is by no means required:
 
     class OtherVertex < ActiveRecord::Base
       extend Dagnabit::Vertex::Connectivity
-      use_edge_table 'other_edges'
+      set_edge_table 'other_edges'
     end
 
-    class OtherEdge < ActiveRecord::Base
-      extend Dagnabit::Vertex::Connectivity
-      use_vertex_table 'other_vertices'
-    end
 
 See the library documentation for details on methods provided by the
 Connectivity modules.
