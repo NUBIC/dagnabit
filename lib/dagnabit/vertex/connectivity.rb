@@ -6,6 +6,8 @@ module Dagnabit::Vertex
   #
   # This module is meant to be used by ActiveRecord::Base subclasses.
   module Connectivity
+    include Settings
+
     ##
     # Finds all source vertices of the given `vertices`.  A source vertex is a
     # vertex that has an indegree of zero.
@@ -20,9 +22,9 @@ module Dagnabit::Vertex
 
       find_by_sql([%Q{
         WITH RECURSIVE roots(id) AS (
-          SELECT edges.parent_id FROM #{table_name} INNER JOIN edges ON edges.child_id = #{table_name}.id WHERE #{table_name}.id IN (?)
+          SELECT #{edge_table}.parent_id FROM #{table_name} INNER JOIN #{edge_table} ON #{edge_table}.child_id = #{table_name}.id WHERE #{table_name}.id IN (?)
           UNION
-          SELECT edges.parent_id FROM roots INNER JOIN edges ON edges.child_id = roots.id
+          SELECT #{edge_table}.parent_id FROM roots INNER JOIN #{edge_table} ON #{edge_table}.child_id = roots.id
         )
         SELECT
           *
@@ -34,8 +36,8 @@ module Dagnabit::Vertex
                                FROM
                                 roots
                                 LEFT JOIN
-                                edges ON roots.id = edges.child_id
-                               WHERE edges.child_id IS NULL)
+                                #{edge_table} ON roots.id = #{edge_table}.child_id
+                               WHERE #{edge_table}.child_id IS NULL)
       }, ids])
     end
 
@@ -52,9 +54,9 @@ module Dagnabit::Vertex
 
       find_by_sql([%Q{
         WITH RECURSIVE ancestors(id) AS (
-          SELECT edges.parent_id FROM #{table_name} INNER JOIN edges ON edges.child_id = #{table_name}.id WHERE #{table_name}.id IN (?)
+          SELECT #{edge_table}.parent_id FROM #{table_name} INNER JOIN #{edge_table} ON #{edge_table}.child_id = #{table_name}.id WHERE #{table_name}.id IN (?)
           UNION
-          SELECT edges.parent_id FROM ancestors INNER JOIN edges ON edges.child_id = ancestors.id
+          SELECT #{edge_table}.parent_id FROM ancestors INNER JOIN #{edge_table} ON #{edge_table}.child_id = ancestors.id
         )
         SELECT * FROM #{table_name} WHERE #{table_name}.id IN (SELECT id FROM ancestors)
       }, ids])
@@ -78,7 +80,7 @@ module Dagnabit::Vertex
           #{table_name}
         WHERE
           #{table_name}.id IN
-            (SELECT parent_id FROM edges WHERE child_id IN (?))
+            (SELECT parent_id FROM #{edge_table} WHERE child_id IN (?))
       }, ids])
     end
 
@@ -100,7 +102,7 @@ module Dagnabit::Vertex
           #{table_name}
         WHERE
           #{table_name}.id IN
-            (SELECT child_id FROM edges WHERE parent_id IN (?))
+            (SELECT child_id FROM #{edge_table} WHERE parent_id IN (?))
       }, ids])
     end
 
@@ -117,9 +119,9 @@ module Dagnabit::Vertex
 
       find_by_sql([%Q{
         WITH RECURSIVE descendants(id) AS (
-          SELECT edges.child_id FROM #{table_name} INNER JOIN edges ON edges.parent_id = #{table_name}.id WHERE #{table_name}.id IN (?)
+          SELECT #{edge_table}.child_id FROM #{table_name} INNER JOIN #{edge_table} ON #{edge_table}.parent_id = #{table_name}.id WHERE #{table_name}.id IN (?)
           UNION
-          SELECT edges.child_id FROM descendants INNER JOIN edges ON edges.parent_id = descendants.id
+          SELECT #{edge_table}.child_id FROM descendants INNER JOIN #{edge_table} ON #{edge_table}.parent_id = descendants.id
         )
         SELECT * FROM #{table_name} WHERE #{table_name}.id IN (SELECT id FROM descendants)
       }, ids])
