@@ -1,14 +1,16 @@
-= So I lied
+So I lied
+=========
 
 dagnabit is actually still alive.  I still think you should be using something
-like Sequel if you really want to do dags in a SQL database, but if you're using
-ActiveRecord for whatever reason, dagnabit might still be useful.
+like Sequel if you really want to do graphs in a SQL database, but if you're
+using ActiveRecord for whatever reason, dagnabit might still be useful.
 
 Version 3 is a rework of dagnabit as a PostgreSQL-specific ActiveRecord plugin.
 It's blatantly incompatible with the 2.x series of dagnabit.  There are some
 migration notes in MIGRATION.md.
 
-= dagnabit
+dagnabit
+========
 
 dagnabit is (yet another) ActiveRecord plugin for directed acyclic graphs.  It
 stores directed acyclic graphs as an adjacency list, using recursive common
@@ -23,10 +25,11 @@ and application of workflows) and representing biospecimen heritage.
 
 dagnabit is hosted at Gitorious and Github:
 
-http://gitorious.org/dagnabit/dagnabit
-http://github.com/yipdw/dagnabit
+* http://gitorious.org/dagnabit/dagnabit
+* http://github.com/yipdw/dagnabit
 
-= Related work
+Related work
+============
 
 This plugin was inspired by Matthew Leventi's acts-as-dag plugin
 <http://github.com/mleventi/acts-as-dag/tree/master>.  Indeed, Leventi's
@@ -50,20 +53,23 @@ The primary differences between dagnabit and acts-as-dag are:
   With acts-as-dag, one must save the nodes _before_ creating the edge.
   The above code segment works in dagnabit.
 
-= Database compatibility
+Database compatibility
+======================
 
 PostgreSQL.  That's all I know that'll work with dagnabit, anyway.
 
 It's possible other SQL databases will work, but I have no tests to demonstrate
 that situation.
 
-= Setup
+Setup
+=====
 
 dagnabit is distributed as a gem plugin; you can therefore install it as you
 would any other RubyGem.  Integration with your Rails application can be
 achieved by adding dagnabit to your application's gem dependencies list.
 
-== Database schema
+Database schema
+---------------
 
 You'll need at least one table for storing your graph's vertices.  Additionally,
 for every vertex table you create, you will need one edge table.
@@ -72,22 +78,49 @@ Polymorphic vertices are supported via single table inheritance.
 
 Here's an example schema written as an ActiveRecord schema definition:
 
-  create_table :vertices do |t|
-    t.integer :ordinal
-    t.string  :type
-  end
-  
-  create_table :edges do |t|
-    t.integer :parent_id
-    t.integer :child_id
-  end
+    create_table :vertices do |t|
+      t.integer :ordinal
+      t.string  :type
+    end
+    
+    create_table :edges do |t|
+      t.integer :parent_id
+      t.integer :child_id
+    end
 
-= Using dagnabit
+Using dagnabit
+==============
 
-I need to write more about this, but for now, look at the Vertex and Edge
-models in the dagnabit-test executable for an example setup.
+dagnabit is activated on vertex and edge models by extending vertex and edge
+classes with Dagnabit::Vertex::Connectivity and Dagnabit::Edge::Connectivity,
+respectively:
 
-= Copyright
+    class Vertex < ActiveRecord::Base
+      extend Dagnabit::Vertex::Connectivity
+    end
+
+    class Edge < ActiveRecord::Base
+      extend Dagnabit::Edge::Connectivity
+    end
+
+dagnabit assumes that the edge table is called `edges`, and that the vertex
+table is called `vertices`.  These can be changed on a per-model basis:
+
+    class OtherVertex < ActiveRecord::Base
+      extend Dagnabit::Vertex::Connectivity
+      use_edge_table 'other_edges'
+    end
+
+    class OtherEdge < ActiveRecord::Base
+      extend Dagnabit::Vertex::Connectivity
+      use_vertex_table 'other_vertices'
+    end
+
+See the library documentation for details on methods provided by the
+Connectivity modules.
+
+Copyright
+=========
 
 Copyright (c) 2009-2010 David Yip.  Released under the MIT License; see LICENSE
 for details.
