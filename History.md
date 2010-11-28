@@ -1,3 +1,10 @@
+== 3.0.0 (unreleased)
+
+=== Major changes
+
+* Completely new data model: no more post-insert processing, no more transitive
+  closure table.  Downside: only PostgreSQL is presently supported.
+
 == 2.2.6 2010-01-01
 
 === Bugfixes
