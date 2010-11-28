@@ -143,5 +143,19 @@ module Dagnabit::Vertex
 
       it_behaves_like Connectivity
     end
+
+    describe 'with subclasses using custom model names' do
+      let(:base) { Class.new(OtherVertex) }
+      let(:model) { Class.new(base) }
+      let(:edge) { OtherEdge[OtherVertex] }
+
+      before do
+        base.extend(Connectivity)
+
+        base.set_edge_table 'other_edges'
+      end
+
+      it_behaves_like Connectivity
+    end
   end
 end

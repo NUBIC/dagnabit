@@ -9,5 +9,10 @@ module Dagnabit::Vertex
     def set_edge_table(name)
       @edge_table = name
     end
+
+    def inherited(subclass)
+      super
+      subclass.set_edge_table(edge_table)
+    end
   end
 end
