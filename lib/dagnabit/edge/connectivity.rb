@@ -31,7 +31,7 @@ module Dagnabit::Edge
       ids = vertices.map(&:id)
 
       find_by_sql([%Q{
-        SELECT * FROM edges WHERE parent_id IN (:ids) AND child_id IN (:ids)
+        SELECT * FROM #{table_name} WHERE parent_id IN (:ids) AND child_id IN (:ids)
       }, { :ids => ids }])
     end
   end
