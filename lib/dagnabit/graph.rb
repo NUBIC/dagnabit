@@ -39,6 +39,22 @@ module Dagnabit
     attr_accessor :edges
 
     ##
+    # The vertex model used by this graph.
+    #
+    # This must be defined before calling {#load_descendants!}.
+    #
+    # @return [Class]
+    attr_accessor :vertex_model
+
+    ##
+    # The vertex model used by this graph.
+    #
+    # This must be defined before calling {#load_descendants!}.
+    #
+    # @return [Class]
+    attr_accessor :edge_model
+
+    ##
     # Given a set of `vertices`, builds a subgraph from those vertices and their
     # descendants.
     #
@@ -56,14 +72,36 @@ module Dagnabit
     # @return [Subgraph] a subgraph
     def self.from_vertices(vertices, vertex_model, edge_model)
       new.tap do |g|
-        g.vertices = vertices + vertex_model.descendants_of(*vertices)
-        g.edges = edge_model.connecting(*g.vertices)
+        g.vertex_model = vertex_model
+        g.edge_model = edge_model
+        g.vertices = vertices
+        g.load_descendants!
       end
     end
 
     def initialize
       self.vertices = []
       self.edges = []
+    end
+
+    ##
+    # Loads all descendants of the vertices in {#vertices}.
+    #
+    # {#vertex_model} and {#edge_model} must be set before calling this method.
+    # If either are not set, this method raises `RuntimeError`.
+    #
+    # Once vertices are loaded, load_descendants! loads all edges that connect
+    # vertices in the working vertex set.
+    #
+    # Vertices and edges that were present before a load_descendants! call will
+    # remain in {#vertices} and {#edges}, respectively.
+    #
+    # @raise [RuntimeError] if {#vertex_model} or {#edge_model} are unset
+    def load_descendants!
+      raise 'vertex_model and edge_model must be set' unless vertex_model && edge_model
+
+      self.vertices += vertex_model.descendants_of(*vertices)
+      self.edges += edge_model.connecting(*vertices)
     end
   end
 end

@@ -9,12 +9,12 @@ module Dagnabit
     let(:vertex) { Class.new(::Vertex) }
     let(:edge)   { ::Edge[::Vertex] }
 
-    describe '.from_vertices' do
-      before do
-        vertex.extend(Vertex::Connectivity)
-        edge.extend(Edge::Connectivity)
-      end
+    before do
+      vertex.extend(Vertex::Connectivity)
+      edge.extend(Edge::Connectivity)
+    end
 
+    describe '.from_vertices' do
       it 'returns a graph' do
         Graph.from_vertices([], vertex, edge).should be_is_a(Graph)
       end
@@ -79,6 +79,47 @@ module Dagnabit
         graph.edges << e
 
         graph.edges.should == [e]
+      end
+    end
+
+    describe '#load_descendants!' do
+      [:v1, :v2, :v3].each { |v| let(v) { vertex.new } }
+
+      let(:e1) { edge.new(:parent => v1, :child => v2) }
+      let(:e2) { edge.new(:parent => v2, :child => v3) }
+
+      before do
+        e1.save
+        e2.save
+
+        graph.vertices << v1
+        graph.vertex_model = vertex
+        graph.edge_model = edge
+      end
+
+      it 'requires vertex_model to be set' do
+        graph.vertex_model = nil
+
+        lambda { graph.load_descendants! }.should raise_error(RuntimeError)
+      end
+
+      it 'requires edge_model to be set' do
+        graph.vertex_model = vertex
+        graph.edge_model = nil
+
+        lambda { graph.load_descendants! }.should raise_error(RuntimeError)
+      end
+
+      it 'loads all descendants of the vertices in the graph' do
+        graph.load_descendants!
+
+        graph.vertices.should be_set_equivalent_to(v1, v2, v3)
+      end
+
+      it 'loads all edges connecting the loaded descendants' do
+        graph.load_descendants!
+
+        graph.edges.should be_set_equivalent_to(e1, e2)
       end
     end
   end
