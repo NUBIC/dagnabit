@@ -6,8 +6,8 @@ module Dagnabit::Vertex
   module Bonding
     ##
     # Calculates a bond for this vertex (the method receiver) to all source
-    # nodes of `graph`.  Edges that already connect the receiver vertex to
-    # source nodes in `graph` will not be duplicated.
+    # vertices of `graph`.  Edges that already connect the receiver vertex to
+    # source vertices in `graph` will not be duplicated.
     #
     # This method requires the existence of an edge model; see
     # {Settings#edge_model} and {Settings#set_edge_model}.  If an edge model has
@@ -23,6 +23,11 @@ module Dagnabit::Vertex
     #   vertex to `graph`
     # @raise [RuntimeError] if an edge model has not been set
     def bond_for(graph)
+      raise 'edge_model must be set' unless self.class.edge_model
+
+      graph.sources.inject([]) do |edges, source|
+        edges << self.class.edge_model.new(:parent => self, :child => source)
+      end
     end
   end
 end
