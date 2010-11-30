@@ -5,3 +5,6 @@ pkg
 *.log
 .bundle
 Gemfile.lock
+
+.yardoc
+doc
