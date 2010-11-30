@@ -43,12 +43,12 @@ The primary differences between dagnabit and acts-as-dag are:
 
 * acts-as-dag does not permit linking of unpersisted nodes, i.e.
 
-    n1 = Vertex.new
-    n2 = Vertex.new
-    e1 = Link.new(:ancestor => n1, :descendant => n2)
-    ... other code ...
+      n1 = Vertex.new
+      n2 = Vertex.new
+      e1 = Edge.new(:parent => n1, :child => n2)
+      ... other code ...
 
-    [n1, n2, e1].map { |o| o.save }
+      [n1, n2, e1].map { |o| o.save }
 
   With acts-as-dag, one must save the nodes _before_ creating the edge.
   The above code segment works in dagnabit.
