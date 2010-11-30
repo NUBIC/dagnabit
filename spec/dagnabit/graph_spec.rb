@@ -82,6 +82,23 @@ module Dagnabit
       end
     end
 
+    describe '#sources' do
+      [:v1, :v2].each { |v| let!(v) { vertex.create } }
+
+      it 'returns all source vertices of the graph' do
+        graph.vertices << v1
+
+        graph.sources.should == [v1]
+      end
+
+      it 'considers edges' do
+        graph.vertices = [v1, v2]
+        graph.edges << edge.create(:parent_id => v1.id, :child_id => v2.id)
+
+        graph.sources.should == [v1]
+      end
+    end
+
     describe '#load_descendants!' do
       [:v1, :v2, :v3].each { |v| let!(v) { vertex.create } }
 

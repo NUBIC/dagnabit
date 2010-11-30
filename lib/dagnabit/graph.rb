@@ -103,5 +103,46 @@ module Dagnabit
       self.vertices += vertex_model.descendants_of(*vertices)
       self.edges += edge_model.connecting(*vertices)
     end
+
+    ##
+    # Returns the source vertices in the graph.  Sources are not returned in any
+    # particular order.
+    #
+    # This method is implemented using a hash anti-join on vertex ID and edge
+    # child ID.  If a vertex is a child of some edge, then it is rejected, and
+    # thus only vertices that are not children of any edge (viz. have indegree
+    # zero and are therefore sources) remain.
+    #
+    # If this method is run on a subgraph of a larger graph, then the source
+    # determination is done relative to the subgraph.  Consider the following
+    # graph:
+    #
+    #     a   b
+    #      \ /
+    #       c
+    #       |
+    #       d
+    #
+    # When considering the vertex set `{ a, b, c, d }` and corresponding edge
+    # set, `c` is clearly not a source.  However, in the subgraph `S`
+    #
+    #     S = ({c, d}, {(c, d)})
+    #
+    # `c` _is_ a source, and if S were reified as a {Graph} instance (using, for
+    # example, {.from_vertices}), `[c]` would be the output of calling `sources`
+    # on that instance.
+    #
+    # This method expects all vertices and edges to have been persisted, and
+    # will return incorrect results if there exist unpersisted vertices or edges
+    # in the graph.  For this reason, it is advised that you ensure that all
+    # vertices and edges in a graph are saved before calling {#sources}.
+    #
+    # @return [Array<vertex_model>] an array of source vertices
+    def sources
+      ids = vertices.inject({}) { |r, v| r.update(v.id => v) }
+      children = edges.inject({}) { |r, e| r.update(e.child_id => true) }
+
+      ids.reject { |k, _| children[k] }.map { |_, v| v }
+    end
   end
 end
