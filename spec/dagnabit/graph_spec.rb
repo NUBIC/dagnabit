@@ -83,15 +83,12 @@ module Dagnabit
     end
 
     describe '#load_descendants!' do
-      [:v1, :v2, :v3].each { |v| let(v) { vertex.create } }
+      [:v1, :v2, :v3].each { |v| let!(v) { vertex.create } }
 
-      let(:e1) { edge.new(:parent_id => v1.id, :child_id => v2.id) }
-      let(:e2) { edge.new(:parent_id => v2.id, :child_id => v3.id) }
+      let!(:e1) { edge.create(:parent_id => v1.id, :child_id => v2.id) }
+      let!(:e2) { edge.create(:parent_id => v2.id, :child_id => v3.id) }
 
       before do
-        e1.save
-        e2.save
-
         graph.vertices << v1
         graph.vertex_model = vertex
         graph.edge_model = edge
