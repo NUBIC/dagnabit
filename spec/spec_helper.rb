@@ -8,6 +8,7 @@ $LOAD_PATH.unshift(File.expand_path("connections/#{database}", File.dirname(__FI
 require 'connection'
 require 'schema'
 require 'matchers/be_set_equivalent'
+require 'matchers/contain_edges'
 
 RSpec.configure do |config|
   config.around do |example|
