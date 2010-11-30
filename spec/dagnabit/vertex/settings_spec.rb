@@ -6,7 +6,7 @@ require 'models/vertex'
 module Dagnabit::Vertex
   describe Settings do
     let(:model) { Class.new(Vertex) }
-    let(:edge) { Edge[Vertex] }
+    let(:edge) { Edge }
 
     before do
       model.extend(Settings)

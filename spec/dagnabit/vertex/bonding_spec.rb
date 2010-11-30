@@ -6,13 +6,16 @@ require 'models/vertex'
 module Dagnabit::Vertex
   describe Bonding do
     let(:vertex) { Class.new(Vertex) }
-    let(:edge) { Edge[Vertex] }
+    let(:edge) { Class.new(Edge) }
     let(:v) { vertex.new }
     let(:g) { Dagnabit::Graph.new }
 
     before do
+      edge.extend(Dagnabit::Edge::Associations)
       vertex.extend(Settings)
       vertex.send(:include, Bonding)
+
+      edge.edge_for('Vertex')
     end
 
     describe '#bond_for' do

@@ -1,8 +1,4 @@
-OtherEdge = lambda do |model|
-  Class.new(ActiveRecord::Base) do
-    set_table_name 'other_edges'
+require 'active_record'
 
-    belongs_to :parent, :class_name => model.to_s
-    belongs_to :child,  :class_name => model.to_s
-  end
+class OtherEdge < ActiveRecord::Base
 end

@@ -7,7 +7,7 @@ module Dagnabit
   describe Graph do
     let(:graph) { Graph.new }
     let(:vertex) { Class.new(::Vertex) }
-    let(:edge)   { ::Edge[::Vertex] }
+    let(:edge)   { Class.new(::Edge) }
 
     before do
       vertex.extend(Vertex::Connectivity)
@@ -33,11 +33,11 @@ module Dagnabit
         end
 
         describe 'given a non-empty vertex list' do
-          [:v1, :v2, :v3].each { |v| let(v) { vertex.new } }
+          [:v1, :v2, :v3].each { |v| let(v) { vertex.create } }
 
           before do
-            @e1 = edge.create(:parent => v1, :child => v2)
-            @e2 = edge.create(:parent => v2, :child => v3)
+            @e1 = edge.create(:parent_id => v1.id, :child_id => v2.id)
+            @e2 = edge.create(:parent_id => v2.id, :child_id => v3.id)
             @graph = Graph.from_vertices([v1], vertex, edge)
           end
 
@@ -83,10 +83,10 @@ module Dagnabit
     end
 
     describe '#load_descendants!' do
-      [:v1, :v2, :v3].each { |v| let(v) { vertex.new } }
+      [:v1, :v2, :v3].each { |v| let(v) { vertex.create } }
 
-      let(:e1) { edge.new(:parent => v1, :child => v2) }
-      let(:e2) { edge.new(:parent => v2, :child => v3) }
+      let(:e1) { edge.new(:parent_id => v1.id, :child_id => v2.id) }
+      let(:e2) { edge.new(:parent_id => v2.id, :child_id => v3.id) }
 
       before do
         e1.save

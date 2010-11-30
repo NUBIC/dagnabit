@@ -8,12 +8,12 @@ require 'models/vertex'
 module Dagnabit::Edge
   describe Connectivity do
     shared_examples_for Connectivity do
-      [:v1, :v2, :v3].each { |v| let(v) { vertex.new } }
+      [:v1, :v2, :v3].each { |v| let(v) { vertex.create } }
       [:e1, :e2].each { |e| let(e) { edge.new } }
 
       before do
-        e1.update_attributes(:parent => v1, :child => v2)
-        e2.update_attributes(:parent => v2, :child => v3)
+        e1.update_attributes(:parent_id => v1.id, :child_id => v2.id)
+        e2.update_attributes(:parent_id => v2.id, :child_id => v3.id)
 
         [e1, e2].each(&:save)
       end
@@ -28,7 +28,7 @@ module Dagnabit::Edge
 
     describe 'with default model names' do
       let(:vertex) { Class.new(Vertex) }
-      let(:edge) { Edge[Vertex] }
+      let(:edge) { Class.new(Edge) }
 
       before do
         edge.extend(Connectivity)
@@ -39,7 +39,7 @@ module Dagnabit::Edge
 
     describe 'with custom model names' do
       let(:vertex) { Class.new(OtherVertex) }
-      let(:edge) { OtherEdge[OtherVertex] }
+      let(:edge) { Class.new(OtherEdge) }
 
       before do
         edge.extend(Connectivity)

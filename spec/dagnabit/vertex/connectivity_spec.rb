@@ -8,11 +8,11 @@ require 'models/vertex'
 module Dagnabit::Vertex
   describe Connectivity do
     shared_examples_for Connectivity do
-      [:v1, :v2, :v3].each { |v| let(v) { model.new } }
+      [:v1, :v2, :v3].each { |v| let(v) { model.create } }
 
       before do
-        edge.create(:parent => v1, :child => v2)
-        edge.create(:parent => v2, :child => v3)
+        edge.create(:parent_id => v1.id, :child_id => v2.id)
+        edge.create(:parent_id => v2.id, :child_id => v3.id)
       end
 
       describe '.inherited' do
@@ -31,9 +31,9 @@ module Dagnabit::Vertex
         end
 
         it 'returns the source vertices of a set of vertices' do
-          v4 = model.new
+          v4 = model.create
 
-          edge.create(:parent => v2, :child => v4)
+          edge.create(:parent_id => v2.id, :child_id => v4.id)
 
           model.roots_of(v3, v4).should == [v1]
         end
@@ -49,9 +49,9 @@ module Dagnabit::Vertex
         end
 
         it 'returns the ancestors of a set of vertices' do
-          v4 = model.new
+          v4 = model.create
 
-          edge.create(:parent => v3, :child => v4)
+          edge.create(:parent_id => v3.id, :child_id => v4.id)
 
           model.ancestors_of(v2, v4).length.should == 3
           model.ancestors_of(v2, v4).should be_set_equivalent_to(v1, v2, v3)
@@ -68,9 +68,9 @@ module Dagnabit::Vertex
         end
 
         it 'returns the immediate parents of a set of vertices' do
-          v4 = model.new
+          v4 = model.create
 
-          edge.create(:parent => v2, :child => v4)
+          edge.create(:parent_id => v2.id, :child_id => v4.id)
 
           model.parents_of(v3, v4).should == [v2]
         end
@@ -88,8 +88,8 @@ module Dagnabit::Vertex
         it 'returns the immediate children of a set of vertices' do
           edge.delete_all
 
-          edge.create(:parent => v1, :child => v2)
-          edge.create(:parent => v3, :child => v2)
+          edge.create(:parent_id => v1.id, :child_id => v2.id)
+          edge.create(:parent_id => v3.id, :child_id => v2.id)
 
           model.children_of(v1, v3).should == [v2]
         end
@@ -105,10 +105,10 @@ module Dagnabit::Vertex
         end
 
         it 'returns the descendants of a set of vertices' do
-          v4 = model.new
-          v5 = model.new
+          v4 = model.create
+          v5 = model.create
 
-          edge.create(:parent => v4, :child => v5)
+          edge.create(:parent_id => v4.id, :child_id => v5.id)
 
           model.descendants_of(v1, v4).length.should == 3
           model.descendants_of(v1, v4).should be_set_equivalent_to(v2, v3, v5)
@@ -122,7 +122,7 @@ module Dagnabit::Vertex
 
     describe 'with default model names' do
       let(:model) { Class.new(Vertex) }
-      let(:edge) { Edge[Vertex] }
+      let(:edge) { Edge }
 
       before do
         model.extend(Connectivity)
@@ -133,7 +133,7 @@ module Dagnabit::Vertex
 
     describe 'with custom model names' do
       let(:model) { Class.new(OtherVertex) }
-      let(:edge) { OtherEdge[OtherVertex] }
+      let(:edge) { OtherEdge }
 
       before do
         model.extend(Connectivity)
@@ -147,7 +147,7 @@ module Dagnabit::Vertex
     describe 'with subclasses using custom model names' do
       let(:base) { Class.new(OtherVertex) }
       let(:model) { Class.new(base) }
-      let(:edge) { OtherEdge[OtherVertex] }
+      let(:edge) { OtherEdge }
 
       before do
         base.extend(Connectivity)
