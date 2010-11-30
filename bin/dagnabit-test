@@ -28,10 +28,10 @@ ActiveRecord::Schema.define do
 end
 
 class Edge < ActiveRecord::Base
+  extend Dagnabit::Edge::Associations
   extend Dagnabit::Edge::Connectivity
 
-  belongs_to :parent, :class_name => 'Vertex'
-  belongs_to :child,  :class_name => 'Vertex'
+  edge_for 'Vertex'
 end
 
 class Vertex < ActiveRecord::Base
