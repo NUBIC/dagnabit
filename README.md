@@ -111,9 +111,17 @@ By default, the vertex connectivity queries expect the edge table to be called
       set_edge_table 'other_edges'
     end
 
+Some of dagnabit's features, such as Dagnabit::Vertex::Bonding, make use of
+parent and child associations on the edge model.  These can either be written
+by you, or you can let dagnabit do it:
+
+    class Edge < ActiveRecord::Base
+      extend Dagnabit::Edge::Associations
+      edge_for 'Vertex'     # sets up belongs_to associations called "parent" and "child"
+    end
 
 See the library documentation for details on methods provided by the
-Connectivity modules.
+Connectivity modules.  Also see the listing of the `dagnabit-test` program.
 
 Copyright
 =========
