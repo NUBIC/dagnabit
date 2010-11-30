@@ -12,13 +12,15 @@ module Dagnabit::Vertex
 
     before do
       edge.extend(Dagnabit::Edge::Associations)
+      edge.edge_for('Vertex')
+
       vertex.extend(Settings)
       vertex.send(:include, Bonding)
-
-      edge.edge_for('Vertex')
     end
 
     describe '#bond_for' do
+      [:v1, :v2].each { |v| let!(v) { vertex.create } }
+
       before do
         vertex.set_edge_model edge
       end
@@ -30,15 +32,30 @@ module Dagnabit::Vertex
       end
 
       it 'connects a vertex to the source vertices of a graph' do
-        v1 = vertex.new
-        v2 = vertex.new
-
-        [v1, v2].each { |v| v.save }
         g.vertices = [v1, v2]
 
         edges = v.bond_for(g)
 
         edges.should contain_edges([v, v1], [v, v2])
+      end
+
+      it 'does not build edges that already exist' do
+        g.vertices = [v1, v2]
+        g.edges = [edge.create(:parent => v, :child => v1)]
+
+        edges = v.bond_for(g)
+
+        edges.should contain_edges([v, v2])
+      end
+
+      it 'builds edges that can be saved' do
+        vertex.extend(Connectivity)
+        g.vertices = [v1, v2]
+
+        edges = v.bond_for(g)
+        edges.all? { |e| e.save }.should be_true
+
+        vertex.children_of(v).should be_set_equivalent_to(v1, v2)
       end
     end
   end
