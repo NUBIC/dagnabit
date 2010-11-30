@@ -24,7 +24,7 @@ module Dagnabit
   # `each_vertex` and `each_edge`, respectively.  Nevertheless, RGL compatibility would be
   # nice to have, so it is a (currently low priority) to-do item.
   #
-  # Graphs may be constructed from a set of source nodes with {.from_roots}.
+  # Graphs may be constructed from a set of source nodes with {.from_vertices}.
   class Graph
     ##
     # The vertices of this graph.
@@ -64,12 +64,12 @@ module Dagnabit
     #
     # If your vertices may be one of many subclasses (i.e. you're using single
     # table inheritance in your vertices table), then you should use the base
-    # class for `vertex_model`.
+    # class for {#vertex_model}.
     #
     # @param [Array<ActiveRecord::Base>] vertices the vertices to start from
     # @param [Class] vertex_model the model class used for representing vertices
     # @param [Class] edge_model the model class used for representing edges
-    # @return [Subgraph] a subgraph
+    # @return [Graph] a subgraph
     def self.from_vertices(vertices, vertex_model, edge_model)
       new.tap do |g|
         g.vertex_model = vertex_model
