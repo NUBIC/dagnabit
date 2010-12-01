@@ -9,6 +9,7 @@ Version 3 is a rework of dagnabit as a PostgreSQL-specific ActiveRecord plugin.
 It's blatantly incompatible with the 2.x series of dagnabit.  There are some
 migration notes in MIGRATION.md.
 
+
 dagnabit
 ========
 
@@ -53,6 +54,7 @@ The primary differences between dagnabit and acts-as-dag are:
 
   With acts-as-dag, one must save the nodes _before_ creating the edge.
   The above code segment works in dagnabit.
+
 
 Database compatibility
 ======================
@@ -225,6 +227,7 @@ These can either be written by you, or you can let dagnabit do it:
 
 For further information, see the library API documentation.  Also see the
 listing of the `dagnabit-test` program.
+
 
 Copyright
 =========
