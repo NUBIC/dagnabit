@@ -1,4 +1,4 @@
-Migrating from Dagnabit 2 to Dagnabit 3
+Migrating from dagnabit 2 to dagnabit 3
 =======================================
 
 1. Polymorphic associations are no longer supported.  If you need a polymorphic
@@ -6,33 +6,33 @@ Migrating from Dagnabit 2 to Dagnabit 3
 
 2. The `*_transitive_closure` tables are no longer used, and can be dropped.
 
-3. Dagnabit is no longer mixed into `ActiveRecord::Base` by default.  You need
+3. dagnabit is no longer mixed into `ActiveRecord::Base` by default.  You need
    to augment the models you want to use as vertices:
 
-      class Vertex < ActiveRecord::Base
-        extend Dagnabit::Vertex::Connectivity
-      end
+        class Vertex < ActiveRecord::Base
+          extend Dagnabit::Vertex::Activation
 
-   If you want the instance method connectivity queries, those are in a
-   separate module:
+          acts_as_vertex
+        end
 
-      class Vertex < ActiveRecord::Base
-        extend Dagnabit::Vertex::Connectivity
-        include Dagnabit::Vertex::Neighbors
-      end
-
-4. The default name of the edge table is now `edges`.  The name of the vertex table
-   is now taken from the model(s) in which Dagnabit is mixed in.
+4. The default name of the edge table is now `edges`, and the name of the vertex
+   table is taken from the model.
 
    So, for example, if you had the following models:
 
         class Vertex < ActiveRecord::Base
+          extend Dagnabit::Vertex::Activation
+
+          acts_as_vertex
         end
 
         class BetaVertex < Vertex
         end
 
         class DifferentGraphVertex < ActiveRecord::Base
+          extend Dagnabit::Vertex::Activation
+
+          acts_as_vertex
           set_edge_table 'different_edges'
         end
 
@@ -45,17 +45,12 @@ Migrating from Dagnabit 2 to Dagnabit 3
     and `descendant_id` is now `child_id`.  `ancestor_type` and `descendant_type`
     are now unused.
 
-6.  Technically, you no longer need an edge model to use Dagnabit.  It can,
+6.  Technically, you no longer need an edge model to use dagnabit.  It can,
     however, occasionally be useful.  To make an edge model, create a model
     resembling
 
         class Edge < ActiveRecord::Base
+          extend Dagnabit::Edge::Activation
+
+          acts_as_edge
         end
-
-    To use the edge connectivity methods:
-
-        class Edge < ActiveRecord::Base
-          extend Dagnabit::Edge::Connectivity
-        end
-
- :vim:tw=80
