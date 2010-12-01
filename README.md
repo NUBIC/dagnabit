@@ -142,11 +142,11 @@ dagnabit's cycle-checking trigger
 ---------------------------------
 
 dagnabit ships with a PL/pgSQL trigger that can be installed on edge tables.
-The trigger algorithm is run per inserted or updated row, and has the following
-pseudocode description:
+The trigger algorithm is run per inserted or updated row, and may be described
+as
 
-    check_cycle(seen, edge = (a, b)):
-      if seen does not contain a
+    trigger check_cycle(seen = [], edge = (a, b)):
+      if a != b
         if b has no children
           ok
         else
@@ -156,6 +156,29 @@ pseudocode description:
       else
         abort
       end
+
+The implementation uses a `WITH RECURSIVE` query.
+
+The {Dagnabit::Migration} module provides methods for creating and dropping
+triggers on edge tables:
+
+    class CreateEdges < ActiveRecord::Migration
+      extend Dagnabit::Migration
+
+      def self.up
+        create_table :edges do |t|
+          ...
+        end
+
+        create_cycle_check_trigger :edges
+      end
+
+      def self.down
+        drop_cycle_check_trigger :edges
+
+        drop_table :edges
+      end
+    end
     
 Using dagnabit
 ==============
