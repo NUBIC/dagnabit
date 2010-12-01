@@ -84,10 +84,79 @@ Here's an example schema written as an ActiveRecord schema definition:
     end
     
     create_table :edges do |t|
-      t.references :parent
-      t.references :child
+      t.references :parent, :null => false
+      t.references :child,  :null => false
     end
 
+    add_index :edges, [:parent_id, :child_id], :unique => true
+
+
+Maintaining a directed acyclic simple graph and some words on validation
+------------------------------------------------------------------------
+
+dagnabit is designed to operate on directed, acyclic, simple graphs.  That means:
+
+1. each edge has a direction (_directed_),
+2. there cannot exist any edges that create a cycle (_acyclic_),
+3. any edge must connect two and only two vertices (no _hyperedges_), and
+4. there may be only zero or one edges connecting any two vertices (_simple_).
+
+dagnabit is set up to make the database enforce these invariants:
+
+1. The directionality of each edge is implicit in the edge table structure from
+   parent to child.
+2. dagnabit provides a PL/pgSQL trigger that you can use to abort saving edges
+   that, when inserted, causes a cycle.  More on this below.
+3. As each edge may only address one parent and one child, the maximum of two
+   vertices is guaranteed.  NOT NULL constraints on the parent_id and child_id
+   columns guarantee the minimum of two.  (It is recommended that you also set
+   up foreign key constraints from edges to vertices, though that addresses a
+   different issue.)
+4. The (parent_id, child_id) index prevents multiple edges connecting the same
+   vertices.
+
+You may, of course, relax invariants 2-4 by omitting indices or constraints;
+however, if you do that, you risk problems such as
+`Dagnabit::Vertex::Connectivity` methods generating infinite loops.
+
+Note that dagnabit currently does not provide a way to catch data that would
+violate these invariants via ActiveRecord's validation subsystem.  Violations,
+therefore, will result in quite nasty (from the ActiveRecord perspective of
+things) `PGError`s.
+
+If you design your application code such that these invariants cannot be
+violated via typical user actions, then this is probably fine, because in that
+case the `PGError` exception (which, in this case, you probably don't want to
+handle) indicates either the existence of an error in the code and/or malicious
+activity that was prevented.
+
+On the other hand, if users of your application will be building dags as part of
+their interactions with your application, then it is a very real possibility
+that violation of the above invarints may occur in the course of normal user
+activity.  In this case, you must trap these errors and provide adequate
+feedback to your users so that they can correct the problem.  This, like many UI
+problems, is not a trivial problem to solve, and I do not have any general
+solution for it.
+
+dagnabit's cycle-checking trigger
+---------------------------------
+
+dagnabit ships with a PL/pgSQL trigger that can be installed on edge tables.
+The trigger algorithm is run per inserted or updated row, and has the following
+pseudocode description:
+
+    check_cycle(seen, edge = (a, b)):
+      if seen does not contain a
+        if b has no children
+          ok
+        else
+          for each child c of b
+            check_cycle(seen + [b], (a, c))
+        end
+      else
+        abort
+      end
+    
 Using dagnabit
 ==============
 
