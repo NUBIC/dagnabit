@@ -112,16 +112,16 @@ dagnabit is set up to make the database enforce these invariants:
 2. dagnabit provides a PL/pgSQL trigger that you can use to abort saving edges
    that, when inserted, causes a cycle.  More on this below.
 3. As each edge may only address one parent and one child, the maximum of two
-   vertices is guaranteed.  NOT NULL constraints on the parent_id and child_id
-   columns guarantee the minimum of two.  (It is recommended that you also set
-   up foreign key constraints from edges to vertices, though that addresses a
-   different issue.)
-4. The (parent_id, child_id) index prevents multiple edges connecting the same
+   vertices is guaranteed.  `NOT NULL` constraints on the `parent_id` and
+   `child_id` columns guarantee the minimum of two.  (It is recommended that you
+   also set up foreign key constraints from edges to vertices, though that
+   addresses a different issue.)
+4. The `(parent_id, child_id)` index prevents multiple edges connecting the same
    vertices.
 
 You may, of course, relax invariants 2-4 by omitting indices or constraints;
 however, if you do that, you risk problems such as
-`Dagnabit::Vertex::Connectivity` methods generating infinite loops.
+{Dagnabit::Vertex::Connectivity} methods generating infinite loops.
 
 Note that dagnabit currently does not provide a way to catch data that would
 violate these invariants via ActiveRecord's validation subsystem.  Violations,
