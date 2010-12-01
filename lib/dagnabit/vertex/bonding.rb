@@ -31,6 +31,7 @@ module Dagnabit::Vertex
       edge = self.class.edge_model
 
       raise 'edge_model must be set' unless edge
+      raise "#{self} must be persisted before invoking bond_for" if new_record?
 
       sources = graph.sources
       existing = edge.all(:conditions => { :parent_id => id, :child_id => sources.map(&:id) }).map { |e| [e.parent_id, e.child_id] }

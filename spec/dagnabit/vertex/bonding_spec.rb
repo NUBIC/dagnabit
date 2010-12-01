@@ -21,6 +21,12 @@ module Dagnabit::Vertex
         lambda { v.bond_for(g) }.should raise_error(RuntimeError)
       end
 
+      it 'raises if the vertex has not been saved' do
+        v = Vertex.new
+
+        lambda { v.bond_for(g) }.should raise_error(RuntimeError)
+      end
+
       it 'connects a vertex to the source vertices of a graph' do
         g.vertices = [v1, v2]
 
