@@ -69,6 +69,9 @@ dagnabit is distributed as a gem plugin; you can therefore install it as you
 would any other RubyGem.  Integration with your Rails application can be
 achieved by adding dagnabit to your application's gem dependencies list.
 
+Using dagnabit
+==============
+
 Database schema
 ---------------
 
@@ -180,12 +183,12 @@ triggers on edge tables:
         drop_table :edges
       end
     end
-    
-Using dagnabit
-==============
+
+Using dagnabit in your application
+----------------------------------
 
 dagnabit is activated on vertex and edge models by extending vertex and edge
-classes with Dagnabit::Vertex::Activation and Dagnabit::Edge::Activation,
+classes with {Dagnabit::Vertex::Activation} and {Dagnabit::Edge::Activation},
 respectively:
 
     class Vertex < ActiveRecord::Base
