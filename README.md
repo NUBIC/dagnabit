@@ -16,8 +16,8 @@ dagnabit is (yet another) ActiveRecord plugin for directed acyclic graphs.  It
 stores directed acyclic graphs as an adjacency list, using recursive common
 table expressions to perform fast reachability queries.
 
-dagnabit was developed at the Northwestern University Biomedical Informatics
-Center <http://www.nucats.northwestern.edu/centers/nubic/index.html> for a Ruby
+dagnabit was developed at the [Northwestern University Biomedical Informatics
+Center](http://www.nucats.northwestern.edu/centers/nubic/index.html) for a Ruby
 on Rails application designed for management and querying of
 large-and-rapidly-growing biospecimen banks (i.e. for cancer research).  The
 application uses directed acyclic graphs for knowledge representation (storage
@@ -25,16 +25,17 @@ and application of workflows) and representing biospecimen heritage.
 
 dagnabit is hosted at Gitorious and Github:
 
-* http://gitorious.org/dagnabit/dagnabit
-* http://github.com/yipdw/dagnabit
+* <http://gitorious.org/dagnabit/dagnabit>
+* <http://github.com/yipdw/dagnabit>
+
 
 Related work
 ============
 
-This plugin was inspired by Matthew Leventi's acts-as-dag plugin
-<http://github.com/mleventi/acts-as-dag/tree/master>.  Indeed, Leventi's
-acts-as-dag plugin was originally used in the application from which this
-plugin was extracted.
+This plugin was inspired by [Matthew Leventi's acts-as-dag
+plugin](http://github.com/mleventi/acts-as-dag/tree/master).  Indeed, Leventi's
+acts-as-dag plugin was originally used in the application from which this plugin
+was extracted.
 
 The primary differences between dagnabit and acts-as-dag are:
 
