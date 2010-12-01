@@ -92,22 +92,22 @@ Using dagnabit
 ==============
 
 dagnabit is activated on vertex and edge models by extending vertex and edge
-classes with Dagnabit::Vertex::Connectivity and Dagnabit::Edge::Connectivity,
+classes with Dagnabit::Vertex::Activation and Dagnabit::Edge::Activation,
 respectively:
 
     class Vertex < ActiveRecord::Base
-      extend Dagnabit::Vertex::Connectivity
+      extend Dagnabit::Vertex::Activation
     end
 
     class Edge < ActiveRecord::Base
-      extend Dagnabit::Edge::Connectivity
+      extend Dagnabit::Edge::Activation
     end
 
 By default, the vertex connectivity queries expect the edge table to be called
 "edges", but that is by no means required:
 
     class OtherVertex < ActiveRecord::Base
-      extend Dagnabit::Vertex::Connectivity
+      extend Dagnabit::Vertex::Activation
       set_edge_table 'other_edges'
     end
 
@@ -116,12 +116,12 @@ parent and child associations on the edge model.  These can either be written
 by you, or you can let dagnabit do it:
 
     class Edge < ActiveRecord::Base
-      extend Dagnabit::Edge::Associations
+      extend Dagnabit::Edge::Activation
       edge_for 'Vertex'     # sets up belongs_to associations called "parent" and "child"
     end
 
-See the library documentation for details on methods provided by the
-Connectivity modules.  Also see the listing of the `dagnabit-test` program.
+For further information, see the library API documentation.  Also see the
+listing of the `dagnabit-test` program.
 
 Copyright
 =========

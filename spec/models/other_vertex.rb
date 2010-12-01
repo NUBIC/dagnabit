@@ -1,11 +1,8 @@
 require 'active_record'
 
 class OtherVertex < ActiveRecord::Base
-  extend Dagnabit::Vertex::Connectivity
-  extend Dagnabit::Vertex::Settings
+  extend Dagnabit::Vertex::Activation
 
-  include Dagnabit::Vertex::Bonding
-  include Dagnabit::Vertex::Neighbors
-
+  acts_as_vertex
   set_edge_model OtherEdge
 end
