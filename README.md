@@ -30,6 +30,12 @@ dagnabit is hosted at Gitorious and Github:
 * <http://github.com/yipdw/dagnabit>
 
 
+Installation
+============
+
+    gem install dagnabit
+
+
 Related work
 ============
 
@@ -64,12 +70,6 @@ PostgreSQL.  That's all I know that'll work with dagnabit, anyway.
 It's possible other SQL databases will work, but I have no tests to demonstrate
 that situation.
 
-Setup
-=====
-
-dagnabit is distributed as a gem plugin; you can therefore install it as you
-would any other RubyGem.  Integration with your Rails application can be
-achieved by adding dagnabit to your application's gem dependencies list.
 
 Using dagnabit
 ==============
