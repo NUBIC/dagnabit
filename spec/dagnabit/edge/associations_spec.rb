@@ -5,24 +5,20 @@ require 'models/vertex'
 
 module Dagnabit::Edge
   describe Associations do
-    let(:e) { Edge.new }
-    let(:v) { Vertex.new }
+    let(:c) { Vertex.new }
+    let(:p) { Vertex.new }
+
+    let(:e) { Edge.create(:parent => p, :child => c) }
 
     describe '#parent' do
-      it 'points to the parent vertex' do
-        e.parent = v
-        e.save
-
-        Edge.find(e).parent.should == v
+      it 'retrieves the parent vertex' do
+        Edge.find(e).parent.should == p
       end
     end
 
     describe '#child' do
-      it 'points to the child vertex' do
-        e.child = v
-        e.save
-
-        Edge.find(e).child.should == v
+      it 'retrieves the child vertex' do
+        Edge.find(e).child.should == c
       end
     end
   end
