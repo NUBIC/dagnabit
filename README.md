@@ -80,12 +80,12 @@ Here's an example schema written as an ActiveRecord schema definition:
 
     create_table :vertices do |t|
       t.integer :ordinal
-      t.string  :type
+      t.string  :type     # only if you're using STI
     end
     
     create_table :edges do |t|
-      t.integer :parent_id
-      t.integer :child_id
+      t.references :parent
+      t.references :child
     end
 
 Using dagnabit
