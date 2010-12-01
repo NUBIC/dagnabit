@@ -1,2 +1,4 @@
 --markup markdown
 --hide-void-return
+--files History.md
+--files MIGRATION.md
