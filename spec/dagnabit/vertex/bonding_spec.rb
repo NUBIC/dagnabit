@@ -57,6 +57,15 @@ module Dagnabit::Vertex
 
         vertex.children_of(v).should be_set_equivalent_to(v1, v2)
       end
+
+      it 'does not build edges that were created from a previous bonding' do
+        g.vertices = [v1, v2]
+
+        edges = v.bond_for(g)
+        edges.each { |e| e.save }
+
+        v.bond_for(g).should be_empty
+      end
     end
   end
 end

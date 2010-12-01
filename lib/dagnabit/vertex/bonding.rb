@@ -6,11 +6,16 @@ module Dagnabit::Vertex
   module Bonding
     ##
     # Calculates a bond for this vertex (the method receiver) to all source
-    # vertices of `graph`.  Persisted edges that already connect the receiver
-    # vertex to source vertices in `graph` will not be duplicated.  Unpersisted
-    # edges connecting the receiver to a source in `graph` _will_ be
-    # duplicated, so it is advised that you ensure that all vertices and edges
-    # in `graph` have been persisted before using {#bond_for}.
+    # vertices of `graph`.
+    #
+    # This method expects the receiver to have been persisted, and will raise
+    # `RuntimeError` if that is not the case.
+    #
+    # Persisted edges that already connect the receiver vertex to source
+    # vertices in `graph` will not be duplicated.  Unpersisted edges connecting
+    # the receiver to a source in `graph` _will_ be duplicated, so it is
+    # advised that you ensure that all vertices and edges in `graph` have been
+    # persisted before using {#bond_for}.
     #
     # This method requires the existence of an edge model; see
     # {Settings#edge_model} and {Settings#set_edge_model}.  If an edge model has
@@ -27,9 +32,11 @@ module Dagnabit::Vertex
 
       raise 'edge_model must be set' unless edge
 
-      graph.sources.inject([]) do |edges, source|
-        edges << edge.new(:parent => self, :child => source)
-      end
+      sources = graph.sources
+      existing = edge.all(:conditions => { :parent_id => id, :child_id => sources.map(&:id) }).map { |e| [e.parent_id, e.child_id] }
+      new = sources.inject([]) { |es, s| es << [id, s.id] }
+
+      (new - existing).map { |p, c| edge.new(:parent_id => p, :child_id => c) }
     end
   end
 end
