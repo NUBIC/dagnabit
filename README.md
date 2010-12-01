@@ -215,9 +215,8 @@ vertex model.  This can be done as follows:
       set_edge_model Edge
     end
 
-Some of dagnabit's features, such as Dagnabit::Vertex::Bonding, make use of
-parent and child associations on the edge model.  These can either be written
-by you, or you can let dagnabit do it:
+You may find it helpful to have parent and child associations on the edge model.
+These can either be written by you, or you can let dagnabit do it:
 
     class Edge < ActiveRecord::Base
       extend Dagnabit::Edge::Activation
