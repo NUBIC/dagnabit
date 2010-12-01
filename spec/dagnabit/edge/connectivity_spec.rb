@@ -27,23 +27,15 @@ module Dagnabit::Edge
     end
 
     describe 'with default model names' do
-      let(:vertex) { Class.new(Vertex) }
-      let(:edge) { Class.new(Edge) }
-
-      before do
-        edge.extend(Connectivity)
-      end
+      let(:vertex) { Vertex }
+      let(:edge) { Edge }
 
       it_behaves_like Connectivity
     end
 
     describe 'with custom model names' do
-      let(:vertex) { Class.new(OtherVertex) }
-      let(:edge) { Class.new(OtherEdge) }
-
-      before do
-        edge.extend(Connectivity)
-      end
+      let(:vertex) { OtherVertex }
+      let(:edge) { OtherEdge }
 
       it_behaves_like Connectivity
     end

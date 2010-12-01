@@ -5,28 +5,18 @@ require 'models/vertex'
 
 module Dagnabit::Vertex
   describe Bonding do
-    let(:vertex) { Class.new(Vertex) }
-    let(:edge) { Class.new(Edge) }
-    let(:v) { vertex.new }
     let(:g) { Dagnabit::Graph.new }
-
-    before do
-      edge.extend(Dagnabit::Edge::Associations)
-      edge.edge_for('Vertex')
-
-      vertex.extend(Settings)
-      vertex.send(:include, Bonding)
-    end
+    let!(:v) { Vertex.create }
 
     describe '#bond_for' do
-      [:v1, :v2].each { |v| let!(v) { vertex.create } }
+      [:v1, :v2].each { |v| let!(v) { Vertex.create } }
 
       before do
-        vertex.set_edge_model edge
+        Vertex.set_edge_model(Edge)
       end
 
       it 'raises if an edge vertex has not been set' do
-        vertex.set_edge_model(nil)
+        Vertex.set_edge_model(nil)
 
         lambda { v.bond_for(g) }.should raise_error(RuntimeError)
       end
@@ -41,7 +31,7 @@ module Dagnabit::Vertex
 
       it 'does not build edges that already exist' do
         g.vertices = [v1, v2]
-        g.edges = [edge.create(:parent => v, :child => v1)]
+        g.edges = [Edge.create(:parent => v, :child => v1)]
 
         edges = v.bond_for(g)
 
@@ -49,13 +39,13 @@ module Dagnabit::Vertex
       end
 
       it 'builds edges that can be saved' do
-        vertex.extend(Connectivity)
+        Vertex.extend(Connectivity)
         g.vertices = [v1, v2]
 
         edges = v.bond_for(g)
         edges.all? { |e| e.save }.should be_true
 
-        vertex.children_of(v).should be_set_equivalent_to(v1, v2)
+        Vertex.children_of(v).should be_set_equivalent_to(v1, v2)
       end
 
       it 'does not build edges that were created from a previous bonding' do

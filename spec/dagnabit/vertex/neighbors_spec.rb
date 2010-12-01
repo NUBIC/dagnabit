@@ -5,15 +5,12 @@ require 'models/vertex'
 
 module Dagnabit::Vertex
   describe Neighbors do
-    let(:model) { Class.new(Vertex) }
+    let(:model) { Vertex }
     let(:edge) { Edge }
 
     [:v1, :v2, :v3].each { |v| let(v) { model.create } }
 
     before do
-      model.extend(Connectivity)
-      model.send(:include, Neighbors)
-
       edge.create(:parent_id => v1.id, :child_id => v2.id)
       edge.create(:parent_id => v2.id, :child_id => v3.id)
     end

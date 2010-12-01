@@ -121,39 +121,23 @@ module Dagnabit::Vertex
     end
 
     describe 'with default model names' do
-      let(:model) { Class.new(Vertex) }
+      let(:model) { Vertex }
       let(:edge) { Edge }
-
-      before do
-        model.extend(Connectivity)
-      end
 
       it_behaves_like Connectivity
     end
 
     describe 'with custom model names' do
-      let(:model) { Class.new(OtherVertex) }
+      let(:model) { OtherVertex }
       let(:edge) { OtherEdge }
-
-      before do
-        model.extend(Connectivity)
-
-        model.set_edge_table 'other_edges'
-      end
 
       it_behaves_like Connectivity
     end
 
     describe 'with subclasses using custom model names' do
-      let(:base) { Class.new(OtherVertex) }
-      let(:model) { Class.new(base) }
+      let(:base) { OtherVertex }
       let(:edge) { OtherEdge }
-
-      before do
-        base.extend(Connectivity)
-
-        base.set_edge_table 'other_edges'
-      end
+      let(:model) { Class.new(base) }
 
       it_behaves_like Connectivity
     end

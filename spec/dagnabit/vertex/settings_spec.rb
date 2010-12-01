@@ -8,10 +8,6 @@ module Dagnabit::Vertex
     let(:model) { Class.new(Vertex) }
     let(:edge) { Edge }
 
-    before do
-      model.extend(Settings)
-    end
-
     describe '#edge_table' do
       it 'defaults to "edges"' do
         model.edge_table.should == 'edges'
@@ -50,6 +46,7 @@ module Dagnabit::Vertex
 
     describe '#inherited' do
       it "copies the superclass' edge table to the subclass" do
+        model.set_edge_model nil
         model.set_edge_table 'my_edges'
 
         subclass = Class.new(model)
