@@ -11,8 +11,8 @@ RSpec::Matchers.define(:contain_edges) do |*expected|
     @failure_reason = :missing_edge
     expected.each do |parent, child|
       unless actual.any? { |e| e.parent == parent && e.child == child }
-        @failure_data = "(#{parent}, #{child})"
-        raise
+        @failure_data = "(#{parent.inspect}, #{child.inspect})"
+        break false
       end
     end
   end
