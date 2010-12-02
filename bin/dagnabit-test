@@ -31,7 +31,7 @@ class Edge < ActiveRecord::Base
   extend Dagnabit::Edge::Associations
   extend Dagnabit::Edge::Connectivity
 
-  edge_for 'Vertex'
+  connects 'Vertex'
 end
 
 class Vertex < ActiveRecord::Base

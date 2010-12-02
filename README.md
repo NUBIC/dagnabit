@@ -222,7 +222,7 @@ These can either be written by you, or you can let dagnabit do it:
 
     class Edge < ActiveRecord::Base
       extend Dagnabit::Edge::Activation
-      edge_for 'Vertex'     # sets up belongs_to associations called "parent" and "child"
+      connects 'Vertex'     # sets up belongs_to associations called "parent" and "child"
     end
 
 For further information, see the library API documentation.  Also see the

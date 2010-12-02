@@ -4,5 +4,5 @@ class Edge < ActiveRecord::Base
   extend Dagnabit::Edge::Activation
 
   acts_as_edge
-  edge_for 'Vertex'
+  connects 'Vertex'
 end
