@@ -17,8 +17,8 @@ module Dagnabit::Vertex
     # advised that you ensure that all vertices and edges in `graph` have been
     # persisted before using {#bond_for}.
     #
-    # This method requires the existence of an edge model; see
-    # {Settings#edge_model} and {Settings#set_edge_model}.  If an edge model has
+    # This method requires the existence of an edge model: see
+    # {Settings#connected_by} and {Settings#edge_model}.  If an edge model has
     # not been set, this method raises `RuntimeError`.
     #
     # Edges instantiated by `bond_for` are not automatically saved.
