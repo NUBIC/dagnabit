@@ -195,10 +195,14 @@ respectively:
 
     class Vertex < ActiveRecord::Base
       extend Dagnabit::Vertex::Activation
+
+      acts_as_vertex
     end
 
     class Edge < ActiveRecord::Base
       extend Dagnabit::Edge::Activation
+
+      acts_as_edge
     end
 
 By default, the vertex connectivity queries expect the edge table to be called
@@ -215,6 +219,7 @@ vertex model.  This can be done as follows:
     class Vertex < ActiveRecord::Base
       extend Dagnabit::Vertex::Activation
       set_edge_model Edge
+      acts_as_vertex
     end
 
 You may find it helpful to have parent and child associations on the edge model.
