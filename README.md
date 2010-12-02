@@ -9,7 +9,6 @@ Version 3 is a rework of dagnabit as a PostgreSQL-specific ActiveRecord plugin.
 It's blatantly incompatible with the 2.x series of dagnabit.  There are some
 migration notes in MIGRATION.md.
 
-
 dagnabit
 ========
 
@@ -29,12 +28,10 @@ dagnabit is hosted at Gitorious and Github:
 * <http://gitorious.org/dagnabit/dagnabit>
 * <http://github.com/yipdw/dagnabit>
 
-
 Installation
 ============
 
     gem install dagnabit
-
 
 Related work
 ============
@@ -61,7 +58,6 @@ The primary differences between dagnabit and acts-as-dag are:
   With acts-as-dag, one must save the nodes _before_ creating the edge.
   The above code segment works in dagnabit.
 
-
 Database compatibility
 ======================
 
@@ -69,7 +65,6 @@ PostgreSQL.  That's all I know that'll work with dagnabit, anyway.
 
 It's possible other SQL databases will work, but I have no tests to demonstrate
 that situation.
-
 
 Using dagnabit
 ==============
@@ -88,14 +83,13 @@ Here's an example schema written as an ActiveRecord schema definition:
       t.integer :ordinal
       t.string  :type     # only if you're using STI
     end
-    
+
     create_table :edges do |t|
       t.references :parent, :null => false
       t.references :child,  :null => false
     end
 
     add_index :edges, [:parent_id, :child_id], :unique => true
-
 
 Maintaining a directed acyclic simple graph and some words on validation
 ------------------------------------------------------------------------
@@ -232,7 +226,6 @@ These can either be written by you, or you can let dagnabit do it:
 
 For further information, see the library API documentation.  Also see the
 listing of the `dagnabit-test` program.
-
 
 Copyright
 =========
