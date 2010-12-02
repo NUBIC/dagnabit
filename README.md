@@ -200,20 +200,14 @@ respectively:
     end
 
 By default, the vertex connectivity queries expect the edge table to be called
-"edges", but that is by no means required:
+"edges", but that is by no means required.  Just associate the vertex with a
+different edge model:
 
     class OtherVertex < ActiveRecord::Base
       extend Dagnabit::Vertex::Activation
-      set_edge_table 'other_edges'
-    end
 
-Some of dagnabit's features require that you associate an edge model with a
-vertex model.  This can be done as follows:
-
-    class Vertex < ActiveRecord::Base
-      extend Dagnabit::Vertex::Activation
-      set_edge_model Edge
       acts_as_vertex
+      connected_by 'OtherEdge'
     end
 
 You may find it helpful to have parent and child associations on the edge model.
@@ -221,7 +215,10 @@ These can either be written by you, or you can let dagnabit do it:
 
     class Edge < ActiveRecord::Base
       extend Dagnabit::Edge::Activation
-      connects 'Vertex'     # sets up belongs_to associations called "parent" and "child"
+
+      acts_as_edge
+      connects 'Vertex'     # sets up belongs_to associations called "parent"
+                            # and "child"
     end
 
 For further information, see the library API documentation.  Also see the

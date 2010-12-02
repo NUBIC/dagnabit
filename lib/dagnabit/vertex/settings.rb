@@ -5,46 +5,37 @@ module Dagnabit::Vertex
   # Contains parameters that can be customized on a per-vertex-model basis.
   module Settings
     ##
-    # The edge table used by connectivity queries.  Defaults to "edges".
-    #
-    # @return [String] the name of the edge table
-    def edge_table
-      @edge_table || 'edges'
-    end
-
-    ##
-    # Sets the edge table used by connectivity queries.
-    # 
-    # @param [String] name a table name
-    def set_edge_table(name)
-      @edge_table = name
-    end
-
-    ##
-    # The edge model associated with a vertex model.  Defaults to nil.
-    #
-    # Connectivity queries do not use this model; however, some Vertex modules,
-    # such as {Bonding}, do.  If you do not intend to use any of those modules,
-    # it is safe to leave this as nil.
+    # The edge model associated with a vertex model.  Defaults to `Edge`.
     #
     # @return [Class] the edge model
     def edge_model
-      @edge_model
+      (@edge_model_name || 'Edge').constantize
     end
 
     ##
-    # Sets the edge model.
+    # The edge table used by connectivity queries.  Equivalent to
     #
-    # Setting this will also set the edge table to the return value of
+    #     edge_model.table_name
     #
-    #     model.table_name
-    # .
-    #
-    # @param [#table_name] model an ActiveRecord::Base subclass
-    def set_edge_model(model)
-      @edge_model = model
+    # @return [String] the name of the edge table
+    def edge_table
+      edge_model.table_name
+    end
 
-      set_edge_table(model.table_name) if model
+    ##
+    # Sets or retrieves the name of the edge model associated with a vertex.
+    #
+    # If invoked with no arguments or nil, returns the name of the currently
+    # set edge model.  Otherwise, sets the edge model to what is given in
+    # `edge_model_name`.
+    #
+    # {#edge_model} uses ActiveSupport's `constantize` method to look up the
+    # model from `edge_model_name`.
+    #
+    # @param [String] edge_model_name the name of the edge model to use
+    # @return [String] the name of the edge model
+    def connected_by(edge_model_name = nil)
+      edge_model_name ? @edge_model_name = edge_model_name : @edge_model_name
     end
 
     ##
@@ -53,12 +44,11 @@ module Dagnabit::Vertex
     #
     # This callback executes any previously-defined definitions of `inherited`
     # beforee executing its own code.
-    # 
+    #
     # @param [Class] subclass the descendant class
     def inherited(subclass)
       super
-      subclass.set_edge_table(edge_table)
-      subclass.set_edge_model(edge_model)
+      subclass.connected_by(connected_by)
     end
   end
 end

@@ -1,65 +1,48 @@
 require 'spec_helper'
 
 require 'models/edge'
+require 'models/other_edge'
 require 'models/vertex'
 
 module Dagnabit::Vertex
   describe Settings do
     let(:model) { Class.new(Vertex) }
-    let(:edge) { Edge }
 
-    describe '#edge_table' do
-      it 'defaults to "edges"' do
-        model.edge_table.should == 'edges'
-      end
-    end
-
-    describe '#set_edge_table' do
-      it 'sets the name of the edge table' do
-        model.set_edge_table 'other_edges'
-
-        model.edge_table.should == 'other_edges'
-      end
-    end
-
-    describe '#set_edge_model' do
+    shared_examples_for 'a method that sets edge information' do |expected_model|
       it 'sets the edge model' do
-        model.set_edge_model edge
-
-        model.edge_model.should == edge
+        model.edge_model.should == expected_model
       end
 
-      it 'sets the edge table name' do
-        model.set_edge_table ''
-        model.set_edge_model edge
+      it 'sets the edge table from the edge model' do
+        model.edge_table.should == expected_model.table_name
+      end
+    end
 
-        model.edge_table.should == edge.table_name
+    describe '#connected_by' do
+      describe 'with default settings' do
+        it_behaves_like 'a method that sets edge information', Edge
       end
 
-      it 'does not set the edge table name if model is nil' do
-        model.set_edge_table 'my_edges'
-        model.set_edge_model nil
+      describe 'with custom settings' do
+        before do
+          model.connected_by 'OtherEdge'
+        end
 
-        model.edge_table.should == 'my_edges'
+        it_behaves_like 'a method that sets edge information', OtherEdge
       end
     end
 
     describe '#inherited' do
-      it "copies the superclass' edge table to the subclass" do
-        model.set_edge_model nil
-        model.set_edge_table 'my_edges'
-
-        subclass = Class.new(model)
-
-        subclass.edge_table.should == model.edge_table
-      end
-
       it "copies the superclass' edge model to the subclass" do
-        model.set_edge_model edge
-
         subclass = Class.new(model)
 
         subclass.edge_model.should == model.edge_model
+      end
+
+      it "copies the superclass' edge table to the subclass" do
+        subclass = Class.new(model)
+
+        subclass.edge_table.should == model.edge_table
       end
     end
   end

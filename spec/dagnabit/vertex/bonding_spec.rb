@@ -11,12 +11,8 @@ module Dagnabit::Vertex
     describe '#bond_for' do
       [:v1, :v2].each { |v| let!(v) { Vertex.create } }
 
-      before do
-        Vertex.set_edge_model(Edge)
-      end
-
       it 'raises if an edge vertex has not been set' do
-        Vertex.set_edge_model(nil)
+        Vertex.stub!(:edge_model => nil)
 
         lambda { v.bond_for(g) }.should raise_error(RuntimeError)
       end
