@@ -1,14 +1,15 @@
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. .. lib)))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. db)))
+
 require 'rspec'
 
-require File.expand_path('../lib/dagnabit', File.dirname(__FILE__))
+require 'matchers/be_set_equivalent'
+require 'matchers/contain_edges'
 
-database = ENV['DATABASE'] || 'postgresql'
-$LOAD_PATH.unshift(File.expand_path("connections/#{database}", File.dirname(__FILE__)))
+require 'dagnabit'
 
 require 'connection'
 require 'schema'
-require 'matchers/be_set_equivalent'
-require 'matchers/contain_edges'
 
 RSpec.configure do |config|
   config.around do |example|

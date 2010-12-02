@@ -1,13 +1,11 @@
-database = ENV['DATABASE'] || 'postgresql'
-
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. .. lib)))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. .. spec)))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. .. spec connections), database))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. .. db)))
+
+require 'dagnabit'
 
 require 'connection'
 require 'schema'
 
-require 'dagnabit'
 require 'models/edge'
 require 'models/vertex'
 

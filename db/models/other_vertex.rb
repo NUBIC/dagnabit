@@ -1,5 +1,3 @@
-require 'active_record'
-
 class OtherVertex < ActiveRecord::Base
   extend Dagnabit::Vertex::Activation
 

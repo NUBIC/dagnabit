@@ -1,42 +1,19 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. lib)))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. db)))
+
 require 'active_record'
 require 'irb'
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), %w(.. lib)))
-
 require 'dagnabit'
 
+require 'connection'
 ActiveRecord::Base.logger = Logger.new("#{File.basename(__FILE__)}.log")
-ActiveRecord::Base.establish_connection({
-  :adapter => 'postgresql',
-  :database => 'dagnabit_test',
-  :username => 'dagnabit_test',
-  :password => 'dagnabit_test',
-  :host => 'localhost'
-})
+require 'schema'
 
-ActiveRecord::Schema.define do
-  create_table :edges, :force => true do |t|
-    t.integer :parent_id
-    t.integer :child_id
-  end
-
-  create_table :vertices, :force => true do |t|
-    t.integer :datum
-  end
-end
-
-class Edge < ActiveRecord::Base
-  extend Dagnabit::Edge::Associations
-  extend Dagnabit::Edge::Connectivity
-
-  connects 'Vertex'
-end
-
-class Vertex < ActiveRecord::Base
-  extend Dagnabit::Vertex::Connectivity
-end
+require 'models/edge'
+require 'models/vertex'
 
 def v(datum)
   Vertex.find_or_create_by_datum(datum)

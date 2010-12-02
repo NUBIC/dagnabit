@@ -1,6 +1,3 @@
-require 'active_record'
-require 'dagnabit'
-
 ActiveRecord::Schema.define do
   extend Dagnabit::Migration
 

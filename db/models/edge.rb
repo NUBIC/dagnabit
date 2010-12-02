@@ -1,5 +1,3 @@
-require 'active_record'
-
 class Edge < ActiveRecord::Base
   extend Dagnabit::Edge::Activation
 
