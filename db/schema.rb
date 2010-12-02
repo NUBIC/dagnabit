@@ -22,4 +22,11 @@ ActiveRecord::Schema.define do
   create_table :other_vertices, :force => true do |t|
     t.integer :datum
   end
+
+  [ [:vertices, :edges],
+    [:other_vertices, :other_edges]
+  ].each do |vt, et|
+    execute %Q{ALTER TABLE #{et} ADD CONSTRAINT FK_#{et}_parent_id_#{vt}_id FOREIGN KEY (parent_id) REFERENCES #{vt} ("id") MATCH FULL}
+    execute %Q{ALTER TABLE #{et} ADD CONSTRAINT FK_#{et}_child_id_#{vt}_id FOREIGN KEY (child_id) REFERENCES #{vt} ("id") MATCH FULL}
+  end
 end

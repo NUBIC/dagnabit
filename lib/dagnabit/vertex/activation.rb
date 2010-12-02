@@ -8,6 +8,7 @@ module Dagnabit::Vertex
     ##
     # Sets up dagnabit's vertex modules in a vertex class.
     def acts_as_vertex
+      extend Associations
       extend Connectivity
       extend Settings
 
