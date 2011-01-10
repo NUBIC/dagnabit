@@ -18,8 +18,8 @@ module Dagnabit::Vertex
     # persisted before using {#bond_for}.
     #
     # This method requires the existence of an edge model; see
-    # {Settings#edge_model} and {Settings#set_edge_model}.  If an edge model has
-    # not been set, this method raises `RuntimeError`.
+    # {Settings#edge_model} and {Settings#edge_model_name=}.  If an edge model
+    # has not been set, this method raises `RuntimeError`.
     #
     # Edges instantiated by `bond_for` are not automatically saved.
     #
