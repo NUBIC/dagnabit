@@ -11,7 +11,8 @@ Gem::Specification.new do |s|
   s.homepage      = "http://rubygems.org/gems/dagnabit"
   s.summary       = %q{Directed acyclic graph plugin for ActiveRecord/PostgreSQL}
   s.description   = %q{Directed acyclic graph support library for applications using ActiveRecord on top of PostgreSQL.}
-  s.files         = Dir.glob('{History.md,README.rdoc,LICENSE,lib/**/*}')
+  s.files         = Dir.glob("{*.md,LICENSE,lib/**/*,bin/dagnabit-test,db/**/*}")
+  s.executables   = ["dagnabit-test"]
   s.require_paths = ["lib"]
 
   s.add_dependency  'activerecord', '~> 2.3.0'

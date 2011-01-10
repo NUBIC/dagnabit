@@ -22,7 +22,7 @@ Minor changes
 -------------
 
 * Ported development code to Bundler 1.0.
-* Removed usage of Object#returning, which was deprecated in ActiveSupport
+* Removed usage of `Object#returning`, which was deprecated in ActiveSupport
   2.3.9.
 
 2.2.4 2010-03-15
@@ -53,7 +53,7 @@ Minor enhancements
 * Slightly smarter transitive closure maintenance: if a link was saved but
   neither its ancestor nor descendant changed, the transitive closure will not
   be recalculated.
-* Removed usage of deprecated "require 'activesupport'".
+* Removed usage of deprecated `require 'activesupport'`.
 
 2.2.1 2009-12-07
 ================
@@ -62,7 +62,6 @@ Minor enhancements
 ------------------
 
 * Added NUBIC provenance.
-  More information on NUBIC: http://www.nucats.northwestern.edu/centers/nubic/index.html
 
 2.2.0 2009-09-14
 ================
@@ -103,4 +102,4 @@ Major changes
   `node1.links_as_parent.build(:descendant => node2)` or
   `node2.links_as_child.build(:ancestor => node1)`.
 
-  See commit 61d6e3841b63fdcaad7fcecd05b24f4b9f217ba2 for more details.
+  See commit `61d6e3841b63fdcaad7fcecd05b24f4b9f217ba2` for more details.
