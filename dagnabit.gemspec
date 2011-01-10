@@ -17,4 +17,16 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "dagnabit"
 
   s.add_dependency  'activerecord', '~> 2.3.0'
+
+  [ [ 'autotest',   nil        ],
+    [ 'bluecloth',  nil        ],
+    [ 'cucumber',   nil        ],
+    [ 'rake',       nil        ],
+    [ 'rcov',       nil        ],
+    [ 'rspec',      '~> 2.0.0' ],
+    [ 'pg',         nil        ],
+    [ 'yard',       nil        ]
+  ].each do |gem, version|
+    s.add_development_dependency gem, version
+  end
 end
