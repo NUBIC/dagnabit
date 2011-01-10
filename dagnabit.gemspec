@@ -14,8 +14,6 @@ Gem::Specification.new do |s|
   s.files         = Dir.glob('{History.md,README.rdoc,LICENSE,lib/**/*}')
   s.require_paths = ["lib"]
 
-  s.rubyforge_project = "dagnabit"
-
   s.add_dependency  'activerecord', '~> 2.3.0'
 
   [ [ 'autotest',   nil        ],
