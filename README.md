@@ -218,5 +218,5 @@ listing of the `dagnabit-test` program.
 Copyright
 =========
 
-Copyright (c) 2009, 2010 David Yip.  Released under the MIT License; see
+Copyright (c) 2009, 2010, 2011 David Yip.  Released under the MIT License; see
 LICENSE for details.
