@@ -61,7 +61,9 @@ The primary differences between dagnabit and acts-as-dag are:
 Database compatibility
 ======================
 
-PostgreSQL.  That's all I know that'll work with dagnabit, anyway.
+PostgreSQL 8.4.  That's all I know that'll work with dagnabit, anyway.
+Versions of PostgreSQL less than 8.4 will not work because they do not
+implement `WITH RECURSIVE`.
 
 It's possible other SQL databases will work, but I have no tests to demonstrate
 that situation.
