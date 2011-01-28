@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
     [ 'cucumber',   nil        ],
     [ 'rake',       nil        ],
     [ 'rcov',       nil        ],
-    [ 'rspec',      '~> 2.0.0' ],
+    [ 'rspec',      '~> 2.0',  ],
     [ 'pg',         nil        ],
     [ 'yard',       nil        ]
   ].each do |gem, version|
