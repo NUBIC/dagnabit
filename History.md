@@ -1,6 +1,16 @@
 3.0.1 (unreleased)
 ==================
 
+Minor changes
+-------------
+
+* Declare compatibility with ActiveRecord 3.
+
+Development changes
+-------------------
+
+* Loosened up RSpec dependency.
+
 3.0.0 2011-01-10
 ================
 
