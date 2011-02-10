@@ -5,10 +5,8 @@ Minor changes
 -------------
 
 * Declare compatibility with ActiveRecord 3.
-
-Development changes
--------------------
-
+* Eagerly load parent and child associations for edges loaded by
+  `Dagnabit::Graph#load_descendants!`.
 * Loosened up RSpec dependency.
 
 3.0.0 2011-01-10
