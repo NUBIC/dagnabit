@@ -30,9 +30,7 @@ module Dagnabit::Edge
     def connecting(*vertices)
       ids = vertices.map(&:id)
 
-      find_by_sql([%Q{
-        SELECT * FROM #{table_name} WHERE parent_id IN (:ids) AND child_id IN (:ids)
-      }, { :ids => ids }])
+      scoped(:conditions => { :parent_id => ids, :child_id => ids })
     end
   end
 end

@@ -135,6 +135,18 @@ module Dagnabit
 
         graph.edges.should be_set_equivalent_to(e1, e2)
       end
+
+      it 'eagerly loads edge parents' do
+        graph.load_descendants!
+
+        graph.edges.all? { |e| e.loaded_parent? }.should be_true
+      end
+
+      it 'eagerly loads edge children' do
+        graph.load_descendants!
+
+        graph.edges.all? { |e| e.loaded_child? }.should be_true
+      end
     end
   end
 end

@@ -85,18 +85,23 @@ module Dagnabit
     # {#vertex_model} and {#edge_model} must be set before calling this method.
     # If either are not set, this method raises `RuntimeError`.
     #
-    # Once vertices are loaded, load_descendants! loads all edges that connect
-    # vertices in the working vertex set.
-    #
-    # Vertices and edges that were present before a load_descendants! call will
+    # Vertices and edges that were present before a `load_descendants!` call will
     # remain in {#vertices} and {#edges}, respectively.
+    #
+    #
+    # Edge load behavior
+    # ==================
+    #
+    # Once vertices have been loaded, `load_descendants!` loads all edges that
+    # connect vertices in the working vertex set.  It also eagerly loads
+    # `parent` and `child` associations on edges.
     #
     # @raise [RuntimeError] if {#vertex_model} or {#edge_model} are unset
     def load_descendants!
       raise 'vertex_model and edge_model must be set' unless vertex_model && edge_model
 
       self.vertices += vertex_model.descendants_of(*vertices)
-      self.edges += edge_model.connecting(*vertices)
+      self.edges += edge_model.connecting(*vertices).scoped(:include => [:parent, :child])
     end
 
     ##
