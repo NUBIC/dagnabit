@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
     [ 'bluecloth',  nil        ],
     [ 'cucumber',   nil        ],
     [ 'rake',       nil        ],
-    [ 'rcov',       nil        ],
     [ 'rspec',      '~> 2.0',  ],
     [ 'pg',         nil        ],
     [ 'yard',       nil        ]
