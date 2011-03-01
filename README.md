@@ -144,16 +144,16 @@ dagnabit's cycle-checking trigger
 ---------------------------------
 
 dagnabit ships with a PL/pgSQL trigger that can be installed on edge tables.
-The trigger algorithm is run per inserted or updated row, and may be described
-as
+The trigger algorithm is run per inserted or updated row, and is implemented
+with a depth-first search:
 
     trigger check_cycle(seen = [], edge = (a, b)):
-      if a != b
+      if b is not in seen
         if b has no children
           ok
         else
           for each child c of b
-            check_cycle(seen + [b], (a, c))
+            check_cycle(seen + [b], (b, c))
         end
       else
         abort
