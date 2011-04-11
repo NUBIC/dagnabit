@@ -19,4 +19,12 @@ Rake::GemPackageTask.new(gemspec).define
 desc 'Run specs (set database adapter with DATABASE, defaults to postgresql)'
 RSpec::Core::RakeTask.new
 
-YARD::Rake::YardocTask.new
+namespace :yard do
+  desc 'Generate YARD documentation'
+  YARD::Rake::YardocTask.new('once')
+
+  desc 'Run the YARD server'
+  task :auto do
+    sh 'bundle exec yard server --reload'
+  end
+end
