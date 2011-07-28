@@ -144,5 +144,24 @@ module Dagnabit
 
       ids.reject { |k, _| children[k] }.map { |_, v| v }
     end
+
+    ##
+    # Returns the sink vertices in the graph.  Sinks are not returned in any
+    # particular order.
+    #
+    # If this method is run on a subgraph of a larger graph, then the source
+    # determination is done relative to the subgraph.
+    #
+    # This method expects all vertices and edges to have been persisted, and
+    # will return incorrect results if there exist unpersisted vertices of edges
+    # in the graph.
+    #
+    # @return [Array<vertex_model>] an array of sinks
+    def sinks
+      ids = vertices.inject({}) { |r, v| r.update(v.id => v) }
+      edge_source_ids = edges.inject({}) { |r, e| r.update(e.parent_id => true) }
+
+      ids.reject { |k, _| edge_source_ids[k] }.map { |_, v| v }
+    end
   end
 end
