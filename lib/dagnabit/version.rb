@@ -1,3 +1,3 @@
 module Dagnabit
-  VERSION = '3.0.1.pre'
+  VERSION = '3.1.0'
 end

@@ -99,6 +99,23 @@ module Dagnabit
       end
     end
 
+    describe '#sinks' do
+      [:v1, :v2].each { |v| let!(v) { vertex.create } }
+
+      it 'returns sink vertices' do
+        graph.vertices << v1
+
+        graph.sinks.should == [v1]
+      end
+
+      it 'considers edges' do
+        graph.vertices = [v1, v2]
+        graph.edges << edge.create(:parent_id => v1.id, :child_id => v2.id)
+
+        graph.sinks.should == [v2]
+      end
+    end
+
     describe '#load_descendants!' do
       [:v1, :v2, :v3].each { |v| let!(v) { vertex.create } }
 
