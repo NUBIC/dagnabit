@@ -1,3 +1,11 @@
+3.1.0 (2011-07-28)
+==================
+
+Minor enhancements
+------------------
+
+* Added Dagnabit::Graph#sinks, a method to find sinks in a directed graph.
+
 3.0.1 (2011-04-30)
 ==================
 
