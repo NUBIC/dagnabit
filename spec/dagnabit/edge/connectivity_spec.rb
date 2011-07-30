@@ -7,7 +7,7 @@ require 'models/vertex'
 
 module Dagnabit::Edge
   describe Connectivity do
-    shared_examples_for Connectivity do
+    shared_examples_for 'an edge' do
       [:v1, :v2, :v3].each { |v| let(v) { vertex.create } }
       [:e1, :e2].each { |e| let(e) { edge.new } }
 
@@ -30,14 +30,14 @@ module Dagnabit::Edge
       let(:vertex) { Vertex }
       let(:edge) { Edge }
 
-      it_behaves_like Connectivity
+      it_behaves_like 'an edge'
     end
 
     describe 'with custom model names' do
       let(:vertex) { OtherVertex }
       let(:edge) { OtherEdge }
 
-      it_behaves_like Connectivity
+      it_behaves_like 'an edge'
     end
   end
 end
