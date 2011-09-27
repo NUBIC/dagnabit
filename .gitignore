@@ -9,4 +9,4 @@ Gemfile.lock
 .yardoc
 doc
 
-*.rbc
+.rbx
