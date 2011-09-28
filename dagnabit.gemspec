@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency  'activerecord', ['>= 2.3.0', '< 3.1']
 
-  [ [ 'autotest',   nil        ],
+  [ [ 'autotest',   '~> 4.5.0' ],
     [ 'bluecloth',  nil        ],
     [ 'cucumber',   nil        ],
     [ 'rake',       nil        ],
