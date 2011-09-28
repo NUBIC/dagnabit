@@ -17,12 +17,13 @@ Gem::Specification.new do |s|
 
   s.add_dependency  'activerecord', ['>= 2.3.0', '< 3.1']
 
-  [ [ 'autotest',   '~> 4.5.0' ],
+  [
+    [ 'ZenTest',    '~> 4.5.0' ],
     [ 'bluecloth',  nil        ],
     [ 'cucumber',   nil        ],
+    [ 'pg',         nil        ],
     [ 'rake',       nil        ],
     [ 'rspec',      '~> 2.0'   ],
-    [ 'pg',         nil        ],
     [ 'yard',       nil        ]
   ].each do |gem, version|
     s.add_development_dependency gem, version
