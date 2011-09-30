@@ -28,3 +28,8 @@ namespace :yard do
     sh 'bundle exec yard server --reload'
   end
 end
+
+desc 'Run CI build'
+task :ci => [:spec, 'cucumber:all']
+
+task :default => :ci
