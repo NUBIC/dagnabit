@@ -1,3 +1,14 @@
+3.1.1 (2011-08-31)
+==================
+
+Bugfixes
+--------
+
+* Dagnabit <= 3.1.1 is not compatible with ActiveRecord 3.1, so tweaked its
+  gemspec to reflect this.  To use dagnabit with ActiveRecord >= 3.1, use the
+  code in the activerecord-edge branch, which will likely become dagnabit
+  4.0.0.
+
 3.1.0 (2011-07-28)
 ==================
 
