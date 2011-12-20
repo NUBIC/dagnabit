@@ -34,8 +34,8 @@ module Dagnabit::Vertex
       raise "#{self} must be persisted before invoking bond_for" if new_record?
 
       sources = graph.sources
-      existing = edge.all(:conditions => { :parent_id => id, :child_id => sources.map(&:id) }).map { |e| [e.parent_id, e.child_id] }
-      new = sources.inject([]) { |es, s| es << [id, s.id] }
+      existing = edge.where(:parent_id => id, :child_id => sources.map(&:id)).map { |e| [e.parent_id, e.child_id] }
+      new = sources.map { |s| [id, s.id] }
 
       (new - existing).map { |p, c| edge.new(:parent_id => p, :child_id => c) }
     end
