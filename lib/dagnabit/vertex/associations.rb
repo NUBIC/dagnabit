@@ -8,17 +8,24 @@ module Dagnabit::Vertex
 
     ##
     # An override of {Settings#connected_by} that installs `has_many`
-    # associations named `in_edges` and `out_edges` on a vertex model.
+    # associations named `parent_edges` and `child_edges` on a vertex model.
     #
-    # `in_edges` is the collection of edges that flow _into_ a vertex;
-    # `out_edges` is the collection of edges that flow _out of_ a vertex.
+    # `parent_edges` is the collection of edges that flow _into_ a vertex;
+    # `child_edges` is the collection of edges that flow _out of_ a vertex.
+    #
+    # `parents` is the collection of vertices with edges that flow _into_ a vertex;
+    # `children` is the collection of vertices with edges that flow _out of_ a vertex.
     #
     # @return [void]
     def connected_by(*args)
       super
 
-      has_many :in_edges,  :class_name => edge_model_name, :foreign_key => 'child_id',  :dependent => :destroy
-      has_many :out_edges, :class_name => edge_model_name, :foreign_key => 'parent_id', :dependent => :destroy
+      has_many :parent_edges,  :class_name => edge_model_name, :foreign_key => 'child_id',  :dependent => :destroy
+      has_many :child_edges, :class_name => edge_model_name, :foreign_key => 'parent_id', :dependent => :destroy
+
+      has_many :parents,  :through => :parent_edges
+      has_many :children, :through => :child_edges
+
     end
   end
 end
