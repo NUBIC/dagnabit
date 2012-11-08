@@ -156,13 +156,13 @@ module Dagnabit
       it 'eagerly loads edge parents' do
         graph.load_descendants!
 
-        graph.edges.all? { |e| e.loaded_parent? }.should be_true
+        graph.edges.all? { |e| e.association(:parent).loaded? }.should be_true
       end
 
       it 'eagerly loads edge children' do
         graph.load_descendants!
 
-        graph.edges.all? { |e| e.loaded_child? }.should be_true
+        graph.edges.all? { |e| e.association(:child).loaded? }.should be_true
       end
     end
   end
