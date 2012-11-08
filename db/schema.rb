@@ -1,9 +1,6 @@
 ActiveRecord::Schema.define do
   extend Dagnabit::Migration
 
-  execute 'DROP LANGUAGE IF EXISTS plpgsql CASCADE'
-  execute 'CREATE TRUSTED LANGUAGE plpgsql'
-
   [:edges, :other_edges].each do |table|
     create_table table, :force => true do |t|
       t.references :parent, :null => false

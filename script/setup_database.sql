@@ -1,0 +1,4 @@
+CREATE USER dagnabit_test CREATEDB NOCREATEUSER PASSWORD 'dagnabit_test';
+CREATE DATABASE dagnabit_test WITH OWNER dagnabit_test;
+
+CREATE OR REPLACE TRUSTED LANGUAGE plpgsql;
