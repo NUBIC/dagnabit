@@ -24,22 +24,6 @@ module Dagnabit::Vertex
     end
 
     ##
-    # Finds all parents of the receiver object.
-    #
-    # @return [Array<ActiveRecord::Base>] a list of parent vertices
-    def parents
-      self.class.parents_of(self)
-    end
-
-    ##
-    # Finds all children of the receiver object.
-    #
-    # @return [Array<ActiveRecord::Base>] a list of child vertices
-    def children
-      self.class.children_of(self)
-    end
-
-    ##
     # Finds all descendants of the receiver object.
     #
     # @return [Array<ActiveRecord::Base>] a list of descendant vertices
