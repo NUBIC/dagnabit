@@ -23,9 +23,11 @@ module Dagnabit::Vertex
       has_many :edges_to_parents,  :class_name => edge_model_name, :foreign_key => 'child_id',  :dependent => :destroy
       has_many :edges_to_children, :class_name => edge_model_name, :foreign_key => 'parent_id', :dependent => :destroy
 
+      alias_method :in_edges, :edges_to_parents
+      alias_method :out_edges, :edges_to_children
+
       has_many :parents,  :through => :edges_to_parents
       has_many :children, :through => :edges_to_children
-
     end
   end
 end
