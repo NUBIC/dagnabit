@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.executables   = ["dagnabit-test"]
   s.require_paths = ["lib"]
 
-  s.add_dependency  'activerecord', ['~> 3.0']
+  s.add_dependency  'activerecord', ['> 3.0', '< 4.1']
 
   [
     [ 'ZenTest',    '~> 4.5.0' ],
