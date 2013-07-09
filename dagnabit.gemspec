@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name          = "dagnabit"
   s.version       = Dagnabit::VERSION
   s.platform      = Gem::Platform::RUBY
-  s.authors       = ["David Yip"]
-  s.email         = ["yipdw@member.fsf.org"]
+  s.authors       = ["David Yip", "Turadg Aleahmad"]
+  s.email         = ["yipdw@member.fsf.org", "turadg@geknowm.com"]
   s.homepage      = "http://rubygems.org/gems/dagnabit"
   s.summary       = %q{Directed acyclic graph plugin for ActiveRecord/PostgreSQL}
   s.description   = %q{Directed acyclic graph support library for applications using ActiveRecord on top of PostgreSQL.}
@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.executables   = ["dagnabit-test"]
   s.require_paths = ["lib"]
 
-  s.add_dependency  'activerecord', ['>= 2.3.0', '< 3.1']
+  s.add_dependency  'activerecord', ['> 3.0', '< 4.1']
 
   [
     [ 'ZenTest',    '~> 4.5.0' ],
